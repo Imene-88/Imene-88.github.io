@@ -1,0 +1,228 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--nav-color);
+    overflow: hidden;
+}
+
+.container .addition {
+    position: absolute;
+    width: 92.82%;
+    height: 93px;
+    margin-left: 101px;
+    background-color: var(--bg-color);
+    z-index: 1;
+}
+
+.container .nav {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+}
+
+.container .nav > img {
+    position: relative;
+    top: 20px;
+    left: 15px;
+}
+
+.container .nav .navGroup {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    top: 20px;
+    right: 46px;
+    gap: 25px;
+}
+
+.container .nav .navGroup .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 543px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    padding: 0 25px;
+    border-radius: 5px;
+}
+
+.container .nav .navGroup .search input {
+    width: 90%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: var(--secondary-font);
+    color: var(--tertiary-color);
+}
+
+.container .nav .navGroup .search img {
+    position: relative;
+    opacity: 0.5;
+}
+
+.container .nav .navGroup button {
+    position: relative;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.container .nav img:last-child,
+.profile_menu > div:nth-child(3) > ul > li:first-child img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.container .nav .images {
+    cursor: pointer;
+}
+
+.navCol {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    z-index: 100;
+    top: 259px;
+    left: 29px;
+    gap: 61px;
+}
+
+.navCol .page img {
+    cursor: pointer;
+}
+
+.navCol .page img::before {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 66px;
+    left: 0;
+    background: var(--text-color);
+    z-index: 100;
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 400px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.postContent {
+    position: relative;
+    resize: none;
+    background-color: var(--bg-color);
+    outline: none;
+    border: none;
+    padding: 15px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.postContent::placeholder {
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.dialogIcons {
+    position: relative;
+    top: 15px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dialogIcons p {
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    font-size: 15px;
+}
+
+.dialogIcons img {
+    cursor: pointer;
+}
+
+.dialogIcons .imageIcon, 
+.dialogIcons .videoIcon {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 40px;
+    gap: 10px;
+}
+
+.addPostBtn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 10px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 250px;
+    margin-bottom: 30px;
+}
+
+.addPostBtn:disabled {
+    background-color: gray;
+}
+
+.profile_menu  {
+    margin-top: 10px;
+}
+
+.profile_menu > div:nth-child(3) {
+    left: 999px;
+    background-color: var(--editor-bg-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li,
+.profile_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:first-child {
+    position: relative;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:last-child {
+    position: relative;
+    font-size: 14.5px;
+    color: var(--tertiary-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li:nth-child(5) .switch_dark {
+    margin-left: 65px;
+}
+
+.imageIcon input,
+.videoIcon input {
+    display: none;
+}

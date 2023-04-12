@@ -1,0 +1,110 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .open_documents {
+    position: relative;
+    top: 150px;
+    left: 60px;
+    width: 91%;
+}
+
+.subContainer .subSubContainer .open_documents .open_document {
+    position: relative;
+    padding: 20px;
+    background-color: var(--editor-bg-color);
+    border-radius: 5px;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top img {
+    position: relative;
+    top: 2px;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top img:last-child {
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top .left {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top .left p:first-child {
+    position: relative;
+    font-size: 18px;
+    font-family: var(--main-font);
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top .left p:last-child {
+    position: relative;
+    font-family: var(--secondary-font);
+    color: var(--tertiary-color);
+    font-style: normal;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .top .left button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 3px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 8px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .bottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.subContainer .subSubContainer .open_documents .open_document .bottom p:first-child {
+    position: relative;
+    margin-left: 57px;
+    font-family: var(--secondary-font);
+    font-style: normal;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .open_documents .open_document .bottom p:last-child {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-style: normal;
+    color: var(--text-color);
+}
+
+
+

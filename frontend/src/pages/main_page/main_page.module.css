@@ -1,0 +1,371 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    max-height: fit-content;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .wrapper {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 20px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--nav-color);
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle {
+    position: relative;
+    width: 70%;
+    top: 130px;
+}
+
+.subContainer .subSubContainer .middle .post {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(236, 231, 211, 0.9);
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle .post .postTop,
+.subContainer .subSubContainer .right .following {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.subContainer .subSubContainer .right .following {
+    margin-bottom: 30px;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left,
+.subContainer .subSubContainer .right .following .left {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.subContainer .subSubContainer .right .following .left {
+    gap: 15px;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left a {
+    position: relative;
+    text-decoration: none;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left img,
+.subContainer .subSubContainer .right .following .left img {
+    border-radius: 50%;
+    object-fit: cover;
+} 
+
+.subContainer .subSubContainer .middle .post .postTop .left .username {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left .date {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 11px;
+    color: var(--tertiary-color);
+}
+
+.subContainer .subSubContainer .middle .post .postTop button {
+    position: relative;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .dots {
+    position: relative;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle {
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 10px;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle img {
+    width: 100%;
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle .postVideo {
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .like, 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7px;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .like span, 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment span {
+    position: relative;
+    font-family: var(--secondary-font);
+}
+
+.subContainer .subSubContainer .right {
+    position: sticky;
+    width: 30%;
+    background-color: var(--editor-bg-color);
+    margin-left: 40px;
+    top: 130px;
+    padding: 20px;
+    height: 79vh;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .right .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .right .top > p {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.subContainer .subSubContainer .right .top > button {
+    position: relative;
+    margin-bottom: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following .left .text p:first-child {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following .left .text p:last-child {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 14.5px;
+}
+
+.subContainer .subSubContainer .right .following button {
+    position: relative;
+    border: 2px solid var(--primary-color);
+    outline: none;
+    padding: 3px 15px;
+    color: var(--text-color);
+    background-color: transparent;
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following button:hover {
+    background-color: var(--primary-color);
+    transition: all 0.3s;
+    color: var(--bg-color);
+}
+
+.report_menu {
+    margin-left: -128px;
+}
+
+.report_menu > div:nth-child(3) {
+    background-color: var(--bg-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li,
+.report_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li .text p:first-child {
+    position: relative;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.report_menu > div:nth-child(3) > ul > li .text p:last-child {
+    position: relative;
+    font-size: 14.5px;
+    color: var(--tertiary-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li:nth-child(5) .switch_dark {
+    margin-left: 65px;
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 500px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.report_post_contents > p {
+    position: relative;
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    margin-bottom: 10px;
+}
+
+.report_post_contents .report_reason {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.report_post_contents .report_reason input {
+    position: relative;
+    width: 17px;
+    height: 17px;
+    margin-bottom: 5px;
+}
+
+.report_post_contents .report_reason input[type="checkbox"]:checked {
+    background-color: red;
+}
+
+.report_post_contents .report_reason p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 15px;
+    top: -3.4px;
+}
+
+.reportContent {
+    position: relative;
+    resize: none;
+    background-color: var(--bg-color);
+    outline: none;
+    border: none;
+    padding: 14px 50px 40px 14px;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-top: 10px;
+    font-family: var(--secondary-font);
+}
+
+.reportContent::placeholder {
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.reportPostBtn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 8px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 250px;
+    margin-bottom:20px;
+}
+

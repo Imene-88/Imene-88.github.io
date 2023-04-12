@@ -1,0 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&family=Raleway&display=swap');
+
+:root {
+  --primary-color: #844637;
+  --nav-color: #D4C3B2;
+  --secondary-color: #D6CFC8;
+  --text-color: #0D1216;
+  --bg-color: #FFFFF0;
+  --tertiary-color: #657786;
+  --report-color: #E2574C;
+  --editor-bg-color: #ECE7D3;
+
+  --main-font: 'Nunito', sans-serif;
+  --secondary-font: 'Raleway', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}

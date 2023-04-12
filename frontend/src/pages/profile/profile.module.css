@@ -1,0 +1,169 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    max-height: fit-content;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .profile {
+    position: relative;
+    padding: 10px 100px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--nav-color);
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .profile .header {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-color);
+    top: 75px;
+    padding-top: 45px;
+    z-index: 999;
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader > img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader .identity .fullname_edit {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader .identity .fullname_edit .edit {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader .identity p:first-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader .identity p:nth-child(2),
+.subContainer .subSubContainer .profile .header .leftHeader .identity p:last-child {
+    position: relative;
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.subContainer .subSubContainer .profile .header .rightHeader {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.subContainer .subSubContainer .profile .header .rightHeader .data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .profile .header .rightHeader .data p:first-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.subContainer .subSubContainer .profile .header .rightHeader .data p:last-child {
+    position: relative;
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+    font-size: 18px;
+}
+
+.profile .posts_save {
+    position: relative;
+    top: 75px;
+}
+
+.posts_save > div:nth-child(1) {
+    position: fixed;
+    width: 79.6%;
+    background-color: var(--bg-color);
+    padding-top: 30px;
+    z-index: 1;
+}
+
+.posts_save > div:nth-child(1) > div > div > button:first-child {
+    color: var(--primary-color);
+}
+
+.posts_save > div:nth-child(1) > div > div > button:first-child[aria-selected=false] {
+    color: var(--tertiary-color);
+}
+
+.posts_save > div:nth-child(1) > div > div > button:last-child {
+    color: var(--tertiary-color);
+}
+
+.posts_save > div:nth-child(1) > div > div > button:last-child[aria-selected=true] {
+    color: var(--primary-color);
+}
+
+.posts_save > div:nth-child(1) > div > span {
+    background-color: var(--primary-color);
+}
+
+.posts_save > div:nth-child(2) {
+    position: relative;
+    padding-left: 0;
+}
+
+.posts_save .posts {
+    position: relative;
+    top: 80px;
+}
