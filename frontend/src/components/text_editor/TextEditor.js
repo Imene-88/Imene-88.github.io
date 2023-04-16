@@ -39,6 +39,8 @@ function TextEditor({text}) {
     const [socket, setSocket] = useState(); // have access to socket variable and 
     const [quill, setQuill] = useState(); // quill instance
 
+    console.log(document_id);
+
     // Connection with socket.io
     useEffect(() => {
         const URL = "http://localhost:3003";
@@ -51,7 +53,7 @@ function TextEditor({text}) {
         }
     }, [])
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (socket == null || quill == null) return;
 
         if (text) {
@@ -64,9 +66,9 @@ function TextEditor({text}) {
             })
         }
         
-    }, [socket, quill, document_id]);
+    }, [socket, quill, document_id]); */
 
-    useEffect(() => {
+    /*useEffect(() => {
         if (socket == null || quill == null) return;
         const saveWhenIntervalPasses = setInterval(() => {
             const content = quill.getContents();
@@ -78,10 +80,10 @@ function TextEditor({text}) {
         return () => {
             clearInterval(saveWhenIntervalPasses);
         }
-    }, [socket, quill]);
+    }, [socket, quill]); */
 
     // Sending changes to connected users
-    useEffect(() => {
+    /*useEffect(() => {
         if (socket == null || quill == null) return;
         const whenTextChanges = (delta, oldDelta, source) => {
             if (source !== 'user') return;
@@ -94,10 +96,10 @@ function TextEditor({text}) {
         return () => {
             quill.off("text-change", whenTextChanges);
         };
-    }, [socket, quill])
+    }, [socket, quill])*/
 
     // update contents of editor whenever a user makes changes
-    useEffect(() => {
+    /*useEffect(() => {
         if (socket == null || quill == null) return;
         const whenTextChanges = (delta, oldDelta, source) => {
             quill.updateContents(delta);
@@ -108,7 +110,62 @@ function TextEditor({text}) {
         return () => {
             socket.off("changes:receive", whenTextChanges);
         };
-    }, [socket, quill])
+    }, [socket, quill])*/
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        const handler = (delta, oldDelta, source) => {
+            if (source !== 'user') return;
+            socket.emit("changes:send", delta);
+        };
+
+        quill.on("text-change", handler);
+
+        return () => {
+            quill.off("text-change", handler);
+        };
+    }, [socket, quill]);
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        const handler = (delta) => {
+            quill.updateContents(delta);
+        };
+
+        socket.on("changes:receive", handler);
+
+        return () => {
+            socket.off("changes:receive", handler);
+        };
+    }, [socket, quill]);
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        socket.emit("document:send", document_id, userId);
+
+        const handler = (document) => {
+            quill.setContents(document);
+        }
+
+        socket.once("document:receive", handler)
+
+    }, [socket, quill, document_id, userId]);
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        const interval = setInterval(() => {
+            socket.emit("document:saveChangesToDB", quill.getContents());
+        }, 2000);
+
+        return () => {
+            clearInterval(interval);
+        };
+
+    }, [socket, quill]);
 
     const editorContainer = useCallback(textEditor => { /* so that the ref will always be defined because if I use useRef with useEffect, useRef sometimes does not get defined before useEffect, therefore it will not get recognized */
         if (textEditor == null) return;

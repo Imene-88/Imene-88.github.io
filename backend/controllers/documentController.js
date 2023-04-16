@@ -21,3 +21,21 @@ exports.getDocuments = async (req, res) => {
         console.log(error);
     }
 }
+
+exports.getPostDocument = async (document_id, userId) => {
+    try {
+        const document = await DocumentModel.findById(document_id);
+        if (document) {
+            return document;
+        } else {
+            await DocumentModel.create({
+                _id: document_id,
+                owner_id: userId,
+                content: "",
+            });
+        }
+    }
+    catch(error) {
+        console.log(error);
+    }
+}

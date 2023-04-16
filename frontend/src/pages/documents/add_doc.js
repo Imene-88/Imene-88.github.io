@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import TextEditor from '../../components/text_editor/TextEditor'
 import styles from './add_doc.module.css'
 import logo from '../../assets/logo.png'
@@ -15,8 +15,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import { useLocation } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+import default_picture from '../../assets/default_user_profile_picture.png';
 
 function AddDoc() {
+
+  const { user: loggedInUser } = useContext(AuthContext);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const opendocDescDialog = () => {
@@ -278,7 +282,7 @@ function AddDoc() {
             </DialogActions>
           </Dialog>
           <button>Share</button>
-          <img src={img3} alt="profile img" width={55} height={55} className={styles.profile} />
+          <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="profile img" width={55} height={55} className={styles.profile} />
         </div>
       </div>
       <TextEditor text={document} />

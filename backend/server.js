@@ -42,9 +42,11 @@ const io = new Server(server, {
     }
 });
 
+const defaultValue = "";
+
 // socket code
 io.on('connection', (socket) => {
-    socket.on("document:send", async (textId) => {
+    /*socket.on("document:send", async (textId) => {
         // const document = await DocumentModel.findById(document_id);
         socket.join(textId);        
         //const content = document.content;
@@ -64,8 +66,38 @@ io.on('connection', (socket) => {
         catch(error) {
             console.log(error);
         }
-    });
+    });*/
+
+    /*socket.on("document:send", async (data) => {
+        const { document_id, userId } = data;
+        //const document = documentController.getPostDocument(document_id, userId);
+        const document = await findOrCreateDocument(document_id, userId);
+    });*/
+
+    socket.on("document:send", async (document_id, userId) => {
+        const document = await findOrCreateDocument(document_id, userId);
+        socket.join(document_id);
+        socket.emit("document:receive", document.content);
+        
+        socket.on("changes:send", (delta) => {
+            socket.broadcast.to(document_id).emit("changes:receive", delta);
+        });
+
+        socket.on("document:saveChangesToDB", async (content) => {
+            await DocumentModel.findByIdAndUpdate(document_id, {content: content});
+        })
+    })
+
 });
+
+async function findOrCreateDocument(id, userId) {
+    if (id == null) return
+  
+    const document = await DocumentModel.findById(id)
+    if (document) return document
+    return await DocumentModel.create({ _id: id, owner_id: userId, content: defaultValue })
+  }
+  
 
 server.listen(3003, () => {
     console.log("listening on port 3003");
