@@ -101,4 +101,35 @@ exports.getUserPosts = async (req, res) => {
     }
 };
 
+exports.getUserFollowings = async (req, res) => {
+    try {
+        const thisUser = await UserModel.findById(req.params.id);
+        const userFollowings = await Promise.all(
+            thisUser.following.map((followedUser) => {
+                return UserModel.findById(followedUser._id);
+            })
+        );
+       
+        const usefulInformation = userFollowings.map((followedUser) => {
+            const {type_of_color_blindness,email,password,accountType,birth_date, ...other} = followedUser._doc;
+            return other;
+        })
+        res.status(200).json(usefulInformation);
+    }
+    catch(error) {
+        console.log(error);
+    }
+};
+
+exports.getUserPostsCount = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.params.id);
+        const postsCount = await PostModel.countDocuments({owner_id: user._id});
+        res.json(postsCount);
+    }
+    catch(error) {
+        console.log(error);
+    }
+};
+
 

@@ -5,6 +5,10 @@ router.put("/:id", userController.updateUser);
 
 router.get("/userProfile/:fullname", userController.getUserPosts);
 
+router.get("/:id/followings", userController.getUserFollowings);
+
+router.get("/:id/postsCount", userController.getUserPostsCount);
+
 router.delete("/:id", userController.deleteUser);
 
 router.get("/user", userController.getUser);

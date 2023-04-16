@@ -218,13 +218,23 @@
     cursor: pointer;
 }
 
-.subContainer .subSubContainer .right .following .left .text p:first-child {
+.subContainer .subSubContainer .right .following .left .text a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .right .following .left .text a p:first-child {
     position: relative;
     font-family: var(--secondary-font);
     font-size: 17px;
     font-style: normal;
     font-weight: 500;
     cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following .left .text a p:first-child:hover {
+    font-weight: 600;
 }
 
 .subContainer .subSubContainer .right .following .left .text p:last-child {
@@ -368,4 +378,16 @@
     margin-right: 250px;
     margin-bottom:20px;
 }
+
+.no_followings {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-style: italic;
+    color: var(--text-color);
+    text-align: center;
+    margin: 0 60px;
+    top: 200px;
+}
+
+
 

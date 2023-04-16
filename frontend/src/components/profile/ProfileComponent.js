@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import user_profile from '../../assets/img3.jpg'
-import edit from '../../assets/edit.png'
 import styles from '../../pages/profile/profile.module.css'
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -10,6 +8,7 @@ import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import LoggedInUserPosts from '../post/loggedInUserPosts';
+import EditProfile from '../edit_profile/EditProfile';
 
 function ProfileComponent() {
 
@@ -25,11 +24,22 @@ function ProfileComponent() {
         getLoggedInUserPosts();
     }, [loggedInUser._id]);
 
+  // For Tablist  
   const [value, setValue] = useState('1');
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const [postsCount, setPostsCount] = useState(0);
+  const followersCount = loggedInUser.followers.length;
+  const followingsCount = loggedInUser.following.length;
+  useEffect(() => {
+    const getUserPostsCount = async () => {
+      const res = await axios.get("/users/" + loggedInUser._id + "/postsCount");
+      setPostsCount(res.data);
+    }
+    getUserPostsCount();
+  }, [loggedInUser._id]);
   
   return (
     <div className={styles.profile}>
@@ -39,25 +49,22 @@ function ProfileComponent() {
           <div className={styles.identity}>
             <div className={styles.fullname_edit}>
               <p>{loggedInUser.username}</p>
-              <div className={styles.edit}>
-                <img src={edit} alt="edit icon" width={15} height={15} />
-                <p>Edit</p>
-              </div>
+              <EditProfile />
             </div>
             <p>{loggedInUser.email}</p>
           </div>
         </div>
         <div className={styles.rightHeader}>
           <div className={styles.data}>
-            <p>15.3K</p>
+            <p>{postsCount}</p>
             <p>Posts</p>
           </div>
           <div className={styles.data}>
-            <p>5.2M</p>
+            <p>{followersCount}</p>
             <p>Followers</p>
           </div>
           <div className={styles.data}>
-            <p>100</p>
+            <p>{followingsCount}</p>
             <p>Following</p>
           </div>
         </div>
@@ -71,7 +78,7 @@ function ProfileComponent() {
           <TabPanel value="1">
             <div className={styles.posts}>
               {myPosts.map((post) => {
-                <LoggedInUserPosts key={post._id} post={post} />
+                return <LoggedInUserPosts key={post._id} post={post} />
               })}
             </div>
           </TabPanel>

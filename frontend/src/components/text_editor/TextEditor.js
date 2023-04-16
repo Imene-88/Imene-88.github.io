@@ -59,6 +59,9 @@ function TextEditor({text}) {
             quill.blur();
             const textId = text._id;
             socket.emit("document:send", textId);
+            socket.on("document:receive", (delta) => {
+                quill.setContents(delta);
+            })
         }
         
     }, [socket, quill, document_id]);
@@ -68,6 +71,9 @@ function TextEditor({text}) {
         const saveWhenIntervalPasses = setInterval(() => {
             const content = quill.getContents();
             socket.emit("document:insertDB", {document_id, userId, content});
+            socket.on("document:receive", (delta) => {
+                quill.setContents(delta);
+            })
         }, 2000);
         return () => {
             clearInterval(saveWhenIntervalPasses);
@@ -95,6 +101,7 @@ function TextEditor({text}) {
         if (socket == null || quill == null) return;
         const whenTextChanges = (delta, oldDelta, source) => {
             quill.updateContents(delta);
+            socket.emit("document:insertDB", {document_id, userId, delta});
         };
         socket.on("changes:receive", whenTextChanges);
 

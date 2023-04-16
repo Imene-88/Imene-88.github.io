@@ -83,6 +83,10 @@
     cursor: pointer;
 }
 
+.subContainer .subSubContainer .profile .header .leftHeader .identity .fullname_edit .edit:hover {
+    font-weight: 600;
+}
+
 .subContainer .subSubContainer .profile .header .leftHeader .identity p:first-child {
     position: relative;
     font-family: var(--main-font);
@@ -91,10 +95,15 @@
     font-weight: 500;
 }
 
-.subContainer .subSubContainer .profile .header .leftHeader .identity p:nth-child(2),
-.subContainer .subSubContainer .profile .header .leftHeader .identity p:last-child {
+.subContainer .subSubContainer .profile .header .leftHeader .identity p:nth-child(2) {
     position: relative;
     color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.subContainer .subSubContainer .profile .header .leftHeader .identity p:last-child {
+    margin-top: 8px;
+    color: var(--text-color);
     font-family: var(--secondary-font);
 }
 
@@ -128,6 +137,7 @@
 .profile .posts_save {
     position: relative;
     top: 75px;
+    left: 5px;
 }
 
 .posts_save > div:nth-child(1) {
@@ -166,4 +176,106 @@
 .posts_save .posts {
     position: relative;
     top: 80px;
+    left: 5px;
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 600px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.dialog > div:nth-child(3) > div > form .editTop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop p {
+    color: var(--tertiary-color);
+    font-style: italic;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop img {
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop img:hover {
+    opacity: 0.5;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop input {
+    display: none;
+}
+
+.dialog > div:nth-child(3) > div > form hr {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.dialog > div:nth-child(3) > div > form .userInputs {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.dialog > div:nth-child(3) > div > form .userInputs label {
+    position: relative;
+    display: inline-block;
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    font-size: 15px;
+    width: 200px;
+    margin-right: 15px;
+}
+
+.dialog > div:nth-child(3) > div > form .userInputs input, 
+.dialog > div:nth-child(3) > div > form .userInputs textarea,
+.dialog > div:nth-child(3) > div > form .userInputs select {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    width: 50%;
+    border-radius: 5px;
+    font-family: var(--secondary-font);
+}
+
+.dialog > div:nth-child(3) > div > form .userInputs textarea {
+    resize: none;
+}
+
+.EditProfileBtn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 250px;
+    margin-bottom: 30px;
+}
+
+.EditProfileBtn:hover {
+    opacity: 0.9;
 }
