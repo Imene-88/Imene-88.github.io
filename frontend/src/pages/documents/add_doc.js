@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import TextEditor from '../../components/text_editor/TextEditor'
 import styles from './add_doc.module.css'
 import logo from '../../assets/logo.png'
@@ -7,20 +7,35 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Divider from '@mui/material/Divider';
 import openDoc from '../../assets/open.png';
-import img3 from '../../assets/img3.jpg';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import { useLocation } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import default_picture from '../../assets/default_user_profile_picture.png';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
+import info from '../../assets/info.png';
+import SharedWithUsers from '../../components/users_to_share_with/SharedWithUsers';
+import socket from '../../SOCKET_CONNECTION';
 
 function AddDoc() {
 
   const { user: loggedInUser } = useContext(AuthContext);
+  
+  const [userFollowingsList, setUserFollowingsList] = useState([]);
+  useEffect(() => {
+    const getUserFollowings = async () => {
+      try {
+        const res = await axios.get("/users/" + loggedInUser._id + "/followings");
+        setUserFollowingsList(res.data);
+      }
+      catch(error) {}
+    }
+    getUserFollowings();
+  }, [loggedInUser._id]);
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const opendocDescDialog = () => {
@@ -28,6 +43,15 @@ function AddDoc() {
   };
   const closedocDescDialog = () => {
     setDialogOpen(false);
+  };
+  
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const openshareDocDialog = () => {
+    setShareDialogOpen(true);
+  };
+
+  const closeshareDialogDialog = () => {
+    setShareDialogOpen(false);
   };
 
   // File button
@@ -81,24 +105,22 @@ function AddDoc() {
   };
 
   // Make input width fit content width
-  /*const [text, setText] = useState('');
+  const [text, setText] = useState('');
+  const titleInput = useRef();
   const handleChange = (event) => {
-    setText(event.target.value);
+    const title = event.target.value;
+    setText(title);
   };
-  const handleFocus = (event) => {
-    setText("")
-  };
-  const adjustInputWidthToFitContent = () => {
-    const titleInput = document.getElementById('titleInput');
-    if (text.length < 1) {
-      titleInput.style.width = titleInput.placeholder.length+'ch';
-    } else {
-      titleInput.style.width = text.length+'ch';
-    }
-  }; 
   useEffect(() => {
+    const adjustInputWidthToFitContent = () => {
+      if (text.length < 1) {
+        titleInput.current.style.width = titleInput.current.placeholder.length+'ch';
+      } else {
+        titleInput.current.style.width = text.length+'ch';
+      }
+    }; 
     adjustInputWidthToFitContent(); // eslint-disable-next-line
-  }, [text]);*/
+  }, [text]); 
 
   // Tooltip
   const LightTooltip = styled(({ className, ...props }) => (
@@ -114,8 +136,11 @@ function AddDoc() {
     }));
 
     const location = useLocation();
-    const document = location.state;
-    console.log(document);
+    const documentTitle = location.state;
+
+    const shareDocument = () => {
+      //socket.emit("message:send", "hello");
+    };
 
   return (
     <>
@@ -123,7 +148,7 @@ function AddDoc() {
         <div className={styles.imgFileGroup}>
         <img src={logo} alt="Logo of website" width={170} height={89} />
         <div className={styles.fileInteraction}>
-          <input type="text" name='doc_title' id="titleInput"  placeholder='Untitled document'/>
+          <input type="text" placeholder='Untitled document' ref={titleInput} onChange={handleChange} />
           <div className={styles.fileNav}>
             <div>
               { /* --------------- File --------------- */ }
@@ -281,11 +306,28 @@ function AddDoc() {
               <button className={styles.publishBtn}>Publish</button>
             </DialogActions>
           </Dialog>
-          <button>Share</button>
+          <button onClick={openshareDocDialog}>Share</button>
+          <Dialog open={shareDialogOpen} onClose={closeshareDialogDialog} className={styles.dialog}>
+            <DialogTitle>
+              Share {documentTitle}
+              <LightTooltip title="Our policy believes that collaboration is the essence of success. Therefore, if you want to share your document with other people and write together, you can follow them on this platform and find them on the list below."> 
+                <img src={info} alt="help" width={25} height={25} />
+              </LightTooltip> 
+            </DialogTitle>
+            <Divider />
+            <DialogContent>
+              {userFollowingsList.map((followedUser) => {
+                return (
+                  <SharedWithUsers key={followedUser._id} followedUser={followedUser} />
+                )
+              })}
+            </DialogContent>
+            
+          </Dialog>
           <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="profile img" width={55} height={55} className={styles.profile} />
         </div>
       </div>
-      <TextEditor text={document} />
+      <TextEditor title={text} />
     </>  
   )
 }

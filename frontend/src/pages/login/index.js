@@ -10,7 +10,7 @@ function Login() {
 
   const userEmail = useRef();
   const userPassword = useRef();
-  const { user, isFetching, error, dispatch } = useContext(AuthContext);
+  const { isFetching, error, dispatch } = useContext(AuthContext);
 
   const userLogin = (e) => {
     e.preventDefault();
@@ -19,8 +19,6 @@ function Login() {
       dispatch
     );
   };
-
-  console.log(user);
 
   return (
     <div className={styles.container}>

@@ -104,9 +104,11 @@
 
 .dialog > div:nth-child(3) > div > h2 {
     color: var(--text-color);
-    align-self: center;
     font-family: var(--main-font);
     font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .dialog > div:nth-child(3) > div > hr {
@@ -143,4 +145,43 @@
     cursor: pointer;
     margin-right: 250px;
     margin-bottom: 30px;
+}
+
+.shareDiv {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.userFollowings {
+    position: relative;
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--bg-color);
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.userFollowings:hover {
+    transform: scale(1.05);
+    transition: all 0.4s ease;
+}
+
+.userFollowings p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+}
+
+.userFollowings img {
+    position: relative;
+    border-radius: 100%;
+    object-fit: cover;
 }

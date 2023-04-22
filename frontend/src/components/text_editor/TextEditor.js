@@ -5,6 +5,7 @@ import 'quill/dist/quill.snow.css';
 import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import socket from '../../SOCKET_CONNECTION';
 
 /* useRef so that the editor does not re-render each time changes are made,
 and since toolbar of editor is seperated from the actual editor, we reference 
@@ -32,17 +33,15 @@ const modules = {
     toolbar: custom_additional_toolbar
 }
 
-function TextEditor({text}) {
+function TextEditor({title}) {
     const { user: loggedInUser} = useContext(AuthContext);
     const userId = loggedInUser._id;
     const {id: document_id} = useParams();
-    const [socket, setSocket] = useState(); // have access to socket variable and 
+    //const [socket, setSocket] = useState(); // have access to socket variable and 
     const [quill, setQuill] = useState(); // quill instance
 
-    console.log(document_id);
-
     // Connection with socket.io
-    useEffect(() => {
+    /*useEffect(() => {
         const URL = "http://localhost:3003";
         const s = io(URL, { autoConnect: false });
         s.connect();
@@ -51,7 +50,7 @@ function TextEditor({text}) {
         return () => {
             s.disconnect();
         }
-    }, [])
+    }, [])*/
 
     /*useEffect(() => {
         if (socket == null || quill == null) return;

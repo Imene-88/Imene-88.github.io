@@ -20,7 +20,7 @@ function App() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={user ? (<Navigate replace to={"/main_page"} />) : (<Register />)} />
       <Route path="/login" element={user ? (<Navigate replace to={"/main_page"} />) : (<Login />)} />
-      <Route path="/main_page" element={user ? (<MainPage />) : (<Register />)} />
+      <Route path="/main_page" element={<MainPage />} />
       <Route path="/documents" element={<Documents />} />
       <Route path="/open_collabs" element={<OpenCollabs />} />
       <Route path="/userProfile/:fullname" element={<UserProfile />} />

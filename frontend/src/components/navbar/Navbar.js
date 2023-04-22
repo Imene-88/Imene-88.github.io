@@ -25,6 +25,7 @@ import default_picture from '../../assets/default_user_profile_picture.png';
 import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
+import { useNavigate, useBeforeUnload } from 'react-router-dom'
 
 function Navbar() {
 
@@ -45,6 +46,7 @@ function Navbar() {
   };
   const handleCloseProfile = () => {
     setAnchorProfile(null);
+    
   };
 
   const userPostContent = useRef();
@@ -130,6 +132,13 @@ function Navbar() {
 
     }
   };
+  
+  const navigate = useNavigate();
+  const clearStorage = () => {
+    localStorage.removeItem('user');
+    navigate('/login', {replace: true});
+    navigate(0);
+  }
 
   return (
     <div className={styles.container}>
@@ -208,10 +217,12 @@ function Navbar() {
                     <Switch className={styles.switch_dark} />
                   </MenuItem>
                   <Divider />
-                  <MenuItem>
-                    <img src={log_out} alt="logout icon" width={25} height={25} />
-                    <p>Log out</p>
-                  </MenuItem>
+                  
+                    <MenuItem onClick={clearStorage}>
+                      <img src={log_out} alt="logout icon" width={25} height={25} />
+                      <p>Log out</p>
+                    </MenuItem>
+                 
                 </Menu>
             </div>
         </div>

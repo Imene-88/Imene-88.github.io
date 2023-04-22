@@ -4,6 +4,8 @@ const http = require('http');
 const { Server } = require("socket.io");
 const DocumentModel = require("./models/Document");
 const documentController = require("./controllers/documentController");
+const ConnectedUsers = require("./models/ConnectedUsers");
+const connectedUsersController = require('./controllers/connectedUsersController');
 
 const cors = require('cors');
 app.use(cors());
@@ -39,7 +41,8 @@ const io = new Server(server, {
     cors: {
         origin: "http://localhost:3000",
         methods: ["GET", "POST"],
-    }
+    },
+    transports: ['websocket', 'polling'],
 });
 
 const defaultValue = "";
@@ -74,6 +77,15 @@ io.on('connection', (socket) => {
         const document = await findOrCreateDocument(document_id, userId);
     });*/
 
+    //socket.on("connectedUser:add", (userId) => {
+    //    connectedUsersController.addNewConnectedUser(userId, socket.id);
+    //})
+
+    //socket.on("document:share", async (participantId) => {
+    //    const sharedWithUser = await connectedUsersController.getConnectedUser(participantId);
+    //    socket.broadcast.to(sharedWithUser.socket_id).emit("document:shared", "hello");
+    //});
+
     socket.on("document:send", async (document_id, userId) => {
         const document = await findOrCreateDocument(document_id, userId);
         socket.join(document_id);
@@ -86,6 +98,12 @@ io.on('connection', (socket) => {
         socket.on("document:saveChangesToDB", async (content) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
         })
+
+        socket.once("disconnect", () => {
+            connectedUsersController.deleteConnectedUser(socket.id);
+            console.log("disconnected");
+        });
+        
     })
 
 });

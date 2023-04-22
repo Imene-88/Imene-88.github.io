@@ -21,7 +21,11 @@ const documentSchema = new mongoose.Schema({
     }, 
     description: {
         type: String,
-    }
+    },
+    participants: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }]
 },
 {timestamps: true},
 );
