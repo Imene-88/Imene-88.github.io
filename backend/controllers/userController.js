@@ -1,6 +1,7 @@
 const UserModel = require("../models/User");
 const PostModel = require("../models/Post");
 const bcrypt = require("bcrypt");
+const { response } = require("express");
 
 exports.updateUser = async (req, res) => {
     if(req.body.password) {
@@ -33,6 +34,16 @@ exports.deleteUser = async (req, res) => {
     }
 };
 
+exports.getSender = async (userId) => {
+    try {
+        const user = await UserModel.findById(userId);
+        return user;
+    }
+    catch(error) {
+        console.log(error);
+    }
+};
+
 exports.getUser = async (req, res) => {
     try {
         const userId = req.query.id;
@@ -60,7 +71,7 @@ exports.followUser = async (req, res) => {
     try {
         const followedUser = await UserModel.findById(req.params.id);
         const thisUser = await UserModel.findById(req.body.userId);
-        await followedUser.updateOne({$push: {followers: thisUser}});
+        await followedUser.updateOne({$push: {followers: thisUser}}); 
         await thisUser.updateOne({$push: {following: followedUser}});
         res.status(200).json("User followed successfully");
     }

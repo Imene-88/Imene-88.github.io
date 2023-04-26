@@ -114,43 +114,15 @@ function TextEditor({title}) {
     useEffect(() => {
         if (socket == null || quill == null) return;
 
-        const handler = (delta, oldDelta, source) => {
-            if (source !== 'user') return;
-            socket.emit("changes:send", delta);
-        };
-
-        quill.on("text-change", handler);
-
-        return () => {
-            quill.off("text-change", handler);
-        };
-    }, [socket, quill]);
-
-    useEffect(() => {
-        if (socket == null || quill == null) return;
-
-        const handler = (delta) => {
-            quill.updateContents(delta);
-        };
-
-        socket.on("changes:receive", handler);
-
-        return () => {
-            socket.off("changes:receive", handler);
-        };
-    }, [socket, quill]);
-
-    useEffect(() => {
-        if (socket == null || quill == null) return;
-
-        socket.emit("document:send", document_id, userId);
-
-        const handler = (document) => {
+        const handler = (document, msg) => {
             quill.setContents(document);
+            console.log(msg);
         }
-
+        
         socket.once("document:receive", handler)
-
+        
+        socket.emit("document:send", document_id, userId, "hello1");
+        
     }, [socket, quill, document_id, userId]);
 
     useEffect(() => {
@@ -164,6 +136,37 @@ function TextEditor({title}) {
             clearInterval(interval);
         };
 
+    }, [socket, quill]);
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        const handler = (delta, msg) => {
+            quill.updateContents(delta);
+            console.log(msg);
+        };
+
+        socket.on("changes:receive", handler);
+
+        return () => {
+            socket.off("changes:receive", handler);
+        };
+    }, [socket, quill]);
+
+    useEffect(() => {
+        if (socket == null || quill == null) return;
+
+        const handler = (delta, oldDelta, source) => {
+            if (source !== 'user') return;
+            socket.emit("changes:send", delta, "hello3");
+            console.log("hello3")
+        };
+
+        quill.on("text-change", handler);
+
+        return () => {
+            quill.off("text-change", handler);
+        };
     }, [socket, quill]);
 
     const editorContainer = useCallback(textEditor => { /* so that the ref will always be defined because if I use useRef with useEffect, useRef sometimes does not get defined before useEffect, therefore it will not get recognized */

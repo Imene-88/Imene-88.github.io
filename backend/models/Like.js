@@ -9,10 +9,9 @@ const likeSchema = new mongoose.Schema({
     post_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Post",
-        required: true,
     },
     open_document_id: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.String,
         ref: "Document",
     },
 },

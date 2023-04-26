@@ -25,9 +25,20 @@ import default_picture from '../../assets/default_user_profile_picture.png';
 import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
-import { useNavigate, useBeforeUnload } from 'react-router-dom'
+import { useNavigate, useBeforeUnload } from 'react-router-dom';
+import socket from '../../SOCKET_CONNECTION';
 
 function Navbar() {
+
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    socket.on("document:shared", data => {
+      setNotifications((prev) => [...prev, data]);
+    })
+  }, [socket]);
+
+  console.log(notifications);
 
   const { user } = useContext(AuthContext);
 
@@ -46,7 +57,15 @@ function Navbar() {
   };
   const handleCloseProfile = () => {
     setAnchorProfile(null);
-    
+  };
+
+  const [anchorNotification, setAnchorNotification] = useState(null);
+  const openNotification = Boolean(anchorNotification);
+  const handleClickNotification = (event) => {
+    setAnchorNotification(event.currentTarget);
+  };
+  const handleCloseNotification = () => {
+    setAnchorNotification(null);
   };
 
   const userPostContent = useRef();
@@ -138,7 +157,17 @@ function Navbar() {
     localStorage.removeItem('user');
     navigate('/login', {replace: true});
     navigate(0);
-  }
+  };
+
+  const acceptCollabRequest = async (document_id, receiverId) => {
+    console.log("it worked!");
+    try {
+      await axios.put("/documents/" + document_id + "/update?receiverId=" + receiverId);
+    }
+    catch(error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -150,7 +179,36 @@ function Navbar() {
                     <input type="text" name='search' placeholder='Search for people' />
                     <img src={search} alt="search icon" width="24" height="24" />
                 </div>
-                <img src={notification} alt="notification icon" width="40" height="40" className={styles.images} />
+                <button id='notification'
+                    aria-controls={openNotification ? 'notification-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={openNotification ? "true" : undefined}
+                    onClick={handleClickNotification}>
+                      <img src={notification} alt="notification icon" width="40" height="40" className={styles.images} />
+                </button>
+                <Menu id='notification-menu'
+                  className={styles.profile_menu}
+                  anchorEl={anchorNotification}
+                  open={openNotification}
+                  onClose={handleCloseNotification}
+                  MenuListProps={{
+                    'aria-labelledby': 'notification',
+                  }}>
+                    {notifications.map((notification) => {
+                      const {senderFullName, document_id, receiverId, link} = notification;
+                      return (
+                        <MenuItem key={notification}>
+                          <p>{senderFullName} wants to collaborate with you on a document. Do you: </p>
+                          <div className={styles.collab_request}>
+                            <Link to={link}>
+                              <button onClick={() => acceptCollabRequest(document_id, receiverId)}>Accept</button>
+                            </Link>
+                            <button>Refuse</button>
+                          </div>
+                        </MenuItem>
+                      )
+                    })}  
+                </Menu>
                 <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />
                 <Dialog open={dialogOpen} onClose={closeAddPostDialog} className={styles.dialog}>
                   <DialogTitle>New Post</DialogTitle>
@@ -217,12 +275,10 @@ function Navbar() {
                     <Switch className={styles.switch_dark} />
                   </MenuItem>
                   <Divider />
-                  
-                    <MenuItem onClick={clearStorage}>
-                      <img src={log_out} alt="logout icon" width={25} height={25} />
-                      <p>Log out</p>
-                    </MenuItem>
-                 
+                  <MenuItem onClick={clearStorage}>
+                    <img src={log_out} alt="logout icon" width={25} height={25} />
+                    <p>Log out</p>
+                  </MenuItem>
                 </Menu>
             </div>
         </div>

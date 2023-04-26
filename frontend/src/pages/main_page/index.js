@@ -11,12 +11,9 @@ function MainPage() {
 
   const { user: loggedInUser} = useContext(AuthContext);
 
-  //useEffect(() => {
-  //  socket.emit("connectedUser:add", loggedInUser._id);
-  //  return () => {
-  //    socket.disconnect();
-  //  }
-  //}, [socket, loggedInUser._id]);
+  useEffect(() => {
+    socket.emit("connectedUser:add", loggedInUser._id);
+  }, [loggedInUser._id]);
   
   return (
     <>

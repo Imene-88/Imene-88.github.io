@@ -4,8 +4,11 @@ import selected from '../../assets/check.png';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import socket from '../../SOCKET_CONNECTION';
 import { useParams } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
 
 function SharedWithUsers({followedUser}) {
+
+    const { user: loggedInUser } = useContext(AuthContext);
 
     const [sharedWith, setSharedWith] = useState("");
     const [FollowedUserClicked, setFollowedUserClicked] = useState(false);
@@ -16,8 +19,14 @@ function SharedWithUsers({followedUser}) {
       setFollowedUserClicked(!FollowedUserClicked);
     };
 
-    const shareDocument = () => {
-        //socket.emit("document:share", sharedWith);
+    console.log(sharedWith);
+
+    const shareDocument = (type) => {
+        socket.emit("document:share", {
+          senderId: loggedInUser._id,
+          receiverId: sharedWith,
+          type,
+        });
     };
 
   return (
@@ -27,7 +36,7 @@ function SharedWithUsers({followedUser}) {
           <p>{followedUser.full_name}</p>
         </div>
         {FollowedUserClicked && <img src={selected} alt="user selected check mark" width={23} height={23} />}
-        {FollowedUserClicked && <button className={styles.publishBtn} onClick={shareDocument}>Share</button>}
+        {FollowedUserClicked && <button className={styles.publishBtn} onClick={() => shareDocument("shareDoc")}>Share</button>}
     </div>
   )
 }

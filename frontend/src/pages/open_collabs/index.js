@@ -1,11 +1,28 @@
-import React from 'react'
-import styles from './open_collabs.module.css'
-import Navbar from '../../components/navbar/Navbar'
-import Sidebar from '../../components/sidebar/Sidebar'
-import open_document from '../../assets/doc.png'
-import like_btn from '../../assets/like.png'
+import React, { useEffect, useState } from 'react';
+import styles from './open_collabs.module.css';
+import Navbar from '../../components/navbar/Navbar';
+import Sidebar from '../../components/sidebar/Sidebar';
+import axios from 'axios';
+import OpenDocument from '../../components/open_documents/OpenDocument';
 
 function OpenCollabs() {
+
+  const [openDocuments, setOpenDocuments] = useState([]);
+  useEffect(() => {
+    const getOpenDocuments = async () => {
+      try {
+        const res = await axios.get("/documents/open");
+        setOpenDocuments(res.data.sort((openDoc_a, openDoc_b) => {
+          return openDoc_b.createdAt.localeCompare(openDoc_a.createdAt);
+        }));
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    getOpenDocuments();
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -13,25 +30,9 @@ function OpenCollabs() {
         <Sidebar />
         <div className={styles.subSubContainer}>
           <div className={styles.open_documents}>
-            <div className={styles.open_document}>
-              <div className={styles.top}>
-                <div className={styles.left}>
-                  <img src={open_document} alt="icon of a document" width={38} height={38} />
-                  <div className={styles.text}>
-                    <p>The secret Life Of Plants</p>
-                    <p>Description</p>
-                  </div>
-                  <button>Join</button>
-                </div>
-                <div className={styles.right}>
-                  <img src={like_btn} alt="icon of heart" width={30} height={30} />
-                </div>
-              </div>
-              <div className={styles.bottom}>
-                <p>22 participants</p>
-                <p>2 days ago</p>
-              </div>
-            </div>
+            {openDocuments.map((openDocument) => {
+              return <OpenDocument key={openDocument._id} openDocument={openDocument} />
+            })}
           </div>
         </div>
       </div>

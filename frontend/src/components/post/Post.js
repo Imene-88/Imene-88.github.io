@@ -31,6 +31,7 @@ export default function Post({post}) {
     };
     count();
   }, [post._id]); 
+  
   const [likeBtnCLicked, setLikeBtnCLicked] = useState(false);
   const [likeBtn, setLikeBtn] = useState(like_btn);
   const {user: loggedInUser} = useContext(AuthContext);

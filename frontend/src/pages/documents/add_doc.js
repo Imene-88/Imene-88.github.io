@@ -16,7 +16,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { AuthContext } from '../../context/AuthContext';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import info from '../../assets/info.png';
 import SharedWithUsers from '../../components/users_to_share_with/SharedWithUsers';
 import socket from '../../SOCKET_CONNECTION';
@@ -138,8 +138,22 @@ function AddDoc() {
     const location = useLocation();
     const documentTitle = location.state;
 
-    const shareDocument = () => {
-      //socket.emit("message:send", "hello");
+    const navigate = useNavigate();
+
+    const { id: document_id} = useParams();
+    const documentDescription = useRef();
+    
+    const publishDocumentAsOpen = async (event) => {
+      event.preventDefault();
+      try {
+        await axios.put("/documents/" + document_id + "/update", {
+          description: documentDescription.current.value,
+        });
+        navigate("/open_collabs", { replace: true });
+      } 
+      catch (error) {
+        console.log(error);
+      }
     };
 
   return (
@@ -299,12 +313,14 @@ function AddDoc() {
           <Dialog open={dialogOpen} onClose={closedocDescDialog} className={styles.dialog}>
             <DialogTitle>Please provide a description for the document</DialogTitle>
             <Divider />
-            <DialogContent>
-              <textarea cols="68" rows="11" placeholder='Your description' autoFocus className={styles.documentDescription}></textarea>
-            </DialogContent>
-            <DialogActions>
-              <button className={styles.publishBtn}>Publish</button>
-            </DialogActions>
+            <form method='post' onSubmit={publishDocumentAsOpen}>
+              <DialogContent>
+                <textarea cols="68" rows="11" placeholder='Your description' autoFocus required className={styles.documentDescription} ref={documentDescription}></textarea>
+              </DialogContent>
+              <DialogActions>
+                <button className={styles.publishBtn} type='submit' >Publish</button>
+              </DialogActions>
+            </form>
           </Dialog>
           <button onClick={openshareDocDialog}>Share</button>
           <Dialog open={shareDialogOpen} onClose={closeshareDialogDialog} className={styles.dialog}>
@@ -322,7 +338,6 @@ function AddDoc() {
                 )
               })}
             </DialogContent>
-            
           </Dialog>
           <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="profile img" width={55} height={55} className={styles.profile} />
         </div>

@@ -6,6 +6,7 @@ const DocumentModel = require("./models/Document");
 const documentController = require("./controllers/documentController");
 const ConnectedUsers = require("./models/ConnectedUsers");
 const connectedUsersController = require('./controllers/connectedUsersController');
+const userController = require("./controllers/userController");
 
 const cors = require('cors');
 app.use(cors());
@@ -46,6 +47,7 @@ const io = new Server(server, {
 });
 
 const defaultValue = "";
+let link;
 
 // socket code
 io.on('connection', (socket) => {
@@ -77,33 +79,50 @@ io.on('connection', (socket) => {
         const document = await findOrCreateDocument(document_id, userId);
     });*/
 
-    //socket.on("connectedUser:add", (userId) => {
-    //    connectedUsersController.addNewConnectedUser(userId, socket.id);
-    //})
+    socket.on("connectedUser:add", (userId) => {
+        connectedUsersController.addNewConnectedUser(userId, socket.id);
+    });
+
+    
 
     //socket.on("document:share", async (participantId) => {
     //    const sharedWithUser = await connectedUsersController.getConnectedUser(participantId);
     //    socket.broadcast.to(sharedWithUser.socket_id).emit("document:shared", "hello");
     //});
 
-    socket.on("document:send", async (document_id, userId) => {
+    socket.on("document:send", async (document_id, userId, msg) => {
         const document = await findOrCreateDocument(document_id, userId);
         socket.join(document_id);
-        socket.emit("document:receive", document.content);
+        socket.emit("document:receive", document.content, msg);
         
-        socket.on("changes:send", (delta) => {
-            socket.broadcast.to(document_id).emit("changes:receive", delta);
+        socket.on("changes:send", (delta, msg) => {
+            socket.broadcast.to(document_id).emit("changes:receive", delta, msg);
         });
 
         socket.on("document:saveChangesToDB", async (content) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
+        });
+
+        socket.on("document:share", async ({senderId, receiverId, type}) => {
+            const receiver = await connectedUsersController.getConnectedUser(receiverId);
+            const sender = await userController.getSender(senderId);
+            const senderFullName = sender.full_name;
+            if (type === "shareDoc") {
+                link = "http://localhost:3000/documents/add_doc/" + document_id;
+            }
+            socket.broadcast.to(receiver.socket_id).emit("document:shared", {
+                senderFullName,
+                document_id,
+                receiverId,
+                link,
+                type,
+            })
         })
 
         socket.once("disconnect", () => {
             connectedUsersController.deleteConnectedUser(socket.id);
             console.log("disconnected");
-        });
-        
+        });      
     })
 
 });

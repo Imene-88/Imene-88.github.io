@@ -11,6 +11,12 @@ exports.deleteConnectedUser = async (socketId) => {
 }
 
 exports.getConnectedUser = async (userId) => {
-    const connectedUser = await ConnectedUsers.findOne({user_id: userId});
-    return connectedUser;
+    try {
+        const connectedUser = await ConnectedUsers.findOne({user_id: userId});
+        return connectedUser;
+    }
+    catch(error) {
+        console.log(error);
+    }
+    
 }
