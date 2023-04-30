@@ -12,7 +12,7 @@ function Register() {
     const userColorBlindness = useRef();
     const userEmail = useRef();
     const userPassword = useRef();
-    const {user, isFetching, error, dispatch} = useContext(AuthContext);
+    const {isFetching, error, dispatch} = useContext(AuthContext);
 
     const userRegister = (event) => {
         event.preventDefault();
@@ -24,7 +24,6 @@ function Register() {
             email: userEmail.current.value
         }, dispatch);
     };
-    console.log(user);
   return (
     <div className={styles.container}>
         <img src={logo} alt="Logo of website" width="170" height="89" />

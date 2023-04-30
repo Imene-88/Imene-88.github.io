@@ -1,6 +1,8 @@
 const PostModel = require("../models/Post");
 const UserModel = require("../models/User");
 const LikeModel = require("../models/Like");
+const CommentModel = require("../models/Comment");
+const SavedPostModel = require("../models/SavedPosts");
 
 exports.createPost = async (req, res) => {
     try {
@@ -81,7 +83,42 @@ exports.getLikesCount = async (req, res) => {
     try {
         const post = await PostModel.findById(req.params.id);
         const likesCount = await LikeModel.countDocuments({post_id: post._id});
-        res.json(likesCount);
+        res.status(200).json(likesCount);
+    }
+    catch(error) {
+        console.log(error);
+    }
+};
+
+exports.getCommentsCount = async (req, res) => {
+    try {
+        const post = await PostModel.findById(req.params.id);
+        const commentsCount = await CommentModel.countDocuments({post_id: post._id});
+        res.status(200).json(commentsCount);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+exports.savePost = async (req, res) => {
+    try {
+        const savedPost = new SavedPostModel({
+            user_id: req.params.userId,
+            post_id: req.params.postId,
+        });
+        await savedPost.save();
+        res.status(200).json(savedPost);
+    }
+    catch(error) {
+        console.log(error);
+    }
+};
+
+exports.unsavePost = async (req, res) => {
+    try {
+        await SavedPostModel.deleteOne({ user_id: req.params.userId, post_id: req.params.postId });
+        res.status(200).json("deleted successfully");
     }
     catch(error) {
         console.log(error);

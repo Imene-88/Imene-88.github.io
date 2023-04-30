@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styles from './TextEditor.module.css';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
-import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import socket from '../../SOCKET_CONNECTION';
@@ -123,7 +122,7 @@ function TextEditor({title}) {
         
         socket.emit("document:send", document_id, userId, "hello1");
         
-    }, [socket, quill, document_id, userId]);
+    }, [quill, document_id, userId]);
 
     useEffect(() => {
         if (socket == null || quill == null) return;
@@ -136,7 +135,7 @@ function TextEditor({title}) {
             clearInterval(interval);
         };
 
-    }, [socket, quill]);
+    }, [quill]);
 
     useEffect(() => {
         if (socket == null || quill == null) return;
@@ -151,7 +150,7 @@ function TextEditor({title}) {
         return () => {
             socket.off("changes:receive", handler);
         };
-    }, [socket, quill]);
+    }, [quill]);
 
     useEffect(() => {
         if (socket == null || quill == null) return;
@@ -167,7 +166,7 @@ function TextEditor({title}) {
         return () => {
             quill.off("text-change", handler);
         };
-    }, [socket, quill]);
+    }, [quill]);
 
     const editorContainer = useCallback(textEditor => { /* so that the ref will always be defined because if I use useRef with useEffect, useRef sometimes does not get defined before useEffect, therefore it will not get recognized */
         if (textEditor == null) return;

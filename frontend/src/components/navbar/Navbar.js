@@ -3,7 +3,6 @@ import logo from '../../assets/logo.png'
 import search from '../../assets/search.png'
 import notification from '../../assets/notification.png'
 import addPost from '../../assets/add_post.png'
-import img3 from '../../assets/img3.jpg'
 import styles from './Navbar.module.css'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -19,13 +18,15 @@ import profile from '../../assets/profile.png'
 import settings from '../../assets/settings.png'
 import dark_mode from '../../assets/dark_mode.png'
 import log_out from '../../assets/log_out.png'
-import { Link, NavLink } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
-import { useNavigate, useBeforeUnload } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import remove_image from '../../assets/cancel.png';
+import { ColorRing } from 'react-loader-spinner';
 import socket from '../../SOCKET_CONNECTION';
 
 function Navbar() {
@@ -36,9 +37,21 @@ function Navbar() {
     socket.on("document:shared", data => {
       setNotifications((prev) => [...prev, data]);
     })
-  }, [socket]);
+  }, []);
 
-  console.log(notifications);
+  const receiveNotification = ({senderFullName, document_id, receiverId, link}) => {
+    return (
+      <MenuItem>
+        <p>{senderFullName} sent you a collaboration request. Do you: </p>
+        <div className={styles.collab_request}>
+          <Link to={link}>
+            <button onClick={() => acceptCollabRequest(document_id, receiverId)}>Accept</button>
+          </Link>
+          <button>Refuse</button>
+        </div>
+      </MenuItem>
+    )
+  };
 
   const { user } = useContext(AuthContext);
 
@@ -70,13 +83,20 @@ function Navbar() {
 
   const userPostContent = useRef();
   const [newPostImageUrl, setNewPostImageUrl] = useState("");
+  const [postImage, setPostImage] = useState(null);
   const [newPostVideoUrl, setNewPostVideoUrl] = useState("");
+  const [postVideo, setPostVideo] = useState(null);
   const [percentage, setPercentage] = useState(0);
+  const [postImageCancelled, setPostImageCancelled] = useState(false);
+  const uploadTaskRefImage = useRef();
+  const uploadTaskRefVideo = useRef();
 
   const postImageUpload = (event) => {
     const newPostImage = event.target.files[0];
+    setPostImage(newPostImage);
     const storageRef = ref(storage, newPostImage.name);
     const uploadTask = uploadBytesResumable(storageRef, newPostImage);
+    uploadTaskRefImage.current = uploadTask;
     uploadTask.on('state_changed', 
     (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -106,8 +126,10 @@ function Navbar() {
 
   const postVideoUpload = (event) => {
     const newPostVideo = event.target.files[0];
+    setPostVideo(newPostVideo);
     const storageRef = ref(storage, newPostVideo.name);
     const uploadTask = uploadBytesResumable(storageRef, newPostVideo);
+    uploadTaskRefVideo.current = uploadTask;
     uploadTask.on('state_changed', 
     (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -135,6 +157,12 @@ function Navbar() {
     }
   );
   };
+
+  const removepostImage = () => {
+    setPostImage(null);
+    uploadTaskRefImage.current.cancel();
+    setPostImageCancelled(true);
+  }
 
   const addNewPost = async (event) => {
     event.preventDefault();
@@ -169,6 +197,8 @@ function Navbar() {
     }
   };
 
+  console.log(postImageCancelled);
+
   return (
     <div className={styles.container}>
         <div className={styles.addition}></div>
@@ -176,7 +206,7 @@ function Navbar() {
             <img src={logo} alt="Logo of website" width="170" height="89" />
             <div className={styles.navGroup}>
                 <div className={styles.search}>
-                    <input type="text" name='search' placeholder='Search for people' />
+                    {user.email !== process.env.REACT_APP_ADMIN_EMAIL ? <input type="text" name='search' placeholder='Search for people' /> : <input type="text" name='search' placeholder='Search for users' />}
                     <img src={search} alt="search icon" width="24" height="24" />
                 </div>
                 <button id='notification'
@@ -194,22 +224,9 @@ function Navbar() {
                   MenuListProps={{
                     'aria-labelledby': 'notification',
                   }}>
-                    {notifications.map((notification) => {
-                      const {senderFullName, document_id, receiverId, link} = notification;
-                      return (
-                        <MenuItem key={notification}>
-                          <p>{senderFullName} wants to collaborate with you on a document. Do you: </p>
-                          <div className={styles.collab_request}>
-                            <Link to={link}>
-                              <button onClick={() => acceptCollabRequest(document_id, receiverId)}>Accept</button>
-                            </Link>
-                            <button>Refuse</button>
-                          </div>
-                        </MenuItem>
-                      )
-                    })}  
+                    {notifications.map((notification) => receiveNotification(notification))}  
                 </Menu>
-                <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />
+                {user.role !== "Admin" && <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />}
                 <Dialog open={dialogOpen} onClose={closeAddPostDialog} className={styles.dialog}>
                   <DialogTitle>New Post</DialogTitle>
                   <Divider />
@@ -228,12 +245,32 @@ function Navbar() {
                           <input type="file" aria-labelledby="newPostVideo" accept='video/*' onChange={postVideoUpload} />
                         </label>
                         <div className={styles.progress}>
-                          <p>Upload Progress is: {percentage} </p>
+                          {postImage && percentage > 0  && !postImageCancelled && 
+                          <div className={styles.progressCircle}>
+                            <ColorRing
+                              visible={true}
+                              height="80"
+                              width="80"
+                              ariaLabel="blocks-loading"
+                              wrapperStyle={{}}
+                              wrapperClass="blocks-wrapper"
+                              colors={['var(--primary-color)', '#915445', '#9D6354', '#A97265', '#B68376']}
+                            />
+                            <span className={styles.progressValue}>{Math.round(percentage)} %</span>
+                          </div>
+                          }
+                          {postVideo && percentage > 0 && <p>Upload Progress is: {percentage} </p>}
                         </div>
                       </div>
+                      {postImage && 
+                        <div className={styles.postImageHolder}>
+                          <img src={URL.createObjectURL(postImage)} alt="post media holder" className={styles.postImage} />
+                          <img src={remove_image} alt="remove icon" width={17} height={17} className={styles.removepostImage} onClick={removepostImage} />
+                        </div>
+                      }
                     </DialogContent>
                     <DialogActions>
-                      <button className={styles.addPostBtn} type='submit' disabled={percentage > 0 && percentage !== 100}>Add</button>
+                      <button className={styles.addPostBtn} type='submit' disabled={(percentage > 0 && percentage !== 100 && !postImageCancelled) && (!postImageCancelled)}>Add</button>
                     </DialogActions>
                   </form>
                 </Dialog>

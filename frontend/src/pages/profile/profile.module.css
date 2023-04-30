@@ -279,3 +279,111 @@
 .EditProfileBtn:hover {
     opacity: 0.9;
 }
+
+.post {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(236, 231, 211, 0.9);
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.post .postTop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.post .postTop .left {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.post .postTop .left a {
+    position: relative;
+    text-decoration: none;
+}
+
+.post .postTop .left img {
+    border-radius: 50%;
+    object-fit: cover;
+} 
+
+.post .postTop .left .username {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.post .postTop .left .date {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 11px;
+    color: var(--tertiary-color);
+}
+
+.post .postTop button {
+    position: relative;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.post .postMiddle {
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.post .postMiddle p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 10px;
+}
+
+.post .postMiddle img {
+    width: 100%;
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.post .postBottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post .postBottom .react_to_post {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.post .postBottom .react_to_post .like, 
+.post .postBottom .react_to_post .comment {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7px;
+}
+
+.post .postBottom .react_to_post .like span, 
+.post .postBottom .react_to_post .comment span {
+    position: relative;
+    font-family: var(--secondary-font);
+}

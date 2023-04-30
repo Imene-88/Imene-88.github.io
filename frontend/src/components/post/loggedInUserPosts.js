@@ -45,23 +45,8 @@ export default function LoggedInUserPosts({post}) {
         }
         catch(error) {}
       }
-    };  
+    };    
     
-    const [anchorReport, setAnchorReport] = useState(null);
-    const openReport = Boolean(anchorReport);
-    const handleClickReport = (event) => {
-      setAnchorReport(event.currentTarget);
-    };
-    const handleCloseReport = () => {
-      setAnchorReport(null);
-    };  
-    const [dialogReportPostOpen, setDialogReportPostOpen] = useState(false);
-    const openReportPostDialog = () => {
-      setDialogReportPostOpen(true);
-    };
-    const closeReportPostDialog = () => {
-      setDialogReportPostOpen(false);
-    };  
     return (
       <div className={styles.post}>
           <div className={styles.postTop}>

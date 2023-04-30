@@ -50,7 +50,8 @@
     top: 130px;
 }
 
-.subContainer .subSubContainer .middle .post {
+.subContainer .subSubContainer .middle .post,
+.profile .posts_save .posts .post {
     position: relative;
     width: 100%;
     padding: 20px;
@@ -60,20 +61,22 @@
 }
 
 .subContainer .subSubContainer .middle .post .postTop,
-.subContainer .subSubContainer .right .following {
+.subContainer .subSubContainer .right .following,
+.profile .posts_save .posts .post .postTop {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
-}
+} 
 
 .subContainer .subSubContainer .right .following {
     margin-bottom: 30px;
 }
 
 .subContainer .subSubContainer .middle .post .postTop .left,
-.subContainer .subSubContainer .right .following .left {
+.subContainer .subSubContainer .right .following .left,
+.profile .posts_save .posts .post .postTop .left {
     position: relative;
     display: flex;
     justify-content: flex-start;
@@ -85,18 +88,21 @@
     gap: 15px;
 }
 
-.subContainer .subSubContainer .middle .post .postTop .left a {
+.subContainer .subSubContainer .middle .post .postTop .left a,
+.profile .posts_save .posts .post .postTop .left a {
     position: relative;
     text-decoration: none;
 }
 
 .subContainer .subSubContainer .middle .post .postTop .left img,
-.subContainer .subSubContainer .right .following .left img {
+.subContainer .subSubContainer .right .following .left img,
+.profile .posts_save .posts .post .postTop .left img {
     border-radius: 50%;
     object-fit: cover;
 } 
 
-.subContainer .subSubContainer .middle .post .postTop .left .username {
+.subContainer .subSubContainer .middle .post .postTop .left .username,
+.profile .posts_save .posts .post .postTop .left .username {
     position: relative;
     font-family: var(--main-font);
     font-size: 18px;
@@ -104,32 +110,37 @@
     font-weight: 500;
 }
 
-.subContainer .subSubContainer .middle .post .postTop .left .date {
+.subContainer .subSubContainer .middle .post .postTop .left .date,
+.profile .posts_save .posts .post .postTop .left .date {
     position: relative;
     font-family: var(--main-font);
     font-size: 11px;
     color: var(--tertiary-color);
 }
 
-.subContainer .subSubContainer .middle .post .postTop button {
+.subContainer .subSubContainer .middle .post .postTop button,
+.profile .posts_save .posts .post .postTop button {
     position: relative;
     border: none;
     outline: none;
     background: transparent;
 }
 
-.subContainer .subSubContainer .middle .post .postTop .dots {
+.subContainer .subSubContainer .middle .post .postTop .dots,
+.profile .posts_save .posts .post .postTop .dots {
     position: relative;
     cursor: pointer;
 }
 
-.subContainer .subSubContainer .middle .post .postMiddle {
+.subContainer .subSubContainer .middle .post .postMiddle, 
+.profile .posts_save .posts .post .postMiddle {
     position: relative;
     padding: 0 20px;
     margin-bottom: 15px;
 }
 
-.subContainer .subSubContainer .middle .post .postMiddle p {
+.subContainer .subSubContainer .middle .post .postMiddle p,
+.profile .posts_save .posts .post .postMiddle p {
     position: relative;
     font-family: var(--secondary-font);
     font-size: 16px;
@@ -138,25 +149,29 @@
     margin-bottom: 10px;
 }
 
-.subContainer .subSubContainer .middle .post .postMiddle img {
+.subContainer .subSubContainer .middle .post .postMiddle img,
+.profile .posts_save .posts .post .postMiddle img {
     width: 100%;
     max-height: fit-content;
     object-fit: contain;
 }
 
-.subContainer .subSubContainer .middle .post .postMiddle .postVideo {
+.subContainer .subSubContainer .middle .post .postMiddle .postVideo,
+.profile .posts_save .posts .post .postMiddle .postVideo {
     max-height: fit-content;
     object-fit: contain;
 }
 
-.subContainer .subSubContainer .middle .post .postBottom {
+.subContainer .subSubContainer .middle .post .postBottom,
+.profile .posts_save .posts .post .postBottom {
     position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-.subContainer .subSubContainer .middle .post .postBottom .react_to_post {
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post,
+.profile .posts_save .posts .post .postBottom .react_to_post {
     position: relative;
     display: flex;
     justify-content: flex-start;
@@ -165,7 +180,9 @@
 }
 
 .subContainer .subSubContainer .middle .post .postBottom .react_to_post .like, 
-.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment {
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment,
+.profile .posts_save .posts .post .postBottom .react_to_post .like,
+.profile .posts_save .posts .post .postBottom .react_to_post .comment {
     position: relative;
     display: flex;
     justify-content: flex-start;
@@ -173,8 +190,15 @@
     gap: 7px;
 }
 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .like img, 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment img {
+    cursor: pointer;
+}
+
 .subContainer .subSubContainer .middle .post .postBottom .react_to_post .like span, 
-.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment span {
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment span,
+.profile .posts_save .posts .post .postBottom .react_to_post .like span, 
+.profile .posts_save .posts .post .postBottom .react_to_post .comment span {
     position: relative;
     font-family: var(--secondary-font);
 }
@@ -267,12 +291,15 @@
     margin-left: -128px;
 }
 
-.report_menu > div:nth-child(3) {
+.report_menu > div:nth-child(3),
+.commentUD_menu > div:nth-child(3) {
     background-color: var(--bg-color);
 }
 
 .report_menu > div:nth-child(3) > ul > li,
-.report_menu > div:nth-child(3) > ul > a {
+.report_menu > div:nth-child(3) > ul > a,
+.commentUD_menu > div:nth-child(3) > ul > li,
+.commentUD_menu > div:nth-child(3) > ul > a {
     gap: 10px;
     font-family: var(--secondary-font);
     color: var(--text-color);
@@ -389,5 +416,85 @@
     top: 200px;
 }
 
+.writeComment {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: var(--bg-color);
+    padding: 10px 15px;
+    width: 100%;
+    margin: 0 15px 10px 10px;
+    border-radius: 5px;
+    font-family: var(--main-font);
+    resize: none;
+}
 
+.postComment {
+    position: relative;
+    margin-bottom: 11px;
+    margin-right: 11px;
+    cursor: pointer;
+}
 
+.userComment {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.userComment img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.userComment .commentText .commentTop {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.userComment .commentText p {
+    position: relative;
+    font-family: var(--secondary-font);
+}
+
+.userComment .commentText .commentTop p:first-child {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.userComment .commentText .commentTop p:last-child {
+    font-size: 12px;
+    color: var(--tertiary-color);
+}
+
+.userComment .commentText > p {
+    margin-top: 4px;
+}
+
+.commentUDdots {
+    position: relative;
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: 320px;
+    cursor: pointer;
+}
+
+.commentUD_menu {
+    left: -100px;
+}
+
+.commentUD_menu > div:nth-child(3) > ul > li {
+    font-size: 15px;
+}
+
+.commentUD_menu > div:nth-child(3) > ul > li:last-child {
+    margin-left: 6px;
+}

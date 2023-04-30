@@ -71,6 +71,51 @@
     right: 46px;
 }
 
+.navEditor .userInteraction .profileButton {
+    position: relative;
+    background: none;
+    padding: 0;
+}
+
+.profile_menu  {
+    margin-top: 10px;
+}
+
+.profile_menu > div:nth-child(3) {
+    left: 999px;
+    background-color: var(--editor-bg-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li,
+.profile_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:first-child {
+    position: relative;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:last-child {
+    position: relative;
+    font-size: 14.5px;
+    color: var(--tertiary-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li:nth-child(5) .switch_dark {
+    margin-left: 65px;
+}
+
+.profile_menu > div:nth-child(3) > ul > li:first-child img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
 .navEditor .userInteraction .openDoc {
     cursor: pointer;
 }
@@ -184,4 +229,19 @@
     position: relative;
     border-radius: 100%;
     object-fit: cover;
+}
+
+.participantsAvatars {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    left: 10px;
+}
+
+.participantsAvatars img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: -20px;
 }

@@ -1,11 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { styled } from '@mui/material/styles'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styles from '../navbar/Navbar.module.css'
 import { Link } from 'react-router-dom'
-import group from '../../assets/group.png'
-import homeFilled from '../../assets/home_filled.png'
-import doc from '../../assets/doc.png'
+import group_filled from '../../assets/group_filled.png';
+import group_unfilled from '../../assets/group_unfilled.png'
+import home_filled from '../../assets/home_filled.png';
+import home_unfilled from '../../assets/home_unfilled.png';
+import users_filled from '../../assets/users_filled.png';
+import users_unfilled from '../../assets/users_unfilled.png';
+import posts_filled from '../../assets/posts_filled.png';
+import posts_unfilled from '../../assets/posts_unfilled.png';
+import doc_filled from '../../assets/doc_filled.png';
+import doc_unfilled from '../../assets/doc_unfilled.png';
+import reports_filled from '../../assets/reports_filled.png';
+import reports_unfilled from '../../assets/reports_unfilled.png';
+import { AuthContext } from '../../context/AuthContext';
 
 const LightTooltip = styled(({ className, ...props }) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -20,30 +30,76 @@ const LightTooltip = styled(({ className, ...props }) => (
     }));
 
 function Sidebar() {
+
+  const { user: loggedInUser } = useContext(AuthContext);
+
   return (
-    <div className={styles.navCol}>
-        <div className={styles.page}>
+    <>
+      {loggedInUser.email !== process.env.REACT_APP_ADMIN_EMAIL && 
+        <div className={styles.navCol}>
+          <div className={styles.page}>
             <LightTooltip title="Open Collaborations">
               <Link to="/open_collabs">
-                <img src={group} alt="open collaborations icon" width="35" height="35" />
+                <img src={group_unfilled} alt="open collaborations icon" width="35" height="35" />
               </Link>
             </LightTooltip>
-        </div>
-        <div className={styles.page}>
+          </div>
+          <div className={styles.page}>
             <LightTooltip title="Home">
               <Link to="/main_page">
-                <img src={homeFilled} alt="home icon" width="35" height="35" className={styles.activeLink}/>
+                <img src={home_filled} alt="home icon" width="35" height="35" className={styles.activeLink}/>
               </Link>
             </LightTooltip>
-        </div>
-        <div className={styles.page}>
+          </div>
+          <div className={styles.page}>
             <LightTooltip title="Documents">
               <Link to="/documents">
-                <img src={doc} alt="documents icon" width="35" height="35" />
+                <img src={doc_unfilled} alt="documents icon" width="35" height="35" />
               </Link>
             </LightTooltip>
+          </div>
         </div>
-    </div>
+      }
+      {loggedInUser.role === "Admin" && 
+        <div className={styles.navColAdmin}>
+          <div className={styles.page}>
+              <LightTooltip title="Home">
+                <Link to="/admin_page">
+                  <img src={home_filled} alt="home icon" width="35" height="35" className={styles.activeLink}/>
+                </Link>
+              </LightTooltip>
+          </div>
+          <div className={styles.page}>
+              <LightTooltip title="Users">
+                <Link to="/users">
+                  <img src={users_unfilled} alt="user icon" width="30" height="30" className={styles.activeLink}/>
+                </Link>
+              </LightTooltip>
+          </div>
+          <div className={styles.page}>
+              <LightTooltip title="Posts">
+                <Link to="/posts">
+                  <img src={posts_unfilled} alt="post icon" width="30" height="30" className={styles.activeLink}/>
+                </Link>
+              </LightTooltip>
+          </div>
+          <div className={styles.page}>
+              <LightTooltip title="Open Documents">
+                <Link to="/open_collabs">
+                  <img src={group_unfilled} alt="group icon" width="35" height="35" className={styles.activeLink}/>
+                </Link>
+              </LightTooltip>
+          </div>
+          <div className={styles.page}>
+              <LightTooltip title="Reports">
+                <Link to="/reports">
+                  <img src={reports_unfilled} alt="report icon" width="35" height="35" className={styles.activeLink}/>
+                </Link>
+              </LightTooltip>
+          </div>
+        </div>
+      } 
+    </>
   )
 }
 

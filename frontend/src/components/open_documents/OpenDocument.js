@@ -1,6 +1,6 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect, useCallback } from 'react';
 import styles from '../../pages/open_collabs/open_collabs.module.css';
-import open_document from '../../assets/doc.png';
+import open_document from '../../assets/doc_unfilled.png';
 import like_btn from '../../assets/like.png';
 import like_btn_filled from '../../assets/heart.png';
 import { format } from 'timeago.js';
@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function OpenDocument({openDocument}) {
 
@@ -53,6 +54,21 @@ function OpenDocument({openDocument}) {
     }
   };
 
+  const navigate = useNavigate();
+  const joinOpenDocument = useCallback(() => {
+    navigate(`/documents/add_doc/${openDocument._id}`, { replace: true });
+    const joinDocument = async () => {
+      try {
+        await axios.put("/documents/" + openDocument._id + "/update?receiverId=" + loggedInUser._id); 
+        console.log("done")
+      }
+      catch(error) {
+        console.log(error);
+      }
+    };
+    joinDocument();
+  }, [openDocument._id, loggedInUser._id, navigate]);
+
   return (
     <div className={styles.open_document}>
     <div className={styles.top}>
@@ -75,7 +91,7 @@ function OpenDocument({openDocument}) {
             </AccordionDetails>
           </Accordion>
         </div>
-        <button>Join</button>
+        <button onClick={joinOpenDocument}>Join</button>
       </div>
       <div className={styles.right}>
         <img src={likeBtn} alt="icon of heart" width={30} height={30} onClick={likeDocument} />
@@ -83,7 +99,7 @@ function OpenDocument({openDocument}) {
       </div>
     </div>
     <div className={styles.bottom}>
-      {openDocument.participants.length > 0 && <p>{openDocument.participants.length} participants</p> || <p>No participants yet. <i><b>Be the first one!</b></i></p>}
+      {openDocument.participants.length > 1 && <p>{openDocument.participants.length} participants</p>} {openDocument.participants.length === 1 && <p>{openDocument.participants.length} participant</p>} {openDocument.participants.length === 0 && <p>No participants yet. <i><b>Be the first one!</b></i></p>} 
       <p>{format(openDocument.createdAt)}</p>
     </div>
   </div>

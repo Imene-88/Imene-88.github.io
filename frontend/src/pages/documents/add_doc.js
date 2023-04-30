@@ -16,15 +16,29 @@ import DialogTitle from '@mui/material/DialogTitle';
 import { AuthContext } from '../../context/AuthContext';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import axios from 'axios';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams, Link } from 'react-router-dom';
 import info from '../../assets/info.png';
 import SharedWithUsers from '../../components/users_to_share_with/SharedWithUsers';
-import socket from '../../SOCKET_CONNECTION';
+import Switch from '@mui/material/Switch';
+import profile from '../../assets/profile.png'
+import settings from '../../assets/settings.png'
+import dark_mode from '../../assets/dark_mode.png'
+import log_out from '../../assets/log_out.png'
+import TextEditor2 from '../../components/text_editor/TextEditor2';
 
 function AddDoc() {
 
   const { user: loggedInUser } = useContext(AuthContext);
-  
+
+  const [anchorProfile, setAnchorProfile] = useState(null);
+  const openProfile = Boolean(anchorProfile);
+  const handleClickProfile = (event) => {
+    setAnchorProfile(event.currentTarget);
+  };
+  const handleCloseProfile = () => {
+    setAnchorProfile(null);
+  };
+
   const [userFollowingsList, setUserFollowingsList] = useState([]);
   useEffect(() => {
     const getUserFollowings = async () => {
@@ -142,6 +156,8 @@ function AddDoc() {
 
     const { id: document_id} = useParams();
     const documentDescription = useRef();
+    const [documentParticipants, setDocumentParticipants] = useState([]);
+    const [documentOpen, setDocumentOpen] = useState(false);
     
     const publishDocumentAsOpen = async (event) => {
       event.preventDefault();
@@ -150,10 +166,30 @@ function AddDoc() {
           description: documentDescription.current.value,
         });
         navigate("/open_collabs", { replace: true });
+        setDocumentOpen(true);
       } 
       catch (error) {
         console.log(error);
       }
+    };
+
+    useEffect(() => {
+      const getDocumentParticipants = async () => {
+        try {
+          const res = await axios.get("/documents/participants/" + document_id);
+          setDocumentParticipants(res.data);
+        } 
+        catch (error) {
+          console.log(error);
+        }
+      };
+      getDocumentParticipants(); 
+    }, [document_id])
+
+    const clearStorage = () => {
+      localStorage.removeItem('user');
+      navigate('/login', {replace: true});
+      navigate(0);
     };
 
   return (
@@ -305,11 +341,13 @@ function AddDoc() {
         </div>
         </div>
         <div className={styles.userInteraction}>
-          <div onClick={opendocDescDialog}>
-            <LightTooltip title="Publish this document as an open document"> 
-              <img src={openDoc} alt="lock icon" width={30} height={30} className={styles.openDoc} /> 
-            </LightTooltip>
-          </div>
+          {!documentOpen && 
+            <div onClick={opendocDescDialog}>
+              <LightTooltip title="Publish this document as an open document"> 
+                <img src={openDoc} alt="lock icon" width={30} height={30} className={styles.openDoc} /> 
+              </LightTooltip>
+            </div>
+          }
           <Dialog open={dialogOpen} onClose={closedocDescDialog} className={styles.dialog}>
             <DialogTitle>Please provide a description for the document</DialogTitle>
             <Divider />
@@ -322,7 +360,7 @@ function AddDoc() {
               </DialogActions>
             </form>
           </Dialog>
-          <button onClick={openshareDocDialog}>Share</button>
+          {!documentOpen && <button onClick={openshareDocDialog}>Share</button>}
           <Dialog open={shareDialogOpen} onClose={closeshareDialogDialog} className={styles.dialog}>
             <DialogTitle>
               Share {documentTitle}
@@ -339,10 +377,59 @@ function AddDoc() {
               })}
             </DialogContent>
           </Dialog>
-          <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="profile img" width={55} height={55} className={styles.profile} />
+          <div className={styles.participantsAvatars}>
+            {documentParticipants.length > 0 && documentParticipants.map((participant) => {
+              return <img src={participant.profile_picture ? participant.profile_picture : default_picture} alt="participants profiles" width={40} height={40} />
+            })}
+          </div>
+          <button id='profile'
+            className={styles.profileButton}
+            aria-controls={openProfile ? 'profile-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={openProfile ? "true" : undefined}
+            onClick={handleClickProfile}>
+              <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="profile img" width={55} height={55} className={styles.profile} />
+          </button>
+          <Menu id='profile-menu'
+            className={styles.profile_menu}
+            anchorEl={anchorProfile}
+            open={openProfile}
+            onClose={handleCloseProfile}
+            MenuListProps={{
+              'aria-labelledby': 'profile',
+            }}
+          >
+            <MenuItem>
+              <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="User profile" width={55} height={55} />
+              <div className={styles.text}>
+                <p>{loggedInUser.username}</p>
+                <p>{loggedInUser.email}</p>
+              </div>
+            </MenuItem>
+            <Divider />
+            <MenuItem component={Link} to={"/main_page/profile"}>
+              <img src={profile} alt="profile icon" width={25} height={25} />
+              <p>Profile</p>
+            </MenuItem>
+            <MenuItem>
+              <img src={settings} alt="settings icon" width={25} height={25} />
+              <p>Settings</p>
+            </MenuItem>
+            <MenuItem>
+              <img src={dark_mode} alt="dark mode icon" width={25} height={25} />
+              <p>Dark mode</p>
+              <Switch className={styles.switch_dark} />
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={clearStorage}>
+              <img src={log_out} alt="logout icon" width={25} height={25} />
+              <p>Log out</p>
+            </MenuItem>
+          </Menu>
         </div>
       </div>
-      <TextEditor title={text} />
+      {/*<TextEditor title={text} />*/}
+      <TextEditor2 />
     </>  
   )
 }

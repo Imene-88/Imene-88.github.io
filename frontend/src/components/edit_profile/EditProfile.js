@@ -31,6 +31,7 @@ function EditProfile() {
     const userColorBlindness = useRef();
     const userEmail = useRef();
     const userPassword = useRef();
+    const confirmUserPassword = useRef();
     const [profilePictureUrl, setProfilePictureUrl] = useState("");
     const [percentage, setPercentage] = useState(0);
     const changeProfilePicture = (event) => {
@@ -63,6 +64,7 @@ function EditProfile() {
         }
         );
     };
+
     const editProfile = async (event) => {
         event.preventDefault();
         try {
@@ -135,7 +137,7 @@ function EditProfile() {
                         <Divider />
                         <div className={styles.userInputs}>
                             <label>Email</label>
-                            <input type="email" ref={userEmail} />
+                            <input type="email" ref={userEmail} placeholder={loggedInUser.email} />
                         </div>
                         <Divider />
                         <div className={styles.userInputs}>
@@ -144,7 +146,7 @@ function EditProfile() {
                         </div>
                         <div className={styles.userInputs}>
                             <label>Confirm Password</label>
-                            <input type="password" />
+                            <input type="password" ref={confirmUserPassword} />
                         </div>
                     </DialogContent>
                     <DialogActions>

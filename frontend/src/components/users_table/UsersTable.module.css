@@ -1,0 +1,102 @@
+.usersTable {
+    position: relative;
+    top: 160px;
+    margin-left: 35px;
+    margin-top: 10px;
+    z-index: 0;
+}
+
+.row {
+    cursor: pointer;
+}
+
+.row:hover {
+    background-color: var(--editor-bg-color);
+}
+
+.userExtraInfo {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.followersFollowingRow .followersFollowingCell > div {
+    background-color: var(--editor-bg-color);
+    box-shadow: none;
+}
+
+.follower {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 10px;
+}
+
+.follower img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.follower p {
+    position: relative;
+    font-family: var(--secondary-font);
+}
+
+.none,
+.viewAll {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 15px;
+}
+
+.none {
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.viewAll {
+    font-size: 14px;
+    color: #51606C;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.viewAll:hover {
+    color: var(--tertiary-color);
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 400px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.activated {
+    position: relative;
+    background-color: #7ED1A4;
+    margin: 5px 20px;
+    border-radius: 5px;
+    color: var(--text-color);
+}
+
+.headerTitles {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}

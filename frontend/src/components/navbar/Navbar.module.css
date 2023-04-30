@@ -95,6 +95,17 @@
     gap: 61px;
 }
 
+.navColAdmin {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    z-index: 100;
+    top: 200px;
+    left: 29px;
+    gap: 50px;
+}
+
 .navCol .page img {
     cursor: pointer;
 }
@@ -225,4 +236,52 @@
 .imageIcon input,
 .videoIcon input {
     display: none;
+}
+
+.collab_request button {
+    position: relative;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 3px 5px;
+    outline: none;
+    margin-right: 5px;
+}
+
+.collab_request button:hover {
+    background-color: var(--primary-color);
+}
+
+.postImageHolder {
+    position: relative;
+    padding: 50px;
+}
+
+.postImageHolder .postImage {
+    width: 100%;
+    object-fit: cover;
+}
+
+.postImageHolder .removepostImage {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.progressCircle {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    left: 40px;
+}
+
+.progressCircle .progressValue {
+    position: relative;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: bold;
 }

@@ -1,7 +1,6 @@
 const UserModel = require("../models/User");
 const PostModel = require("../models/Post");
 const bcrypt = require("bcrypt");
-const { response } = require("express");
 
 exports.updateUser = async (req, res) => {
     if(req.body.password) {

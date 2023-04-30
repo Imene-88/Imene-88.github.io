@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import user_profile from '../../assets/img3.jpg'
-import edit from '../../assets/edit.png'
 import styles from '../../pages/profile/profile.module.css'
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -56,16 +54,16 @@ function UserProfileComponent() {
         </div>
       </div>
       <div className={styles.posts_save}>
-      <TabContext value={value}>
-        <TabList onChange={handleChange} aria-label="Posts and saved posts">
-          <Tab label="Posts" value="1" />
-        </TabList>
-        <TabPanel value="1">
-          <div className={styles.posts}>
-            <Middle fullname={fullname} />
-          </div>
-        </TabPanel>
-      </TabContext>
+        <TabContext value={value}>
+          <TabList onChange={handleChange} aria-label="Posts and saved posts">
+            <Tab label="Posts" value="1" />
+          </TabList>
+          <TabPanel value="1">
+            <div className={styles.posts}>
+              <Middle fullname={fullname} />
+            </div>
+          </TabPanel>
+        </TabContext>
       </div>
     </div>
   )

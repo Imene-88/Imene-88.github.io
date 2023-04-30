@@ -3,7 +3,6 @@ import styles from '../../pages/documents/add_doc.module.css';
 import selected from '../../assets/check.png';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import socket from '../../SOCKET_CONNECTION';
-import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 
 function SharedWithUsers({followedUser}) {
@@ -12,14 +11,11 @@ function SharedWithUsers({followedUser}) {
 
     const [sharedWith, setSharedWith] = useState("");
     const [FollowedUserClicked, setFollowedUserClicked] = useState(false);
-    const {id: document_id} = useParams();
 
     const handleClick = (id) => {
       setSharedWith(id);
       setFollowedUserClicked(!FollowedUserClicked);
     };
-
-    console.log(sharedWith);
 
     const shareDocument = (type) => {
         socket.emit("document:share", {

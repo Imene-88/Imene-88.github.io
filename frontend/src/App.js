@@ -12,6 +12,8 @@ import UserProfile from './pages/profile/userProfile';
 import AddDoc from './pages/documents/add_doc';
 import { v4 } from 'uuid';
 import { AuthContext } from './context/AuthContext';
+import AdminPage from './pages/admin/Admin';
+import Users from './pages/users/Users';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -19,8 +21,9 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={user ? (<Navigate replace to={"/main_page"} />) : (<Register />)} />
-      <Route path="/login" element={user ? (<Navigate replace to={"/main_page"} />) : (<Login />)} />
+      <Route path="/login" element={user ? (user.role === "Admin" ? (<Navigate replace to={"/admin_page"} />) : (<Navigate replace to={"/main_page"} />)) : (<Login />)} />
       <Route path="/main_page" element={<MainPage />} />
+      <Route path="/admin_page" element={<AdminPage />} />
       <Route path="/documents" element={<Documents />} />
       <Route path="/open_collabs" element={<OpenCollabs />} />
       <Route path="/userProfile/:fullname" element={<UserProfile />} />
@@ -29,6 +32,7 @@ function App() {
         <Route path="" element={<Navigate to={`/documents/add_doc/${v4()}`} />} />
         <Route path=":id" element={<AddDoc />} />
       </Route>
+      <Route path="/users" element={<Users />} />
     </Routes>
   );
 }

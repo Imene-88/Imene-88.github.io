@@ -9,5 +9,8 @@ router.get("/:id/likesCount", documentController.getOpenDocumentLikesCount);
 
 router.get("/:userId/documents", documentController.getDocuments);
 
+router.get("/participants/:documentId", documentController.getDocumentParticipants);
+
+router.delete("/:id", documentController.deleteDocument);
 
 module.exports = router;

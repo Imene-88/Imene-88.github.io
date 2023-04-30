@@ -20,6 +20,8 @@ const postRoute = require("./routes/posts");
 const likeRoute = require("./routes/likeRoutes");
 const documentRoute = require("./routes/documents");
 const userAuthenticationRoute = require("./routes/authentication");
+const adminRoute = require("./routes/adminRoute");
+const commentRoute = require("./routes/commentRoute");
 
 dotenv.config();
 
@@ -34,6 +36,8 @@ app.use("/api/user_authentication", userAuthenticationRoute);
 app.use("/api/posts", postRoute);
 app.use("/api/likes", likeRoute);
 app.use("/api/documents", documentRoute);
+app.use("/api/admin", adminRoute);
+app.use("/api/comments", commentRoute);
 
 /* ---------------- Socket ---------------- */
 
@@ -83,20 +87,13 @@ io.on('connection', (socket) => {
         connectedUsersController.addNewConnectedUser(userId, socket.id);
     });
 
-    
-
-    //socket.on("document:share", async (participantId) => {
-    //    const sharedWithUser = await connectedUsersController.getConnectedUser(participantId);
-    //    socket.broadcast.to(sharedWithUser.socket_id).emit("document:shared", "hello");
-    //});
-
-    socket.on("document:send", async (document_id, userId, msg) => {
+    socket.on("document:send", async (document_id, userId) => {
         const document = await findOrCreateDocument(document_id, userId);
         socket.join(document_id);
-        socket.emit("document:receive", document.content, msg);
+        socket.emit("document:receive", document.content);
         
-        socket.on("changes:send", (delta, msg) => {
-            socket.broadcast.to(document_id).emit("changes:receive", delta, msg);
+        socket.on("changes:send", (delta) => {
+            socket.broadcast.to(document_id).emit("changes:receive", delta);
         });
 
         socket.on("document:saveChangesToDB", async (content) => {
