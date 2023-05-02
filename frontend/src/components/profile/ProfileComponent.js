@@ -9,6 +9,7 @@ import { AuthContext } from '../../context/AuthContext';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import LoggedInUserPosts from '../post/loggedInUserPosts';
 import EditProfile from '../edit_profile/EditProfile';
+import LoggedInUserSavedPosts from '../post/LoggedInUserSavedPosts';
 
 function ProfileComponent() {
 
@@ -39,6 +40,20 @@ function ProfileComponent() {
       setPostsCount(res.data);
     }
     getUserPostsCount();
+  }, [loggedInUser._id]);
+
+  const [savedPosts, setSavedPosts] = useState([]);
+  useEffect(() => {
+    const getSavedPosts = async () => {
+      try {
+        const res = await axios.get("/posts/savedPosts/" + loggedInUser._id);
+        setSavedPosts(res.data);
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    getSavedPosts();
   }, [loggedInUser._id]);
   
   return (
@@ -82,7 +97,13 @@ function ProfileComponent() {
               })}
             </div>
           </TabPanel>
-          <TabPanel value="2">Item Two</TabPanel>
+          <TabPanel value="2">
+              <div className={styles.posts}>
+                {savedPosts.map((savedPost) => {
+                  return <LoggedInUserSavedPosts key={savedPost._id} savedPost={savedPost} />
+                })}
+              </div>
+          </TabPanel>
         </TabContext>
       </div>
     </div>

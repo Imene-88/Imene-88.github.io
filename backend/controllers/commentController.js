@@ -27,10 +27,10 @@ exports.getComments = async (req, res) => {
 
 exports.updateComment = async (req, res) => {
     try {
-        await CommentModel.findByIdAndUpdate(req.params.id, {
+        const comment = await CommentModel.findByIdAndUpdate(req.params.id, {
             content: req.body.content,
-        });
-        res.status(200).json("updated successfully");
+        }, {new: true});
+        res.status(200).json(comment);
     } 
     catch (error) {
         console.log(error);

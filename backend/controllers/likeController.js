@@ -3,7 +3,7 @@ const UserModel = require("../models/User");
 const PostModel = require("../models/Post");
 
 exports.likePost = async (req, res) => {
-    const like = LikeModel.findOne({user_id: req.body.userId, post_id: req.params.id});
+    const like = await LikeModel.findOne({user_id: req.body.userId, post_id: req.params.id});
     if (like) {
         return;
     } else {
@@ -71,3 +71,13 @@ exports.unlikeOpenDocument = async (req, res) => {
         return;
     }
 };
+
+exports.getLike = async (req, res) => {
+    try {
+        const like = await LikeModel.find({ user_id: req.params.userId, post_id: req.params.postId });
+        res.status(200).json(like);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+}; 

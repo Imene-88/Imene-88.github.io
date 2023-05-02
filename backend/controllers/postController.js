@@ -102,26 +102,55 @@ exports.getCommentsCount = async (req, res) => {
 };
 
 exports.savePost = async (req, res) => {
-    try {
-        const savedPost = new SavedPostModel({
-            user_id: req.params.userId,
-            post_id: req.params.postId,
-        });
-        await savedPost.save();
-        res.status(200).json(savedPost);
-    }
-    catch(error) {
-        console.log(error);
+    const savedPost = await SavedPostModel.findOne({user_id: req.params.userId, post_id: req.params.postId});
+    if (savedPost) {
+        return;
+    } else {
+        try {
+            const savedPost = new SavedPostModel({
+                user_id: req.params.userId,
+                post_id: req.params.postId,
+            });
+            await savedPost.save();
+            res.status(200).json(savedPost);
+        }
+        catch(error) {
+            console.log(error);
+        }
     }
 };
 
 exports.unsavePost = async (req, res) => {
-    try {
-        await SavedPostModel.deleteOne({ user_id: req.params.userId, post_id: req.params.postId });
-        res.status(200).json("deleted successfully");
+    const savedPost = await SavedPostModel.findOne({ user_id: req.params.userId, post_id: req.params.postId });
+    if (savedPost) {
+        try {
+            await SavedPostModel.findByIdAndDelete(savedPost._id);
+            res.status(200).json("post unsaved successfully");
+        }
+        catch(error) {
+            console.log(error);
+        }
+    } else {
+        return;
     }
-    catch(error) {
+}
+
+exports.getSavedPosts = async (req, res) => {
+    try {
+      const savedPosts = await SavedPostModel.find({ user_id: req.params.userId });
+      res.status(200).json(savedPosts);  
+    } 
+    catch (error) {
         console.log(error);
     }
 };
 
+exports.getSavedPost = async (req, res) => {
+    try {
+        const savedPost = await SavedPostModel.find({ user_id: req.params.userId, post_id: req.params.postId });
+        res.status(200).json(savedPost);  
+      } 
+      catch (error) {
+          console.log(error);
+      }
+}; 

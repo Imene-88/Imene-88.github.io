@@ -4,6 +4,7 @@ import like_btn from '../../assets/like.png';
 import like_btn_filled from '../../assets/heart.png';
 import comment_btn from '../../assets/comment.png';
 import save_btn from '../../assets/save.png';
+import save_btn_filled from '../../assets/save_filled.png';
 import styles from '../../pages/main_page/main_page.module.css';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -27,6 +28,8 @@ import post_comment from '../../assets/post_comment.png';
 import Comment from './Comment';
 
 export default function Post({post}) {
+  const {user: loggedInUser} = useContext(AuthContext);
+
   const [likeNbr, setLikeNbr] = useState(null);
   const [commentNbr, setCommentNbr] = useState(null);
 
@@ -50,41 +53,58 @@ export default function Post({post}) {
     };
     countComments();
   });
+
+  const [liked, setLiked] = useState(false);
+  useEffect(() => {
+    const getLike = async () => {
+      try {
+        const res = await axios.get("/likes/get_like/" + loggedInUser._id + "/" + post._id);
+        if (res.data.length > 0) {
+          setLiked(true);
+        } else {
+          setLiked(false);
+        }
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    getLike();
+  }, []);
   
   const [likeBtnCLicked, setLikeBtnCLicked] = useState(false);
-  const [likeBtn, setLikeBtn] = useState(like_btn);
-  const {user: loggedInUser} = useContext(AuthContext);
-
-  const likePost = () => {
-    if (!likeBtnCLicked) {
+  const likePost = async () => {
+    if (!likeBtnCLicked && !liked) {
       try {
-        axios.post("/likes/like_post/" + post._id, {userId: loggedInUser._id});
+        await axios.post("/likes/like_post/" + post._id, {userId: loggedInUser._id});
       }
       catch(error) {
-
+        console.log(error);
       }
       setLikeNbr(likeNbr + 1);
       setLikeBtnCLicked(!likeBtnCLicked);
-      setLikeBtn(like_btn_filled);
+      setLiked((prevLiked) => !prevLiked);
     } else {
       setLikeNbr(likeNbr - 1);
       setLikeBtnCLicked(!likeBtnCLicked);
-      setLikeBtn(like_btn);
+      setLiked((prevLiked) => !prevLiked);
       try {
-        axios.delete(`/likes/unlike_post/${post._id}`, {
+        await axios.delete(`/likes/unlike_post/${post._id}`, {
           data: {
             userId: loggedInUser._id
           }
         });
       }
-      catch(error) {}
+      catch(error) {
+        console.log(error);
+      }
     }
   };
 
   const [user, setUser] = useState({});
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get(`/users/user?id=${post.owner_id}`); 
+      const res = await axios.get("/users/user?id=" + post.owner_id); 
      setUser(res.data);
     };
     getUser();
@@ -146,6 +166,16 @@ export default function Post({post}) {
     getPostComments();
   }, [post._id]);
 
+  const deleteComment = async (commentId) => {
+    try {
+        await axios.delete("/comments/" + commentId);
+        setComments((prevComments) => prevComments.filter((comment) => comment._id !== commentId)); 
+    } 
+    catch (error) {
+        console.log(error);
+    }
+  };
+
   const postComment = useCallback(() => {
     const addCommentToPost = async () => {
       try {
@@ -161,6 +191,62 @@ export default function Post({post}) {
     };
     addCommentToPost();
   }, [loggedInUser._id, post._id]);
+
+  const updateComment = async (commentId, updatedCommentContent) => {
+    try {
+      const res = await axios.put("/comments/" + commentId, {
+        content: updatedCommentContent,
+      });  
+      //setComments((prevComments) => [prevComments.filter((comment) => comment._id !== commentId), res.data]);
+      setComments(prevComments => prevComments.map(comment =>
+        comment._id === commentId ? res.data : comment
+      ));
+    } 
+    catch (error) {
+      console.log(error);
+    }
+  };
+
+  const [saved, setSaved] = useState(false);
+  useEffect(() => {
+    const getSavedPost = async () => {
+      try {
+        const res = await axios.get("/posts/" + loggedInUser._id + "/savedPost/" + post._id);
+        if (res.data.length > 0) {
+          setSaved(true);
+        } else {
+          setSaved(false);
+        }
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    getSavedPost();
+  }, [loggedInUser._id, post._id]);
+
+  const [saveBtnCLicked, setSaveBtnCLicked] = useState(false);
+  const savePost = async () => {
+      if (!saveBtnCLicked && !saved) {
+        try {
+          await axios.post("/posts/" + loggedInUser._id + "/save_post/" + post._id);
+        }
+        catch(error) {
+          console.log(error);
+        }
+        setSaveBtnCLicked(!saveBtnCLicked);
+        setSaved((prevSaved) => !prevSaved);
+      } else {
+        try {
+          await axios.delete("/posts/unsave_post/" + loggedInUser._id + "/" + post._id);
+        }
+        catch(error) {
+          console.log(error);
+        }
+        setSaveBtnCLicked(!saveBtnCLicked);
+        setSaved((prevSaved) => !prevSaved);
+      }
+    };
 
   return (
     <div className={styles.post}>
@@ -284,7 +370,7 @@ export default function Post({post}) {
         <div className={styles.postBottom}>
             <div className={styles.react_to_post}>
                 <div className={styles.like}>
-                  <img src={likeBtn} alt="like icon" width={30} height={30} onClick={likePost} />
+                  <img src={liked ? like_btn_filled : like_btn} alt="like icon" width={30} height={30} onClick={likePost} />
                   {likeNbr > 0 && <span>{likeNbr}</span>}
                 </div>
                 <div className={styles.comment}>
@@ -293,7 +379,7 @@ export default function Post({post}) {
                     <DialogTitle>Comments</DialogTitle>
                     <DialogContent>
                       {comments.map((comment) => {
-                        return <Comment key={comment._id} comment={comment} />
+                        return <Comment key={comment._id} comment={comment} onDelete={deleteComment} onUpdate={updateComment} />
                       })}
                     </DialogContent>
                     <DialogActions>
@@ -305,7 +391,7 @@ export default function Post({post}) {
                 </div>
             </div>
             <div className={styles.save}>
-                <img src={save_btn} alt="save icon" width={30} height={30} />
+                <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={28} height={28} onClick={savePost} />
             </div>
         </div>
     </div>
