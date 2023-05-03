@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require("express-session");
 const app = express();
 const http = require('http');
 const { Server } = require("socket.io");
@@ -55,48 +56,32 @@ let link;
 
 // socket code
 io.on('connection', (socket) => {
-    /*socket.on("document:send", async (textId) => {
-        // const document = await DocumentModel.findById(document_id);
-        socket.join(textId);        
-        //const content = document.content;
-        //console.log(content);
-        //socket.emit("document:receive", content);
-
-        socket.on("changes:send", (delta) => {
-            socket.broadcast.to(textId).emit("changes:receive", delta); // send the text changes to all the connected users
-        }); 
-    });
-
-    socket.on("document:insertDB", async (data) => {
-        try {
-            const {document_id, userId, content} = data;
-            await DocumentModel.findByIdAndUpdate(document_id, { owner_id: userId, content: content }, {upsert: true});
-        }
-        catch(error) {
-            console.log(error);
-        }
-    });*/
-
-    /*socket.on("document:send", async (data) => {
-        const { document_id, userId } = data;
-        //const document = documentController.getPostDocument(document_id, userId);
-        const document = await findOrCreateDocument(document_id, userId);
-    });*/
 
     socket.on("connectedUser:add", (userId) => {
         connectedUsersController.addNewConnectedUser(userId, socket.id);
     });
 
+    socket.on("notification:send", async ({senderId, receiverId, postId, type}) => {
+        const receiver = await connectedUsersController.getConnectedUser(receiverId);
+        const sender = await userController.getSender(senderId);
+        const senderFullName = sender.full_name;
+        socket.broadcast.to(receiver.socket_id).emit("notification:receive", {
+            senderFullName,
+            postId,
+            type
+        })
+    }); 
+
     socket.on("document:send", async (document_id, userId) => {
         const document = await findOrCreateDocument(document_id, userId);
         socket.join(document_id);
-        socket.emit("document:receive", document.content);
+        socket.emit(`document:receive-${document_id}`, document.content);
         
-        socket.on("changes:send", (delta) => {
+        socket.on(`changes:send-${document_id}`, (delta) => {
             socket.broadcast.to(document_id).emit("changes:receive", delta);
         });
 
-        socket.on("document:saveChangesToDB", async (content) => {
+        socket.on(`document:saveChangesToDB-${document_id}`, async (content) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
         });
 
@@ -114,22 +99,22 @@ io.on('connection', (socket) => {
                 link,
                 type,
             })
-        })
-
-        socket.once("disconnect", () => {
-            connectedUsersController.deleteConnectedUser(socket.id);
-            console.log("disconnected");
-        });      
+        })   
     })
+
+    socket.once("disconnect", () => {
+        connectedUsersController.deleteConnectedUser(socket.id);
+        console.log("disconnected");
+    });   
 
 });
 
-async function findOrCreateDocument(id, userId) {
-    if (id == null) return
+async function findOrCreateDocument(document_id, userId) {
+    if (document_id == null) return
   
-    const document = await DocumentModel.findById(id)
+    const document = await DocumentModel.findById(document_id)
     if (document) return document
-    return await DocumentModel.create({ _id: id, owner_id: userId, content: defaultValue })
+    return await DocumentModel.create({ _id: document_id, owner_id: userId, content: defaultValue })
   }
   
 

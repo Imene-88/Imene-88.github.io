@@ -41,11 +41,11 @@ function TextEditor2() {
     useEffect(() => {
         if (socket == null || quill == null) return;
 
-        const handler = (document) => {
-            quill.setContents(document);
-        }
         
-        socket.once("document:receive", handler)
+        
+        socket.on(`document:receive-${document_id}`, (content) => {
+            quill.setContents(content);
+        })
         
         socket.emit("document:send", document_id, userId);
         
@@ -55,7 +55,7 @@ function TextEditor2() {
         if (socket == null || quill == null) return;
 
         const interval = setInterval(() => {
-            socket.emit("document:saveChangesToDB", quill.getContents());
+            socket.emit(`document:saveChangesToDB-${document_id}`, quill.getContents());
         }, 2000);
 
         return () => {
@@ -71,10 +71,10 @@ function TextEditor2() {
             quill.updateContents(delta);
         };
 
-        socket.on("changes:receive", handler);
+        socket.on(`changes:receive-${document_id}`, handler);
 
         return () => {
-            socket.off("changes:receive", handler);
+            socket.off(`changes:receive-${document_id}`, handler);
         };
     }, [quill]);
 
@@ -83,7 +83,7 @@ function TextEditor2() {
 
         const handler = (delta, oldDelta, source) => {
             if (source !== 'user') return;
-            socket.emit("changes:send", delta, "hello3");
+            socket.emit(`changes:send-${document_id}`, delta, "hello3");
         };
 
         quill.on("text-change", handler);

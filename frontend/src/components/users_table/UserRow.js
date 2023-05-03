@@ -50,7 +50,6 @@ function UserRow({user}) {
         <TableCell align="left">{handleBirthDate(user.birth_date)}</TableCell>
         <TableCell align="left">{user.account_type}</TableCell>
         <TableCell align="center"><p className={styles.activated}>{user.activated ? "Activated" : "Disactivated"}</p></TableCell>
-        <TableCell align="left">{user.role}</TableCell>
     </TableRow>
     {userRowExpanded && (
         <TableRow className={styles.followersFollowingRow}>

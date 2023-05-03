@@ -1,0 +1,75 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    max-height: fit-content;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .wrapper {
+    position: relative;
+    padding: 0 20px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 170px;
+}
+
+.subContainer .subSubContainer .wrapper > p {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 23px;
+    font-weight: 600;
+    top: 150px;
+    margin-left: 35px;
+}
+
+.subContainer .subSubContainer .wrapper > p::before {
+    content: "";
+    position: relative;
+    width: 30px;
+    height: 4px;
+    top: 35px;
+    border-radius: 8px;
+    background-color: var(--primary-color);
+    display: block;
+}
+
+.subContainer .subSubContainer .wrapper form {
+    position: relative;
+    margin-left: 45px;
+    top: 200px;
+}
+
+.subContainer .subSubContainer .wrapper form .inputBox {
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.subContainer .subSubContainer .wrapper form .inputBox input,
+.subContainer .subSubContainer .wrapper form .inputBox select {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: var(--editor-bg-color);
+    width: 500px;
+    padding: 10px;
+    font-family: var(--secondary-font);
+    font-size: 15px;
+    border-radius: 5px;
+}

@@ -14,6 +14,9 @@ import { v4 } from 'uuid';
 import { AuthContext } from './context/AuthContext';
 import AdminPage from './pages/admin/Admin';
 import Users from './pages/users/Users';
+import Posts from './pages/admin_posts/Posts';
+import Reports from './pages/admin_reports/Reports';
+import NewAdmin from './pages/new_admin/NewAdmin';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -33,6 +36,9 @@ function App() {
         <Route path=":id" element={<AddDoc />} />
       </Route>
       <Route path="/users" element={<Users />} />
+      <Route path="/users/new_admin" element={<NewAdmin />} />
+      <Route path="/posts" element={<Posts />} />
+      <Route path="/reports" element={<Reports />} />
     </Routes>
   );
 }

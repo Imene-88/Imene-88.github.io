@@ -26,6 +26,8 @@ import { ref, deleteObject } from "firebase/storage";
 import { storage } from '../../Firebase'; 
 import post_comment from '../../assets/post_comment.png';
 import Comment from './Comment';
+import LikeUser from './LikeUser';
+import socket from '../../SOCKET_CONNECTION';
 
 export default function Post({post}) {
   const {user: loggedInUser} = useContext(AuthContext);
@@ -125,6 +127,14 @@ export default function Post({post}) {
   };
   const closeReportPostDialog = () => {
     setDialogReportPostOpen(false);
+  };
+
+  const [dialogReportUserOpen, setDialogReportUserOpen] = useState(false);
+  const openReportUserDialog = () => {
+    setDialogReportUserOpen(true);
+  };
+  const closeReportUserDialog = () => {
+    setDialogReportUserOpen(false);
   };
 
   const [dialogCommentSectionOpen, setDialogCommentSectionOpen] = useState(false);
@@ -248,6 +258,48 @@ export default function Post({post}) {
       }
     };
 
+    const [dialogLikedByOpen, setDialogLikedByOpen] = useState(false);
+    const openLikedByDialog = () => {
+      setDialogLikedByOpen(true);
+    };
+    const closeLikedByDialog = () => {
+      setDialogLikedByOpen(false);
+    };
+
+    const [likeUsers, setLikeUsers] = useState([]);
+    useEffect(() => {
+      const getLikeUsers = async () => {
+        try {
+          const res = await axios.get("/admin/likeUsers/" + post._id);
+          setLikeUsers(res.data);  
+        } 
+        catch (error) {
+          console.log(error);
+        }
+      };
+      getLikeUsers();
+    }, [post._id]);
+
+    const [admins, setAdmins] = useState([]);
+    useEffect(() => {
+      const getAllAdmins = async () => {
+        const res = await axios.get("/admin/allAdmins");
+        setAdmins(res.data);
+      };
+      getAllAdmins();
+    }, []);
+
+    const sendNotification = (type) => {
+      admins.map((admin) => {
+        socket.emit("notification:send", {
+          senderId: loggedInUser._id,
+          receiverId: admin._id,
+          postId: post._id,
+          type
+        });
+      })
+    }
+
   return (
     <div className={styles.post}>
         <div className={styles.postTop}>
@@ -261,14 +313,16 @@ export default function Post({post}) {
               {user._id === loggedInUser._id && <p className={styles.username}>{user.username}</p>}
               <p className={styles.date}>{format(post.createdAt)}</p>
             </div>
-            <button id='report'
-              aria-controls={openReport ? 'report-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={openReport ? "true" : undefined}
-              onClick={handleClickReport}
-            >
-              <img src={three_dots} alt="three dots icon" width={30} height={30} className={styles.dots} />
-            </button>
+            {loggedInUser.role !== "Admin" && 
+              <button id='report'
+                aria-controls={openReport ? 'report-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={openReport ? "true" : undefined}
+                onClick={handleClickReport}
+              >
+                <img src={three_dots} alt="three dots icon" width={30} height={30} className={styles.dots} />
+              </button>
+            }
             {post.owner_id !== loggedInUser._id && 
               <Menu id='report-menu'
                 className={styles.report_menu}
@@ -305,16 +359,16 @@ export default function Post({post}) {
                       <p>Something else</p>
                     </div>
                     <textarea cols="69" rows="8" placeholder='Explain your answer.' className={styles.reportContent}></textarea>
-                  </DialogContent>
+                  </DialogContent> 
                   <DialogActions>
-                    <button className={styles.reportPostBtn}>Report</button>
+                    <button className={styles.reportPostBtn} onClick={() => sendNotification("report-post")}>Report</button>
                   </DialogActions>
                 </Dialog>
-                <MenuItem onClick={openReportPostDialog}>
+                <MenuItem onClick={openReportUserDialog}>
                   <img src={report_user} alt="report user" width={25} height={25} />
                   <p>Report user</p>
                 </MenuItem>
-                <Dialog open={dialogReportPostOpen} onClose={closeReportPostDialog} className={styles.dialog}>
+                <Dialog open={dialogReportUserOpen} onClose={closeReportUserDialog} className={styles.dialog}>
                   <DialogTitle>Report User</DialogTitle>
                   <Divider />
                   <DialogContent className={styles.report_post_contents}>
@@ -369,10 +423,27 @@ export default function Post({post}) {
         </div>
         <div className={styles.postBottom}>
             <div className={styles.react_to_post}>
+              {loggedInUser.role !== "Admin" && 
                 <div className={styles.like}>
                   <img src={liked ? like_btn_filled : like_btn} alt="like icon" width={30} height={30} onClick={likePost} />
                   {likeNbr > 0 && <span>{likeNbr}</span>}
                 </div>
+              }
+              {loggedInUser.role === "Admin" && 
+                <div className={styles.like}>
+                  <img src={like_btn} alt="like icon" width={30} height={30} onClick={openLikedByDialog} />
+                  <Dialog open={dialogLikedByOpen} onClose={closeLikedByDialog} className={styles.dialog}>
+                    <DialogTitle>Liked by</DialogTitle>
+                    <Divider />
+                    <DialogContent>
+                      {likeUsers.map((likeUser) => {
+                        return <LikeUser key={likeUser} likeUser={likeUser} />
+                      })}
+                    </DialogContent>
+                  </Dialog>
+                  {likeNbr > 0 && <span>{likeNbr}</span>}
+                </div>
+              }
                 <div className={styles.comment}>
                   <img src={comment_btn} alt="Comment icon" width={30} height={30} onClick={openCommentSectionDialog} />
                   <Dialog open={dialogCommentSectionOpen} onClose={closeCommentSectionDialog} className={styles.dialog}>
@@ -390,9 +461,11 @@ export default function Post({post}) {
                   {commentNbr > 0 && <span>{commentNbr}</span>}
                 </div>
             </div>
-            <div className={styles.save}>
-                <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={28} height={28} onClick={savePost} />
-            </div>
+            {loggedInUser.role !== "Admin" && 
+              <div className={styles.save}>
+                  <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={28} height={28} onClick={savePost} />
+              </div>
+            }
         </div>
     </div>
   )

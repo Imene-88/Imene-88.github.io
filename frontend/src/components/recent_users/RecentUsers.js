@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import RecentUser from './RecentUser';
 import styles from './RecentUsers.module.css';
+import { Link } from 'react-router-dom';
 
 function RecentUsers() {
 
@@ -23,7 +24,9 @@ function RecentUsers() {
     <div className={styles.recentUsers}>
       <div className={styles.top}>
         <p>Recent Users</p>
-        <p>See more</p>
+        <Link to={"/users"}>
+          <p>See more</p>
+        </Link>
       </div>
       {recentUsers.map((recentUser) => {
         return <RecentUser key={recentUser._id} recentUser={recentUser} />

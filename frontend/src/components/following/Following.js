@@ -29,7 +29,9 @@ export default function Following() {
     <>
     <div className={styles.top}>
       <p>Following</p>
-      <button ref={seeMore}>See more</button>
+      <Link to={"/main_page/profile"}>
+        <button ref={seeMore}>See more</button>
+      </Link>
     </div>
     {(userFollowingsList.length > 0) ? (
       userFollowingsList.map((followedUser) => {

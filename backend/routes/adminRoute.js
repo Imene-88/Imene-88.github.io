@@ -7,4 +7,10 @@ router.get("/recentUsers", adminController.getRecentUsers);
 
 router.get("/allUsers", adminController.getAllUsers);
 
+router.get("/allAdmins", adminController.getAllAdmins);
+
+router.get("/allPosts", adminController.getAllPosts);
+
+router.get("/likeUsers/:postId", adminController.getLikeUsers);
+
 module.exports = router;

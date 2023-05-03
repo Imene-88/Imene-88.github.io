@@ -12,6 +12,12 @@
     margin-bottom: 10px;
 }
 
+.recentUsers .top a {
+    position: relative;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
 .recentUsers .top p:first-child {
     position: relative;
     font-family: var(--main-font);

@@ -39,7 +39,6 @@ function UsersTable() {
                 <TableCell align="left" className={styles.headerTitles}>Type of color blindness</TableCell>
                 <TableCell align="left" className={styles.headerTitles}>Account type</TableCell>
                 <TableCell align="center" className={styles.headerTitles}>Account status</TableCell>
-                <TableCell align="left" className={styles.headerTitles}>Role</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import styles from '../../pages/profile/profile.module.css';
 import edit from '../../assets/edit.png';
 import { AuthContext } from '../../context/AuthContext';
@@ -73,10 +73,10 @@ function EditProfile() {
                 username: userUsername.current.value || loggedInUser.username, 
                 type_of_color_blindness: userColorBlindness.current.value || loggedInUser.type_of_color_blindness,
                 email: userEmail.current.value || loggedInUser.email,
-                password: userPassword.current.value ? userPassword.current.value : loggedInUser.password,
+                password: userPassword.current.value !== "" && userPassword.current.value,
                 profile_picture: profilePictureUrl || loggedInUser.profile_picture,
                 bio: userBio.current.value || loggedInUser.bio,
-                birth_date: userBirthDate.current.value || loggedInUser.birth_date,
+                birth_date: new Date(userBirthDate.current.value) || loggedInUser.birth_date,
             });
             window.location.reload();
         }
@@ -118,7 +118,7 @@ function EditProfile() {
                         </div>
                         <div className={styles.userInputs}>
                             <label>Birth date</label>
-                            <input type="date" defaultValue={loggedInUser.birth_date} ref={userBirthDate} />
+                            <input type="date" defaultValue={new Date(loggedInUser.birth_date).toISOString().slice(0, 10)} ref={userBirthDate} />
                         </div>
                         <Divider />
                         <div className={styles.userInputs}>

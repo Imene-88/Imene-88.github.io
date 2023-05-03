@@ -49,7 +49,7 @@ function Panels() {
         </div>
         <div className={styles.panel}>
             <div className={styles.panelText}>
-                <p>16</p>
+                <p>{totalDocumentsInCollections[4]}</p>
                 <p>Comments</p>
             </div>
             <img src={comments_filled} alt="group icon" width={35} height={35} />

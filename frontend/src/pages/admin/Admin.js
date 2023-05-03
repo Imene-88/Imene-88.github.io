@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import Panels from '../../components/panels/Panels';
 import RecentUsers from '../../components/recent_users/RecentUsers';
-import Reports from '../../components/reports/Reports';
 import styles from './Admin.module.css';
 import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
+import socket from '../../SOCKET_CONNECTION';
+import { AuthContext } from '../../context/AuthContext';
 
 function Admin() {
+
+  const {user: loggedInUser} = useContext(AuthContext);
+
+  useEffect(() => {
+    socket.emit("connectedUser:add", loggedInUser._id);
+  }, [loggedInUser._id]);
+
   return (
     <>
       <Navbar />
@@ -18,7 +26,7 @@ function Admin() {
                 <div className={styles.wrapper2}>
                   <RecentUsers />
                   <div className={styles.right}>
-                    <Reports />
+                    <p>Reports</p>
                   </div>
                 </div>
             </div>

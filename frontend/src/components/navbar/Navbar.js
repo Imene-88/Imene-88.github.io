@@ -31,7 +31,10 @@ import socket from '../../SOCKET_CONNECTION';
 
 function Navbar() {
 
+  const { user } = useContext(AuthContext);
+
   const [notifications, setNotifications] = useState([]);
+  const [adminNotifications, setAdminNotifications] = useState([]);
 
   useEffect(() => {
     socket.on("document:shared", data => {
@@ -53,7 +56,23 @@ function Navbar() {
     )
   };
 
-  const { user } = useContext(AuthContext);
+  useEffect(() => {
+    socket.on("notification:receive", data => {
+      setAdminNotifications((prev) => [...prev, data]);
+    })
+  }, []);
+
+  const receiveAdminNotification = ({senderFullName, postId, type}) => {
+    return (
+      <>
+      {type === "report-post" && 
+        <MenuItem>
+          <p>{senderFullName} reported a post: {postId} </p>
+        </MenuItem>
+      }
+      </>
+    )
+  };
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const openAddPostDialog = () => {
@@ -197,8 +216,6 @@ function Navbar() {
     }
   };
 
-  console.log(postImageCancelled);
-
   return (
     <div className={styles.container}>
         <div className={styles.addition}></div>
@@ -216,16 +233,30 @@ function Navbar() {
                     onClick={handleClickNotification}>
                       <img src={notification} alt="notification icon" width="40" height="40" className={styles.images} />
                 </button>
-                <Menu id='notification-menu'
-                  className={styles.profile_menu}
-                  anchorEl={anchorNotification}
-                  open={openNotification}
-                  onClose={handleCloseNotification}
-                  MenuListProps={{
-                    'aria-labelledby': 'notification',
-                  }}>
-                    {notifications.map((notification) => receiveNotification(notification))}  
-                </Menu>
+                {user.role !== "Admin" &&
+                  <Menu id='notification-menu'
+                    className={styles.profile_menu}
+                    anchorEl={anchorNotification}
+                    open={openNotification}
+                    onClose={handleCloseNotification}
+                    MenuListProps={{
+                      'aria-labelledby': 'notification',
+                    }}>
+                      {notifications.map((notification) => receiveNotification(notification))}  
+                  </Menu>
+                }
+                {user.role === "Admin" && 
+                  <Menu id='notification-menu'
+                    className={styles.profile_menu}
+                    anchorEl={anchorNotification}
+                    open={openNotification}
+                    onClose={handleCloseNotification}
+                    MenuListProps={{
+                      'aria-labelledby': 'notification',
+                    }}>
+                    {adminNotifications.map((adminNotification) => receiveAdminNotification(adminNotification))}
+                  </Menu>
+                }
                 {user.role !== "Admin" && <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />}
                 <Dialog open={dialogOpen} onClose={closeAddPostDialog} className={styles.dialog}>
                   <DialogTitle>New Post</DialogTitle>

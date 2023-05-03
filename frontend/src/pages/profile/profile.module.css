@@ -119,6 +119,11 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .profile .header .rightHeader .data:first-child {
+    cursor: auto;
 }
 
 .subContainer .subSubContainer .profile .header .rightHeader .data p:first-child {

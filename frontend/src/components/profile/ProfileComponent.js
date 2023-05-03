@@ -10,6 +10,12 @@ import default_picture from '../../assets/default_user_profile_picture.png';
 import LoggedInUserPosts from '../post/loggedInUserPosts';
 import EditProfile from '../edit_profile/EditProfile';
 import LoggedInUserSavedPosts from '../post/LoggedInUserSavedPosts';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import Divider from '@mui/material/Divider';
+import LikeUser from '../post/LikeUser';
 
 function ProfileComponent() {
 
@@ -55,6 +61,22 @@ function ProfileComponent() {
     };
     getSavedPosts();
   }, [loggedInUser._id]);
+
+  const [dialogFollowersOpen, setDialogFollowersOpen] = useState(false);
+  const openFollowersDialog = () => {
+    setDialogFollowersOpen(true);
+  };
+  const closeFollowersDialog = () => {
+    setDialogFollowersOpen(false);
+  };
+
+  const [dialogFollowingsOpen, setDialogFollowingsOpen] = useState(false);
+  const openFollowingsDialog = () => {
+    setDialogFollowingsOpen(true);
+  };
+  const closeFollowingsDialog = () => {
+    setDialogFollowingsOpen(false);
+  };
   
   return (
     <div className={styles.profile}>
@@ -74,14 +96,32 @@ function ProfileComponent() {
             <p>{postsCount}</p>
             <p>Posts</p>
           </div>
-          <div className={styles.data}>
+          <div className={styles.data} onClick={openFollowersDialog}>
             <p>{followersCount}</p>
             <p>Followers</p>
           </div>
-          <div className={styles.data}>
+          <Dialog open={dialogFollowersOpen} onClose={closeFollowersDialog} className={styles.dialog}>
+            <DialogTitle>Followers</DialogTitle>
+            <Divider />  
+            <DialogContent>
+              {loggedInUser.followers.map((follower) => {
+                return <LikeUser key={follower._id} likeUser={follower._id} />
+              })}
+            </DialogContent>
+          </Dialog>
+          <div className={styles.data} onClick={openFollowingsDialog}>
             <p>{followingsCount}</p>
             <p>Following</p>
           </div>
+          <Dialog open={dialogFollowingsOpen} onClose={closeFollowingsDialog} className={styles.dialog}>
+            <DialogTitle>Following</DialogTitle>
+            <Divider />  
+            <DialogContent>
+              {loggedInUser.following.map((following) => {
+                return <LikeUser key={following._id} likeUser={following._id} />
+              })}
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
       <div className={styles.posts_save}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import styles from '../../pages/profile/profile.module.css'
+import styles from '../../pages/main_page/main_page.module.css'
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
@@ -16,13 +16,20 @@ function UserProfileComponent() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const [user, setUser] = useState({});
   const fullname = useParams().fullname;
+  const [user, setUser] = useState({});
+  const [postsCount, setPostsCount] = useState(0);
+  const [followersCount, setFollowersCount] = useState(0);
+  const [followingsCount, setFollowingsCount] = useState(0);
+  
   useEffect(() => { 
     const getUser = async () => {
       const res = await axios.get(`/users/user?fullname=${fullname}`); 
+      const resPostsCount = await axios.get("/users/" + res.data._id + "/postsCount");
       setUser(res.data);
+      setPostsCount(resPostsCount.data);
+      setFollowersCount(res.data.followers.length);
+      setFollowingsCount(res.data.following.length);
     };
     getUser();
   }, [fullname]);
@@ -40,15 +47,15 @@ function UserProfileComponent() {
         </div>
         <div className={styles.rightHeader}>
           <div className={styles.data}>
-            <p>15.3K</p>
+            <p>{postsCount}</p>
             <p>Posts</p>
           </div>
           <div className={styles.data}>
-            <p>5.2M</p>
+            <p>{followersCount}</p>
             <p>Followers</p>
           </div>
           <div className={styles.data}>
-            <p>100</p>
+            <p>{followingsCount}</p>
             <p>Following</p>
           </div>
         </div>

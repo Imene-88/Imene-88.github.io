@@ -7,19 +7,43 @@ exports.updateUser = async (req, res) => {
         try {
             const salt = await bcrypt.genSalt();
             req.body.password = await bcrypt.hash(req.body.password, salt);
+            await UserModel.findByIdAndUpdate(req.params.id, {
+                full_name: req.body.full_name,
+                username: req.body.username,
+                type_of_color_blindness: req.body.type_of_color_blindness,
+                email: req.body.email,
+                password: req.body.password,
+                bio: req.body.bio,
+                profile_picture: req.body.profile_picture,
+                birth_date: new Date(req.body.birth_date),
+                account_type: req.body.account_type,
+                activated: req.body.activated,
+                role: req.body.role
+            });
+            res.status(200).json("User info updated successfully");
         }
         catch(error) {
             console.error(error); 
         }
-    }
-    try {
-        const user = await UserModel.findByIdAndUpdate(req.params.id, {
-            $set: req.body,
-        });
-        res.status(200).json("user info updated successfully");
-    }
-    catch(error) {
-        console.error(error);
+    } else {
+        try {
+            await UserModel.findByIdAndUpdate(req.params.id, {
+                full_name: req.body.full_name,
+                username: req.body.username,
+                type_of_color_blindness: req.body.type_of_color_blindness,
+                email: req.body.email,
+                bio: req.body.bio,
+                profile_picture: req.body.profile_picture,
+                birth_date: new Date(req.body.birth_date),
+                account_type: req.body.account_type,
+                activated: req.body.activated,
+                role: req.body.role
+            });
+            res.status(200).json("User info updated successfully");
+        } 
+        catch (error) {
+            console.log(error);
+        }
     }
 };
 
@@ -119,8 +143,10 @@ exports.getUserFollowings = async (req, res) => {
                 return UserModel.findById(followedUser._id);
             })
         );
+
+        const userFollowingsReduced = userFollowings.slice(0, 7);
        
-        const usefulInformation = userFollowings.map((followedUser) => {
+        const usefulInformation = userFollowingsReduced.map((followedUser) => {
             const {type_of_color_blindness,email,password,accountType,birth_date, ...other} = followedUser._doc;
             return other;
         })

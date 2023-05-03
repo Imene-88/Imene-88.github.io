@@ -2,6 +2,7 @@ const UserModel = require('../models/User');
 const PostModel = require('../models/Post');
 const DocumentModel = require('../models/Document');
 const LikeModel = require('../models/Like');
+const CommentModel = require('../models/Comment');
 
 exports.calcTotalDocumentsInCollections = async (req, res) => {
     let totalDocuments = [];
@@ -10,7 +11,8 @@ exports.calcTotalDocumentsInCollections = async (req, res) => {
         const posts = await PostModel.countDocuments({});
         const documents = await DocumentModel.countDocuments({open: true});
         const likes = await LikeModel.countDocuments({});
-        totalDocuments.push(users - 1, posts, documents, likes);
+        const comments = await CommentModel.countDocuments({});
+        totalDocuments.push(users - 1, posts, documents, likes, comments);
         res.status(200).json(totalDocuments);
     } 
     catch (error) {
@@ -30,7 +32,41 @@ exports.getRecentUsers = async (req, res) => {
 
 exports.getAllUsers = async (req, res) => {
     try {
-        const users = await UserModel.find({role: {$ne: "Admin"}});
+        const users = await UserModel.find({role: "User"});
+        res.status(200).json(users);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getAllAdmins = async (req, res) => {
+    try {
+        const admins = await UserModel.find({role: "Admin"});
+        res.status(200).json(admins);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getAllPosts = async (req, res) => {
+    try {
+        const posts = await PostModel.find({});
+        res.status(200).json(posts);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getLikeUsers = async (req, res) => {
+    let users = [];
+    try {
+        const likes = await LikeModel.find({ post_id: req.params.postId });
+        for (let i = 0; i < likes.length; i++) {
+            users[i] = likes[i].user_id;
+        };
         res.status(200).json(users);
     } 
     catch (error) {

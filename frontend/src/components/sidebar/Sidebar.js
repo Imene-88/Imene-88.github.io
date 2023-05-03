@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { styled } from '@mui/material/styles'
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip'
 import styles from '../navbar/Navbar.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import group_filled from '../../assets/group_filled.png';
 import group_unfilled from '../../assets/group_unfilled.png'
 import home_filled from '../../assets/home_filled.png';
@@ -65,35 +65,35 @@ function Sidebar() {
           <div className={styles.page}>
               <LightTooltip title="Home">
                 <Link to="/admin_page">
-                  <img src={home_filled} alt="home icon" width="35" height="35" className={styles.activeLink}/>
+                  <img src={home_filled} alt="home icon" width="35" height="35" />
                 </Link>
               </LightTooltip>
           </div>
           <div className={styles.page}>
               <LightTooltip title="Users">
-                <Link to="/users">
-                  <img src={users_unfilled} alt="user icon" width="30" height="30" className={styles.activeLink}/>
+                <Link to={"/users"}>
+                  <img src={users_unfilled} alt="user icon" width="30" height="30" />
                 </Link>
               </LightTooltip>
           </div>
           <div className={styles.page}>
               <LightTooltip title="Posts">
                 <Link to="/posts">
-                  <img src={posts_unfilled} alt="post icon" width="30" height="30" className={styles.activeLink}/>
+                  <img src={posts_unfilled} alt="post icon" width="30" height="30" />
                 </Link>
               </LightTooltip>
           </div>
           <div className={styles.page}>
               <LightTooltip title="Open Documents">
                 <Link to="/open_collabs">
-                  <img src={group_unfilled} alt="group icon" width="35" height="35" className={styles.activeLink}/>
+                  <img src={group_unfilled} alt="group icon" width="35" height="35" />
                 </Link>
               </LightTooltip>
           </div>
           <div className={styles.page}>
               <LightTooltip title="Reports">
                 <Link to="/reports">
-                  <img src={reports_unfilled} alt="report icon" width="35" height="35" className={styles.activeLink}/>
+                  <img src={reports_unfilled} alt="report icon" width="35" height="35" />
                 </Link>
               </LightTooltip>
           </div>
