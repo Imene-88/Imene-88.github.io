@@ -23,6 +23,7 @@ const documentRoute = require("./routes/documents");
 const userAuthenticationRoute = require("./routes/authentication");
 const adminRoute = require("./routes/adminRoute");
 const commentRoute = require("./routes/commentRoute");
+const userInterestsRoute = require("./routes/userInterestsRoute");
 
 dotenv.config();
 
@@ -39,6 +40,7 @@ app.use("/api/likes", likeRoute);
 app.use("/api/documents", documentRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/comments", commentRoute);
+app.use("/api/interests", userInterestsRoute);
 
 /* ---------------- Socket ---------------- */
 
@@ -78,14 +80,14 @@ io.on('connection', (socket) => {
         socket.emit(`document:receive-${document_id}`, document.content);
         
         socket.on(`changes:send-${document_id}`, (delta) => {
-            socket.broadcast.to(document_id).emit("changes:receive", delta);
+            socket.broadcast.to(document_id).emit(`changes:receive-${document_id}`, delta);
         });
 
         socket.on(`document:saveChangesToDB-${document_id}`, async (content) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
         });
 
-        socket.on("document:share", async ({senderId, receiverId, type}) => {
+        socket.on(`document:share-${document_id}`, async ({senderId, receiverId, type}) => {
             const receiver = await connectedUsersController.getConnectedUser(receiverId);
             const sender = await userController.getSender(senderId);
             const senderFullName = sender.full_name;

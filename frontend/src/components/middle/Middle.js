@@ -21,6 +21,8 @@ function Middle({fullname}) {
       };
       getFeed();
     }, [fullname, user._id]);
+
+
   return (
     <div className={styles.middle}>
         {feedPosts.map((post) => {

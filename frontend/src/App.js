@@ -17,15 +17,17 @@ import Users from './pages/users/Users';
 import Posts from './pages/admin_posts/Posts';
 import Reports from './pages/admin_reports/Reports';
 import NewAdmin from './pages/new_admin/NewAdmin';
+import UserInterests from './pages/user_interests/UserInterests';
 
 function App() {
   const { user } = useContext(AuthContext);
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path="/register" element={user ? (<Navigate replace to={"/main_page"} />) : (<Register />)} />
+      <Route path="/register" element={user ? (<Navigate replace to={"/user_interests"} />) : (<Register />)} />
       <Route path="/login" element={user ? (user.role === "Admin" ? (<Navigate replace to={"/admin_page"} />) : (<Navigate replace to={"/main_page"} />)) : (<Login />)} />
       <Route path="/main_page" element={<MainPage />} />
+      <Route path="/user_interests" element={<UserInterests />} />
       <Route path="/admin_page" element={<AdminPage />} />
       <Route path="/documents" element={<Documents />} />
       <Route path="/open_collabs" element={<OpenCollabs />} />

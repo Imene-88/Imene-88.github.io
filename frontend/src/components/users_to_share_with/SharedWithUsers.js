@@ -4,10 +4,12 @@ import selected from '../../assets/check.png';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import socket from '../../SOCKET_CONNECTION';
 import { AuthContext } from '../../context/AuthContext';
+import { useParams } from 'react-router';
 
 function SharedWithUsers({followedUser}) {
 
     const { user: loggedInUser } = useContext(AuthContext);
+    const {id: document_id} = useParams();
 
     const [sharedWith, setSharedWith] = useState("");
     const [FollowedUserClicked, setFollowedUserClicked] = useState(false);
@@ -18,7 +20,7 @@ function SharedWithUsers({followedUser}) {
     };
 
     const shareDocument = (type) => {
-        socket.emit("document:share", {
+        socket.emit(`document:share-${document_id}`, {
           senderId: loggedInUser._id,
           receiverId: sharedWith,
           type,
