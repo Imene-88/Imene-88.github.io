@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import styles from '../../pages/documents/add_doc.module.css';
 import selected from '../../assets/check.png';
 import default_picture from '../../assets/default_user_profile_picture.png';
@@ -19,23 +19,40 @@ function SharedWithUsers({followedUser}) {
       setFollowedUserClicked(!FollowedUserClicked);
     };
 
+    const [accessRight, setAccessRight] = useState("editor");
+    const getUserAccessRight = (event) => {
+      setAccessRight(event.target.value);
+    };
+
+    console.log(accessRight);
+
     const shareDocument = (type) => {
         socket.emit(`document:share-${document_id}`, {
           senderId: loggedInUser._id,
           receiverId: sharedWith,
+          accessRight: accessRight,
           type,
         });
     };
 
   return (
-    <div className={styles.shareDiv}>
-        <div className={styles.userFollowings} onClick={() => handleClick(followedUser._id)}>
-          <img src={followedUser.profile_picture ? followedUser.profile_picture : default_picture} alt="followed user profile media" width={30} height={30} />
-          <p>{followedUser.full_name}</p>
+    <>
+      <div className={styles.shareDiv}>
+          <div className={styles.userFollowings} onClick={() => handleClick(followedUser._id)}>
+            <img src={followedUser.profile_picture ? followedUser.profile_picture : default_picture} alt="followed user profile media" width={30} height={30} />
+            <p>{followedUser.full_name}</p>
+          </div>
+      </div>
+      {FollowedUserClicked && 
+        <div className={styles.selectAccessRight}>
+          <select defaultValue={accessRight} onChange={getUserAccessRight}>
+            <option value="editor">Editor</option>
+            <option value="viewer">Viewer</option>
+          </select>
+          <button className={styles.publishBtn} onClick={() => shareDocument("shareDoc")}>Share</button>
         </div>
-        {FollowedUserClicked && <img src={selected} alt="user selected check mark" width={23} height={23} />}
-        {FollowedUserClicked && <button className={styles.publishBtn} onClick={() => shareDocument("shareDoc")}>Share</button>}
-    </div>
+      }
+    </>
   )
 }
 

@@ -11,6 +11,7 @@ import Divider from '@mui/material/Divider';
 import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
+import remove_image from '../../assets/cancel.png';
 
 function EditProfile() {
 
@@ -34,8 +35,11 @@ function EditProfile() {
     const confirmUserPassword = useRef();
     const [profilePictureUrl, setProfilePictureUrl] = useState("");
     const [percentage, setPercentage] = useState(0);
+    const [profilePicture, setProfilePicture] = useState(null);
+
     const changeProfilePicture = (event) => {
         const newProfilePicture = event.target.files[0];
+        setProfilePicture(newProfilePicture);
         const storageRef = ref(storage, newProfilePicture.name);
         const uploadTask = uploadBytesResumable(storageRef, newProfilePicture);
         uploadTask.on('state_changed', 
@@ -101,6 +105,12 @@ function EditProfile() {
                                 <img src={loggedInUser.profile_picture ? loggedInUser.profile_picture : default_picture} alt="profile media" width={55} height={55} />
                                 <input type="file" aria-labelledby="newProfilePicture" accept='.jpg, .jpeg, .png' onChange={changeProfilePicture} />
                             </label>
+                            {profilePicture && 
+                                <div className={styles.profilePictureHolder}>
+                                    <img src={URL.createObjectURL(profilePicture)} alt="profile media holder" className={styles.profilePicture} width={55} height={55} />
+                                    <button>{percentage} %</button>
+                                </div>
+                            }
                             <p>{loggedInUser.account_type} plan</p>
                         </div>
                         <Divider />

@@ -1,18 +1,32 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import info from '../../assets/info.png';
 import InterestsListItem from '../../components/user_interest/InterestsListItem';
 import { styled } from '@mui/material/styles';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import styles from './UserInterests.module.css';
 import MobileStepper from '@mui/material/MobileStepper';
-import { occupations, interestsList } from '../../USER_INTERESTS_PAGE_DATA.js';
-import dayjs from 'dayjs';
-import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
+import { interestsList } from '../../USER_INTERESTS_PAGE_DATA.js';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate} from 'react-router-dom';
+import axios from 'axios';
 
 function UserInterests() {
+
+  const { user: loggedInUser } = useContext(AuthContext);
+
+  useEffect(() => {
+    const addUserToAccessRightsCollection = async () => {
+      try {
+        await axios.post("/access_rights/" + loggedInUser._id + "/addUser");  
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    addUserToAccessRightsCollection();
+  }, [loggedInUser._id]);
+
+  const navigate = useNavigate();
 
   // Tooltip
   const LightTooltip = styled(({ className, ...props }) => (
@@ -30,15 +44,14 @@ function UserInterests() {
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const [optionSelected, setOptionSelected] = useState(false);
   const [interestSelected, setInterestSelected] = useState(false);
-  const selectOption = (selected) =>{
-    if (selected !== true) {
-      setOptionSelected(true);
-    } else {
-      setOptionSelected(false);
-    }
-  };
+  //const selectOption = (selected) =>{
+  //  if (selected !== true) {
+  //    setOptionSelected(true);
+  //  } else {
+  //    setOptionSelected(false);
+  //  }
+  //};
 
   const selectInterest = (selected) =>{
     if (selected !== true) {
@@ -58,9 +71,9 @@ function UserInterests() {
   const goToPreviousPage = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
     setNextPage(nextPage - 1);
-    setOptionSelected(false);
     setInterestSelected(false);
-    setDateSelected("");
+    setDateSelected(false);
+    setOccupationSelected(false);
   }
 
   useEffect(() => {
@@ -69,10 +82,41 @@ function UserInterests() {
     }
   });
 
-  const [dateSelected, setDateSelected] = useState("");
+  const [dateSelected, setDateSelected] = useState(false);
+  const [birthDate, setBirthDate] = useState("");
+  const [occupationSelected, setOccupationSelected] = useState(false);
+  const [occupation, setOccupation] = useState("");
   const enableDoneButton = (event) => {
-    setDateSelected(event.target.value);
+    setDateSelected(true);
+    setBirthDate(event.target.value);
   }
+  
+  const enableFirstNextButton = (event) => {
+    setOccupationSelected(true);
+    setOccupation(event.target.value);
+  };
+  
+  const [interest, setInterest] = useState([]);
+  const selectInterests = (userInterest) => {
+    let interestFiltered = [];
+    if (interest.includes(userInterest)) {
+      interestFiltered = interest.filter((item) => item != userInterest);
+      setInterest(interestFiltered);
+    } else {
+      interest.push(userInterest);
+    }
+    setInterest((prev) => [...prev]);
+    console.log(interest);
+  };
+
+  const insertUserInterests = async () => {
+    await axios.post("/interests/addUserInterests/" + loggedInUser._id, {
+      occupation: occupation,
+      interests: interest,
+      birth_date: new Date(birthDate),
+    });
+    navigate("/main_page", { replace: true });
+  };
 
   return (
     <div className={styles.userInterests}>
@@ -95,15 +139,16 @@ function UserInterests() {
         </div>
         {nextPage === 0 &&
           <div className={styles.interests}>
-            <p>What is your current occupation?</p>
-            <div className={styles.interestsOptions}>
+            <p className={styles.birthDate}>What is your current occupation?</p>
+            {/*<div className={styles.interestsOptions}>
               {occupations.map((occupation) => {
                 return <InterestsListItem key={occupations.indexOf(occupation)} occupation={occupation} onSelect={selectOption} />
               })}
-            </div>
+            </div>*/}
+            <input type="text" value={occupation} placeholder='Enter your current occupation' onChange={enableFirstNextButton} />
             <div className={styles.buttons}>
               <button ref={backButton}>Back</button>
-              <button disabled={!optionSelected} onClick={goToNextPage}>Next</button>
+              <button disabled={!occupationSelected} onClick={goToNextPage} className={styles.firstNext}>Next</button>
             </div>
           </div>
         }
@@ -112,10 +157,10 @@ function UserInterests() {
             <p>What are your interests?</p>
             <div className={styles.interestsOptions}>
               {interestsList.map((interestsListItem) => {
-                return <InterestsListItem key={interestsList.indexOf(interestsListItem)} interestsListItem={interestsListItem} onSelectInterest={selectInterest} />
+                return <InterestsListItem key={interestsList.indexOf(interestsListItem)} interestsListItem={interestsListItem} onSelectInterest={selectInterest} onChooseInterest={selectInterests} />
               })}
             </div>
-            <div className={styles.buttons}>
+            <div className={styles.secondButtons}>
               <button ref={backButton} onClick={goToPreviousPage}>Back</button>
               <button disabled={!interestSelected} onClick={goToNextPage}>Next</button>
             </div>
@@ -124,10 +169,10 @@ function UserInterests() {
         {nextPage === 2 &&
           <div className={styles.interests}>
             <p className={styles.birthDate}>Enter your birth date</p>
-            <input type="date" onChange={enableDoneButton} />
+            <input type="date" value={birthDate} onChange={enableDoneButton} />
             <div className={styles.lastButtons}>
               <button ref={backButton} onClick={goToPreviousPage}>Back</button>
-              <button disabled={!dateSelected} onClick={goToNextPage}>Done</button>
+              <button disabled={!dateSelected} onClick={insertUserInterests}>Done</button>
             </div>
           </div>
         }

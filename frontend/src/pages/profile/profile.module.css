@@ -214,15 +214,53 @@
     font-style: italic;
 }
 
-.dialog > div:nth-child(3) > div > form .editTop img {
+.dialog > div:nth-child(3) > div > form .editTop > img {
     position: relative;
     cursor: pointer;
     border-radius: 50%;
     object-fit: cover;
+    z-index: 0;
 }
 
-.dialog > div:nth-child(3) > div > form .editTop img:hover {
+.dialog > div:nth-child(3) > div > form .editTop > img:hover {
     opacity: 0.5;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop .profilePictureHolder {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop .profilePictureHolder img {
+    position: relative;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: -265.5px;
+    margin-top: -4px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop .profilePictureHolder button {
+    position: relative;
+    outline: none;
+    padding: 3px 25px;
+    border: 1px solid hsla(12, 41%, 37%, .5);
+    border-radius: 5px;
+    text-align: center;
+    font-family: var(--main-font);
+    color: var(--text-color);
+    font-size: 12px;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dialog > div:nth-child(3) > div > form .editTop .profilePictureHolder button:hover {
+    background-color: hsla(12, 41%, 37%, .5);
 }
 
 .dialog > div:nth-child(3) > div > form .editTop input {

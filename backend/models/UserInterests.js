@@ -6,9 +6,17 @@ const userInterestsSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
+    occupation: {
+        type: String,
+        required: true,
+    },
     interests: {
         type: Array,
         default: [],
+    },
+    birth_date:{
+        type: Date,
+        required: true,
     }
 },
 {timestamps: true}

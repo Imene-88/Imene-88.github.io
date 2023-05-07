@@ -3,6 +3,7 @@ import Post from '../post/Post';
 import styles from '../../pages/main_page/main_page.module.css';
 import axios from 'axios';
 import { AuthContext } from '../../context/AuthContext';
+import ProfilesSuggestions from '../profiles_suggestions/ProfilesSuggestions';
 
 function Middle({fullname}) {
     const [feedPosts, setFeedPosts] = useState([]);
@@ -25,6 +26,7 @@ function Middle({fullname}) {
 
   return (
     <div className={styles.middle}>
+      {!fullname && <ProfilesSuggestions />}
         {feedPosts.map((post) => {
           return <Post key={post._id} post={post} />
         })}

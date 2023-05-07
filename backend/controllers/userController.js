@@ -157,6 +157,17 @@ exports.getUserFollowings = async (req, res) => {
     }
 };
 
+exports.getUserFollowing = async (req, res) => {
+    try {
+        const thisUser = await UserModel.findById(req.params.userId);
+        const thisUserFollowing = thisUser.following.filter((user) => user._id !== req.params.userFollowingId); 
+        res.status(200).json(thisUserFollowing);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
 exports.getUserPostsCount = async (req, res) => {
     try {
         const user = await UserModel.findById(req.params.id);

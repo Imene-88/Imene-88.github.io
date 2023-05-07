@@ -176,11 +176,32 @@
     font-family: var(--secondary-font);
 }
 
+.selectAccessRight {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.selectAccessRight select {
+    position: relative;
+    border: none;
+    outline: none;
+    width: 415px;
+    padding: 8px 15px;
+    font-family: var(--secondary-font);
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .publishBtn {
     position: relative;
     border: none;
     outline: none;
-    padding: 10px 30px;
+    padding: 5px 30px;
     background-color: var(--primary-color);
     color: var(--bg-color);
     border-radius: 10px;
@@ -188,8 +209,12 @@
     font-style: normal;
     font-size: 15px;
     cursor: pointer;
-    margin-right: 250px;
-    margin-bottom: 30px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.publishBtn:hover {
+    opacity: 0.9;
 }
 
 .shareDiv {

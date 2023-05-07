@@ -42,13 +42,13 @@ function Navbar() {
     })
   }, []);
 
-  const receiveNotification = ({senderFullName, document_id, receiverId, link}) => {
+  const receiveNotification = ({senderFullName, document_id, receiverId, link, accessRight}) => {
     return (
       <MenuItem>
         <p>{senderFullName} sent you a collaboration request. Do you: </p>
         <div className={styles.collab_request}>
           <Link to={link}>
-            <button onClick={() => acceptCollabRequest(document_id, receiverId)}>Accept</button>
+            <button onClick={() => acceptCollabRequest(document_id, receiverId, accessRight)}>Accept</button>
           </Link>
           <button>Refuse</button>
         </div>
@@ -206,10 +206,13 @@ function Navbar() {
     navigate(0);
   };
 
-  const acceptCollabRequest = async (document_id, receiverId) => {
+  const acceptCollabRequest = async (document_id, receiverId, accessRight) => {
     console.log("it worked!");
     try {
       await axios.put("/documents/" + document_id + "/update?receiverId=" + receiverId);
+      await axios.put("/access_rights/" + receiverId + "/addAccessRight/" + document_id, {
+        accessright: accessRight,
+      });
     }
     catch(error) {
       console.log(error);

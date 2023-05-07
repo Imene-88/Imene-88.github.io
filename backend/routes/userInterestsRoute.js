@@ -3,6 +3,6 @@ const userInterestsController = require("../controllers/userInterestsController"
 
 router.post("/addUserInterests/:userId", userInterestsController.addUserInterests);
 
-router.get("/getUserInterests/:userId", userInterestsController.getUserInterests);
+router.get("/getSimilarProfiles/:userId", userInterestsController.getUsersInterests);
 
 module.exports = router;

@@ -218,6 +218,19 @@
     border-radius: 8px;
 }
 
+.subContainer .subSubContainer .right {
+    position: sticky;
+    width: 30%;
+    background-color: var(--editor-bg-color);
+    margin-left: 40px;
+    top: 130px;
+    margin-top: 130px;
+    padding: 20px;
+    height: 79vh;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
 .subContainer .subSubContainer .middle .post .postTop,
 .subContainer .subSubContainer .right .following,
 .profile .posts_save .posts .post .postTop,
@@ -228,6 +241,58 @@
     align-items: center;
     margin-bottom: 20px;
 } 
+
+.subContainer .subSubContainer .middle > div:first-child {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 5px 30px;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid hsla(207, 26%, 7%, .5);
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity {
+    position: relative;
+    text-align: center;
+    font-family: var(--secondary-font);
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity .username {
+    font-weight: 600;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    font-family: var(--main-font);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile button:hover {
+    opacity: 0.9;
+}
 
 .subContainer .subSubContainer .right .following {
     margin-bottom: 30px;
@@ -379,18 +444,6 @@
 .usersPosts .post .postBottom .react_to_post .comment span {
     position: relative;
     font-family: var(--secondary-font);
-}
-
-.subContainer .subSubContainer .right {
-    position: sticky;
-    width: 30%;
-    background-color: var(--editor-bg-color);
-    margin-left: 40px;
-    top: 130px;
-    padding: 20px;
-    height: 79vh;
-    overflow: hidden;
-    border-radius: 8px;
 }
 
 .subContainer .subSubContainer .right .top {

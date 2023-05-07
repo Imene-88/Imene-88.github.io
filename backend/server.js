@@ -24,6 +24,7 @@ const userAuthenticationRoute = require("./routes/authentication");
 const adminRoute = require("./routes/adminRoute");
 const commentRoute = require("./routes/commentRoute");
 const userInterestsRoute = require("./routes/userInterestsRoute");
+const accessRightsRoute = require("./routes/accessRightsRoute");
 
 dotenv.config();
 
@@ -41,6 +42,7 @@ app.use("/api/documents", documentRoute);
 app.use("/api/admin", adminRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/interests", userInterestsRoute);
+app.use("/api/access_rights", accessRightsRoute);
 
 /* ---------------- Socket ---------------- */
 
@@ -87,7 +89,7 @@ io.on('connection', (socket) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
         });
 
-        socket.on(`document:share-${document_id}`, async ({senderId, receiverId, type}) => {
+        socket.on(`document:share-${document_id}`, async ({senderId, receiverId, accessRight, type}) => {
             const receiver = await connectedUsersController.getConnectedUser(receiverId);
             const sender = await userController.getSender(senderId);
             const senderFullName = sender.full_name;
@@ -99,6 +101,7 @@ io.on('connection', (socket) => {
                 document_id,
                 receiverId,
                 link,
+                accessRight,
                 type,
             })
         })   
