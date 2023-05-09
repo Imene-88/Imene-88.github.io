@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import styles from '../../pages/main_page/main_page.module.css'
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -8,8 +8,12 @@ import Middle from '../middle/Middle';
 import axios from 'axios';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import { useParams } from 'react-router';
+import { AuthContext } from '../../context/AuthContext';
+import Snackbar from '@mui/material/Snackbar';
 
 function UserProfileComponent() {
+
+  const { user: loggedInUser } = useContext(AuthContext);
 
   const [value, setValue] = useState('1');
 
@@ -34,6 +38,23 @@ function UserProfileComponent() {
     getUser();
   }, [fullname]);
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const closeSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  const followUser = async () => {
+    try {
+      await axios.put("/users/" + user._id + "/follow", {
+        userId: loggedInUser._id,
+      });  
+    } 
+    catch (error) {
+      console.log(error);
+    }
+    setSnackbarOpen(true);
+  };
+
   return (
     <div className={styles.profile}>
       <div className={styles.header}>
@@ -44,6 +65,18 @@ function UserProfileComponent() {
             <p>{user.username}</p>
             <p>{user.bio}</p>
           </div>
+          {!loggedInUser.following.includes(user) && <button onClick={followUser}>Follow</button> }
+          <Snackbar
+            anchorOrigin={{
+              horizontal: "right",
+              vertical: "bottom",
+            }}
+            open={snackbarOpen}
+            autoHideDuration={5000}
+            message="User followed successfully."
+            onClose={closeSnackbar}
+            className={styles.snackbar}
+          />
         </div>
         <div className={styles.rightHeader}>
           <div className={styles.data}>

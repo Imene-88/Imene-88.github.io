@@ -4,6 +4,7 @@ import users_filled from '../../assets/users_filled.png';
 import posts_filled from '../../assets/posts_filled.png';
 import likes_filled from '../../assets/likes.png';
 import group_filled from '../../assets/group_filled.png';
+import doc_filled from '../../assets/doc_filled.png';
 import comments_filled from '../../assets/comments_filled.png';
 import axios from 'axios';
 
@@ -40,7 +41,7 @@ function Panels() {
             </div>
             <img src={posts_filled} alt="post icon" width={35} height={35} />
         </div>
-        <div className={styles.panel}>
+        {/*<div className={styles.panel}>
             <div className={styles.panelText}>
                 <p>{totalDocumentsInCollections[3]}</p>
                 <p>Likes</p>
@@ -53,6 +54,13 @@ function Panels() {
                 <p>Comments</p>
             </div>
             <img src={comments_filled} alt="group icon" width={35} height={35} />
+        </div>*/}
+        <div className={styles.panel}>
+            <div className={styles.panelText}>
+                <p>{totalDocumentsInCollections[3]}</p>
+                <p>Private Documents</p>
+            </div>
+            <img src={doc_filled} alt="group icon" width={35} height={35} />
         </div>
         <div className={styles.panel}>
             <div className={styles.panelText}>

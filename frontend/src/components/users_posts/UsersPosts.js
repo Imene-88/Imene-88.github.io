@@ -10,7 +10,9 @@ function UsersPosts() {
         const getAllPosts = async () => {
             try {
                 const res = await axios.get("/admin/allPosts");
-                setUsersPosts(res.data);
+                setUsersPosts(res.data.sort((post_a, post_b) => {
+                    return post_b.createdAt.localeCompare(post_a.createdAt);
+                  }));
             } 
             catch (error) {
                 console.log(error);

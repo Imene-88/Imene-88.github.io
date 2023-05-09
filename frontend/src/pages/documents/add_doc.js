@@ -25,6 +25,9 @@ import settings from '../../assets/settings.png'
 import dark_mode from '../../assets/dark_mode.png'
 import log_out from '../../assets/log_out.png'
 import TextEditor2 from '../../components/text_editor/TextEditor2';
+import Snackbar from '@mui/material/Snackbar';
+import socket from '../../SOCKET_CONNECTION';
+import collaborators_announcements from '../../assets/notif.mp3';
 
 function AddDoc() {
 
@@ -69,7 +72,7 @@ function AddDoc() {
   };
 
   // File button
-  const [anchorElFile, setAnchorElFile] = React.useState(null);
+  const [anchorElFile, setAnchorElFile] = useState(null);
   const openFile = Boolean(anchorElFile);
   const handleClickFile = (event) => {
     setAnchorElFile(event.currentTarget);
@@ -79,7 +82,7 @@ function AddDoc() {
   };
 
   // Edit button
-  const [anchorElEdit, setAnchorElEdit] = React.useState(null);
+  const [anchorElEdit, setAnchorElEdit] = useState(null);
   const openEdit = Boolean(anchorElEdit);
   const handleClickEdit = (event) => {
     setAnchorElEdit(event.currentTarget);
@@ -89,7 +92,7 @@ function AddDoc() {
   };
 
   // Insert button
-  const [anchorElInsert, setAnchorElInsert] = React.useState(null);
+  const [anchorElInsert, setAnchorElInsert] = useState(null);
   const openInsert = Boolean(anchorElInsert);
   const handleClickInsert = (event) => {
     setAnchorElInsert(event.currentTarget);
@@ -99,7 +102,7 @@ function AddDoc() {
   };
 
   // Format button
-  const [anchorElFormat, setAnchorElFormat] = React.useState(null);
+  const [anchorElFormat, setAnchorElFormat] = useState(null);
   const openFormat = Boolean(anchorElFormat);
   const handleClickFormat = (event) => {
     setAnchorElFormat(event.currentTarget);
@@ -108,8 +111,18 @@ function AddDoc() {
     setAnchorElFormat(null);
   };
 
+  // Tools button
+  const [anchorElTools, setAnchorElTools] = useState(null);
+  const openTools = Boolean(anchorElTools);
+  const handleClickTools = (event) => {
+    setAnchorElTools(event.currentTarget);
+  };
+  const handleCloseTools = () => {
+    setAnchorElTools(null);
+  };
+
   // Help button
-  const [anchorElHelp, setAnchorElHelp] = React.useState(null);
+  const [anchorElHelp, setAnchorElHelp] = useState(null);
   const openHelp = Boolean(anchorElHelp);
   const handleClickHelp = (event) => {
     setAnchorElHelp(event.currentTarget);
@@ -122,8 +135,7 @@ function AddDoc() {
   const [text, setText] = useState('');
   const titleInput = useRef();
   const handleChange = (event) => {
-    const title = event.target.value;
-    setText(title);
+    setText(event.target.value);
   };
   useEffect(() => {
     const adjustInputWidthToFitContent = () => {
@@ -192,13 +204,71 @@ function AddDoc() {
       navigate(0);
     };
 
+    const [accessRight, setAccessRight] = useState("");
+    useEffect(() => {
+        const getAccessRight = async () => {
+            try {
+                const res = await axios.get("/access_rights/" + loggedInUser._id + "/getAccessRight/" + document_id);
+                console.log(res.data);
+                //res.data && setAccessRight(res.data);    
+            } 
+            catch (error) {
+                console.log(error);
+            }
+        };
+        getAccessRight();
+    }, [loggedInUser._id, document_id]);
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    useEffect(() => {
+      setSnackbarOpen(true);
+    }, [])
+    const closeSnackbar = () => {
+      setSnackbarOpen(false);
+    };
+
+    useEffect(() => {
+      socket.on(`user:announced-${document_id}`, () => {
+        const audio = document.createElement('audio');
+        audio.src = collaborators_announcements;
+        document.body.appendChild(audio);
+        audio.play();
+      })
+    }, [document_id]);
+
   return (
     <>
+    {accessRight === "viewer" && 
+      <Snackbar
+        anchorOrigin={{
+          horizontal: "center",
+          vertical: "top",
+        }}
+        open={snackbarOpen}
+        autoHideDuration={5000}
+        message="You are viewing"
+        onClose={closeSnackbar}
+        className={styles.snackbar}
+      />
+    }
+    {accessRight === "editor" && 
+      <Snackbar
+      anchorOrigin={{
+        horizontal: "center",
+        vertical: "top",
+      }}
+      open={snackbarOpen}
+      autoHideDuration={5000}
+      message="You are editing"
+      onClose={closeSnackbar}
+      className={styles.snackbar}
+      />
+    }
       <div className={styles.navEditor}>
         <div className={styles.imgFileGroup}>
         <img src={logo} alt="Logo of website" width={170} height={89} />
         <div className={styles.fileInteraction}>
-          <input type="text" placeholder='Untitled document' ref={titleInput} onChange={handleChange} />
+          <input type="text" placeholder='Untitled document' value={text} ref={titleInput} onChange={handleChange} />
           <div className={styles.fileNav}>
             <div>
               { /* --------------- File --------------- */ }
@@ -251,67 +321,97 @@ function AddDoc() {
                   'aria-labelledby': 'edit-button',
                 }}
               >
-                <MenuItem onClick={handleCloseEdit}>Undo</MenuItem>
-                <MenuItem onClick={handleCloseEdit}>Redo</MenuItem>
-                <MenuItem onClick={handleCloseEdit}>Cut</MenuItem>
-                <MenuItem onClick={handleCloseEdit}>Copy</MenuItem>
-                <MenuItem onClick={handleCloseEdit}>Paste</MenuItem>
+                {accessRight !== "viewer" && <MenuItem onClick={handleCloseEdit}>Undo</MenuItem>}
+                {accessRight !== "viewer" && <MenuItem onClick={handleCloseEdit}>Redo</MenuItem>}
+                {accessRight !== "viewer" && <MenuItem onClick={handleCloseEdit}>Cut</MenuItem>}
+                {accessRight !== "viewer" && <MenuItem onClick={handleCloseEdit}>Copy</MenuItem>}
+                {accessRight !== "viewer" && <MenuItem onClick={handleCloseEdit}>Paste</MenuItem>}
                 <MenuItem onClick={handleCloseEdit}>Select all</MenuItem>
               </Menu>
             </div>
 
             {/* --------------- Insert --------------- */}
-            <div>
-              <Button
-                id="insert-button"
-                aria-controls={openInsert ? 'insert-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={openInsert ? 'true' : undefined}
-                onClick={handleClickInsert}
-              >
-                Insert
-              </Button>
-              <Menu
-                id="insert-menu"
-                anchorEl={anchorElInsert}
-                open={openInsert}
-                onClose={handleCloseInsert}
-                MenuListProps={{
-                  'aria-labelledby': 'insert-button',
-                }}
-              >
-                <MenuItem onClick={handleCloseInsert}>Image</MenuItem>
-                <MenuItem onClick={handleCloseInsert}>Table</MenuItem>
-                <MenuItem onClick={handleCloseInsert}>Chart</MenuItem>
-                <MenuItem onClick={handleCloseInsert}>Line</MenuItem>
-              </Menu>
-            </div>
+            {accessRight !== "viewer" &&
+              <div>
+                <Button
+                  id="insert-button"
+                  aria-controls={openInsert ? 'insert-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openInsert ? 'true' : undefined}
+                  onClick={handleClickInsert}
+                >
+                  Insert
+                </Button>
+                <Menu
+                  id="insert-menu"
+                  anchorEl={anchorElInsert}
+                  open={openInsert}
+                  onClose={handleCloseInsert}
+                  MenuListProps={{
+                    'aria-labelledby': 'insert-button',
+                  }}
+                >
+                  <MenuItem onClick={handleCloseInsert}>Image</MenuItem>
+                  <MenuItem onClick={handleCloseInsert}>Table</MenuItem>
+                  <MenuItem onClick={handleCloseInsert}>Chart</MenuItem>
+                  <MenuItem onClick={handleCloseInsert}>Line</MenuItem>
+                </Menu>
+              </div>
+            }
 
             {/* --------------- Format --------------- */}
-            <div>
-              <Button
-                id="format-button"
-                aria-controls={openFormat ? 'format-menu' : undefined}
-                aria-haspopup="true"
-                aria-expanded={openFormat ? 'true' : undefined}
-                onClick={handleClickFormat}
-              >
-                Format
-              </Button>
-              <Menu
-                id="format-menu"
-                anchorEl={anchorElFormat}
-                open={openFormat}
-                onClose={handleCloseFormat}
-                MenuListProps={{
-                  'aria-labelledby': 'format-button',
-                }}
-              >
-                <MenuItem onClick={handleCloseFormat}>Text</MenuItem>
-                <MenuItem onClick={handleCloseFormat}>Align & indent</MenuItem>
-                <MenuItem onClick={handleCloseFormat}>Bullets & numbering</MenuItem>
-              </Menu>
-            </div>
+            {accessRight !== "viewer" && 
+              <div>
+                <Button
+                  id="format-button"
+                  aria-controls={openFormat ? 'format-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openFormat ? 'true' : undefined}
+                  onClick={handleClickFormat}
+                >
+                  Format
+                </Button>
+                <Menu
+                  id="format-menu"
+                  anchorEl={anchorElFormat}
+                  open={openFormat}
+                  onClose={handleCloseFormat}
+                  MenuListProps={{
+                    'aria-labelledby': 'format-button',
+                  }}
+                >
+                  <MenuItem onClick={handleCloseFormat}>Text</MenuItem>
+                  <MenuItem onClick={handleCloseFormat}>Align & indent</MenuItem>
+                  <MenuItem onClick={handleCloseFormat}>Bullets & numbering</MenuItem>
+                </Menu>
+              </div>
+            }
+
+            { /* --------------- Tools --------------- */ }
+            {accessRight !== "viewer" && 
+              <div>
+                <Button
+                  id="tools-button"
+                  aria-controls={openTools ? 'tools-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openTools ? 'true' : undefined}
+                  onClick={handleClickTools}
+                >
+                  Tools
+                </Button>
+                <Menu
+                  id="tools-menu"
+                  anchorEl={anchorElTools}
+                  open={openTools}
+                  onClose={handleCloseTools}
+                  MenuListProps={{
+                    'aria-labelledby': 'tools-button',
+                  }}
+                >
+                  <MenuItem onClick={handleCloseTools}>Voice Typing</MenuItem>
+                </Menu>
+              </div>
+            }
 
             {/* --------------- Help --------------- */}
             <div>
@@ -341,7 +441,7 @@ function AddDoc() {
         </div>
         </div>
         <div className={styles.userInteraction}>
-          {!documentOpen && 
+          {!documentOpen && accessRight !== "viewer" &&
             <div onClick={opendocDescDialog}>
               <LightTooltip title="Publish this document as an open document"> 
                 <img src={openDoc} alt="lock icon" width={30} height={30} className={styles.openDoc} /> 
@@ -360,7 +460,7 @@ function AddDoc() {
               </DialogActions>
             </form>
           </Dialog>
-          {!documentOpen && <button onClick={openshareDocDialog}>Share</button>}
+          {!documentOpen && accessRight !== "viewer" && <button onClick={openshareDocDialog}>Share</button>}
           <Dialog open={shareDialogOpen} onClose={closeshareDialogDialog} className={styles.dialog}>
             <DialogTitle>
               Share {documentTitle}
@@ -429,7 +529,7 @@ function AddDoc() {
         </div>
       </div>
       {/*<TextEditor title={text} />*/}
-      <TextEditor2 />
+      <TextEditor2 accessRight={accessRight} />
     </>  
   )
 }

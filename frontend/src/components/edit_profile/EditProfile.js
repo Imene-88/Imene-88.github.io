@@ -11,7 +11,6 @@ import Divider from '@mui/material/Divider';
 import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { storage } from "../../Firebase";
-import remove_image from '../../assets/cancel.png';
 
 function EditProfile() {
 
@@ -71,21 +70,25 @@ function EditProfile() {
 
     const editProfile = async (event) => {
         event.preventDefault();
-        try {
-            await axios.put("/users/" + loggedInUser._id, {
-                full_name: userFullname.current.value || loggedInUser.fullName,
-                username: userUsername.current.value || loggedInUser.username, 
-                type_of_color_blindness: userColorBlindness.current.value || loggedInUser.type_of_color_blindness,
-                email: userEmail.current.value || loggedInUser.email,
-                password: userPassword.current.value !== "" && userPassword.current.value,
-                profile_picture: profilePictureUrl || loggedInUser.profile_picture,
-                bio: userBio.current.value || loggedInUser.bio,
-                birth_date: new Date(userBirthDate.current.value) || loggedInUser.birth_date,
-            });
-            window.location.reload();
-        }
-        catch(error) {
-            console.log(error);
+        if (userPassword.current.value !== confirmUserPassword.current.value) {
+            confirmUserPassword.current.setCustomValidity("The two passwords you provided do not match");
+        } else {
+            try {
+                await axios.put("/users/" + loggedInUser._id, {
+                    full_name: userFullname.current.value || loggedInUser.fullName,
+                    username: userUsername.current.value || loggedInUser.username, 
+                    type_of_color_blindness: userColorBlindness.current.value || loggedInUser.type_of_color_blindness,
+                    email: userEmail.current.value || loggedInUser.email,
+                    password: userPassword.current.value !== "" && userPassword.current.value,
+                    profile_picture: profilePictureUrl || loggedInUser.profile_picture,
+                    bio: userBio.current.value || loggedInUser.bio,
+                    birth_date: new Date(userBirthDate.current.value) || loggedInUser.birth_date,
+                });
+                window.location.reload();
+            }
+            catch(error) {
+                console.log(error);
+            }
         }
     };
 

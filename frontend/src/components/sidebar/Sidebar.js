@@ -35,7 +35,7 @@ function Sidebar() {
 
   return (
     <>
-      {loggedInUser.email !== process.env.REACT_APP_ADMIN_EMAIL && 
+      {loggedInUser.role !== "Admin" && 
         <div className={styles.navCol}>
           <div className={styles.page}>
             <LightTooltip title="Open Collaborations">

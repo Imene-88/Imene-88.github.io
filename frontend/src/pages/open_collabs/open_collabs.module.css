@@ -29,6 +29,15 @@
     overflow-y: scroll;
 }
 
+.subContainer .subSubContainer .open_documents .noOpenDocument {
+    position: relative;
+    font-family: var(--secondary-font);
+    top: 200px;
+    color: var(--tertiary-color);
+    font-style: italic;
+    text-align: center;
+}
+
 .subContainer .subSubContainer .open_documents .open_document {
     position: relative;
     padding: 20px;

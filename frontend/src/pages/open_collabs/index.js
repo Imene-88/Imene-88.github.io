@@ -30,9 +30,9 @@ function OpenCollabs() {
         <Sidebar />
         <div className={styles.subSubContainer}>
           <div className={styles.open_documents}>
-            {openDocuments.map((openDocument) => {
+            {openDocuments.length > 0 ? openDocuments.map((openDocument) => {
               return <OpenDocument key={openDocument._id} openDocument={openDocument} />
-            })}
+            }) : <p className={styles.noOpenDocument}>There are no open documents yet. <br /> You can start creating a new one by clicking on the 'lock' icon at the top of your document.</p>}
           </div>
         </div>
       </div>

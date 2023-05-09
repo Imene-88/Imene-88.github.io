@@ -104,7 +104,11 @@ io.on('connection', (socket) => {
                 accessRight,
                 type,
             })
-        })   
+        });
+        
+        socket.on(`user:announce-${document_id}`, () => {
+            socket.broadcast.to(document_id).emit(`user:announced-${document_id}`);
+        })
     })
 
     socket.once("disconnect", () => {

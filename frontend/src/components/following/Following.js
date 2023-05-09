@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthContext'
 import axios from 'axios';
 import default_picture from '../../assets/default_user_profile_picture.png';
 import { Link } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
 
 export default function Following() {
 
@@ -24,6 +25,23 @@ export default function Following() {
     }
     getUserFollowings();
   }, [loggedInUser._id]);
+
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const closeSnackbar = () => {
+    setSnackbarOpen(false);
+  };
+
+  const unfollowUser = async (followedUser) => {
+    try {
+      await axios.put("/users/" + followedUser._id + "/unfollow", {
+        userId: loggedInUser._id,
+      });
+    } 
+    catch (error) {
+      console.log(error);
+    }
+    setSnackbarOpen(true);
+  };
 
   return (
     <>
@@ -46,7 +64,18 @@ export default function Following() {
               <p>{followedUser.username}</p>
             </div>
           </div>
-          <button>Following</button>
+          <button onClick={() => unfollowUser(followedUser)}>Following</button>
+          <Snackbar
+            anchorOrigin={{
+              horizontal: "left",
+              vertical: "bottom",
+            }}
+            open={snackbarOpen}
+            autoHideDuration={5000}
+            message="User unfollowed successfully. Refresh the page to see the results."
+            onClose={closeSnackbar}
+            className={styles.snackbar}
+          />
         </div>
         )
       })

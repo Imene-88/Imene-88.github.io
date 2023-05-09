@@ -1,12 +1,15 @@
 import React, { useContext, useRef } from 'react'
 import styles from './register.module.css'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.png';
 import onlineDocument from '../../assets/Online_document.png';
 import { registerAPICall } from '../../API_CALLS'
 import { AuthContext } from '../../context/AuthContext';
 
 function Register() {
+
+    const navigate = useNavigate();
+
     const userFullname = useRef();
     const userUsername = useRef();
     const userColorBlindness = useRef();

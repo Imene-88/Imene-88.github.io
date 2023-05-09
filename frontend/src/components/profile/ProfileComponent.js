@@ -91,61 +91,65 @@ function ProfileComponent() {
             <p>{loggedInUser.email}</p>
           </div>
         </div>
-        <div className={styles.rightHeader}>
-          <div className={styles.data}>
-            <p>{postsCount}</p>
-            <p>Posts</p>
-          </div>
-          <div className={styles.data} onClick={openFollowersDialog}>
-            <p>{followersCount}</p>
-            <p>Followers</p>
-          </div>
-          <Dialog open={dialogFollowersOpen} onClose={closeFollowersDialog} className={styles.dialog}>
-            <DialogTitle>Followers</DialogTitle>
-            <Divider />  
-            <DialogContent>
-              {loggedInUser.followers.map((follower) => {
-                return <LikeUser key={follower._id} likeUser={follower._id} />
-              })}
-            </DialogContent>
-          </Dialog>
-          <div className={styles.data} onClick={openFollowingsDialog}>
-            <p>{followingsCount}</p>
-            <p>Following</p>
-          </div>
-          <Dialog open={dialogFollowingsOpen} onClose={closeFollowingsDialog} className={styles.dialog}>
-            <DialogTitle>Following</DialogTitle>
-            <Divider />  
-            <DialogContent>
-              {loggedInUser.following.map((following) => {
-                return <LikeUser key={following._id} likeUser={following._id} />
-              })}
-            </DialogContent>
-          </Dialog>
-        </div>
-      </div>
-      <div className={styles.posts_save}>
-        <TabContext value={value}>
-          <TabList onChange={handleChange} aria-label="Posts and saved posts">
-            <Tab label="My posts" value="1" />
-            <Tab label="Saved" value="2" />
-          </TabList>
-          <TabPanel value="1">
-            <div className={styles.posts}>
-              {myPosts.map((post) => {
-                return <LoggedInUserPosts key={post._id} post={post} />
-              })}
+        {loggedInUser.role !== "Admin" &&
+          <div className={styles.rightHeader}>
+            <div className={styles.data}>
+              <p>{postsCount}</p>
+              <p>Posts</p>
             </div>
-          </TabPanel>
-          <TabPanel value="2">
+            <div className={styles.data} onClick={openFollowersDialog}>
+              <p>{followersCount}</p>
+              <p>Followers</p>
+            </div>
+            <Dialog open={dialogFollowersOpen} onClose={closeFollowersDialog} className={styles.dialog}>
+              <DialogTitle>Followers</DialogTitle>
+              <Divider />  
+              <DialogContent>
+                {loggedInUser.followers.map((follower) => {
+                  return <LikeUser key={follower._id} likeUser={follower._id} />
+                })}
+              </DialogContent>
+            </Dialog>
+            <div className={styles.data} onClick={openFollowingsDialog}>
+              <p>{followingsCount}</p>
+              <p>Following</p>
+            </div>
+            <Dialog open={dialogFollowingsOpen} onClose={closeFollowingsDialog} className={styles.dialog}>
+              <DialogTitle>Following</DialogTitle>
+              <Divider />  
+              <DialogContent>
+                {loggedInUser.following.map((following) => {
+                  return <LikeUser key={following._id} likeUser={following._id} />
+                })}
+              </DialogContent>
+            </Dialog>
+          </div>
+        }
+      </div>
+      {loggedInUser.role !== "Admin" &&
+        <div className={styles.posts_save}>
+          <TabContext value={value}>
+            <TabList onChange={handleChange} aria-label="Posts and saved posts">
+              <Tab label="My posts" value="1" />
+              <Tab label="Saved" value="2" />
+            </TabList>
+            <TabPanel value="1">
               <div className={styles.posts}>
-                {savedPosts.map((savedPost) => {
-                  return <LoggedInUserSavedPosts key={savedPost._id} savedPost={savedPost} />
+                {myPosts.map((post) => {
+                  return <LoggedInUserPosts key={post._id} post={post} />
                 })}
               </div>
-          </TabPanel>
-        </TabContext>
-      </div>
+            </TabPanel>
+            <TabPanel value="2">
+                <div className={styles.posts}>
+                  {savedPosts.map((savedPost) => {
+                    return <LoggedInUserSavedPosts key={savedPost._id} savedPost={savedPost} />
+                  })}
+                </div>
+            </TabPanel>
+          </TabContext>
+        </div>
+      }
     </div>
   )
 }

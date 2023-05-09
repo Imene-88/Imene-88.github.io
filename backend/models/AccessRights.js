@@ -6,10 +6,10 @@ const accessRightsSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    access_rights: [{
+    access_rights: {
         type: Array,
         default: [],
-    }], 
+    }, 
 },
 {timestamps: true},
 );

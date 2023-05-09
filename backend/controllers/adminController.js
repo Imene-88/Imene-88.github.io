@@ -7,12 +7,13 @@ const CommentModel = require('../models/Comment');
 exports.calcTotalDocumentsInCollections = async (req, res) => {
     let totalDocuments = [];
     try {
-        const users = await UserModel.countDocuments({});
+        const users = await UserModel.countDocuments({role: "User"});
         const posts = await PostModel.countDocuments({});
-        const documents = await DocumentModel.countDocuments({open: true});
+        const openDocuments = await DocumentModel.countDocuments({open: true});
+        const documents = await DocumentModel.countDocuments({open: false});
         const likes = await LikeModel.countDocuments({});
         const comments = await CommentModel.countDocuments({});
-        totalDocuments.push(users - 1, posts, documents, likes, comments);
+        totalDocuments.push(users, posts, openDocuments, documents, likes, comments);
         res.status(200).json(totalDocuments);
     } 
     catch (error) {

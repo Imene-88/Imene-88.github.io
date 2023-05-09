@@ -11,6 +11,8 @@ router.get("/:id/postsCount", userController.getUserPostsCount);
 
 router.get("/:userId/getFollowing/:userFollowingId", userController.getUserFollowing);
 
+router.get("/search", userController.searchUser);
+
 router.delete("/:id", userController.deleteUser);
 
 router.get("/user", userController.getUser);

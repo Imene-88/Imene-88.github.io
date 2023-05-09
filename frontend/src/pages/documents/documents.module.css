@@ -32,6 +32,15 @@
     overflow-y: scroll;
 }
 
+.subContainer .subSubContainer .noDocuments {
+    position: relative;
+    font-family: var(--secondary-font);
+    top: 350px;
+    color: var(--tertiary-color);
+    font-style: italic;
+    text-align: center;
+}
+
 .subContainer .subSubContainer .documents a {
     position: relative;
     text-decoration: none;

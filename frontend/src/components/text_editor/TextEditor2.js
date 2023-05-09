@@ -5,6 +5,7 @@ import 'quill/dist/quill.snow.css';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import socket from '../../SOCKET_CONNECTION';
+import axios from 'axios';
 
 /* useRef so that the editor does not re-render each time changes are made,
 and since toolbar of editor is seperated from the actual editor, we reference 
@@ -28,11 +29,11 @@ const custom_additional_toolbar = [
     ['clean']   
 ]
 
-const modules = {
+/*const modules = {
     toolbar: custom_additional_toolbar
-}
+}*/
 
-function TextEditor2() {
+function TextEditor2({accessRight}) {
     const { user: loggedInUser} = useContext(AuthContext);
     const userId = loggedInUser._id;
     const {id: document_id} = useParams();
@@ -98,12 +99,14 @@ function TextEditor2() {
         textEditor.innerHTML = ''; /* clean up the text editor so that after each change it will not re-render */
         const editor = document.createElement('div'); /* Create a new div that containes the editor and append it to the main container so that the toolbar and the editor are included both in the div */
         textEditor.append(editor);   
-        const q = new Quill(editor, { theme: "snow", modules: modules, placeholder: "Type to insert" });
+        const q = new Quill(editor, { theme: "snow", modules: {toolbar: accessRight == "viewer" ? false : custom_additional_toolbar}, placeholder: "Type to insert" });
         q.focus();
         setQuill(q);
     }, []);
   return (
-    <div className={styles.container} ref={editorContainer}></div>
+    <div className={styles.container} ref={editorContainer}>
+        {accessRight === "viewer" && quill.disable()}
+    </div>
   )
 }
 

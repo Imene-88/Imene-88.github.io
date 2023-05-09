@@ -179,4 +179,18 @@ exports.getUserPostsCount = async (req, res) => {
     }
 };
 
-
+exports.searchUser = async (req, res) => {
+    try {
+        const query = req.query.q;
+        const user = await UserModel.find({
+            $or: [
+                { full_name: { $regex: query, $options: 'i' } },
+                { username: { $regex: query, $options: 'i' } }
+            ]
+        });
+        res.status(200).json(user);    
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};

@@ -147,7 +147,9 @@ function SimilarProfileSuggestion({similarProfile}) {
         }
     }
 
+    console.log(similarProfile)
   return (
+    
     <div className={styles.similarProfile} ref={userToFollow}>
         <img src={similarProfile.profile_picture ? similarProfile.profile_picture : default_picture} alt="similar profile media" width={50} height={50} />
         <div className={styles.profileIdentity}>
@@ -158,6 +160,7 @@ function SimilarProfileSuggestion({similarProfile}) {
         </div>
         <button ref={followBtn} onClick={() => followUser(similarProfile._id)}>{followed ? "Following" : "Follow"}</button>
     </div>
+    
   )
 }
 

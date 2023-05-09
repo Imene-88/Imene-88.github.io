@@ -135,6 +135,23 @@
     font-family: var(--secondary-font);
 }
 
+.profile .header .leftHeader button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 20px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 15px;
+    font-family: var(--secondary-font);
+}
+
+.profile .header .leftHeader button:hover {
+    opacity: 0.9;
+}
+
 .profile .header .rightHeader {
     position: relative;
     display: flex;
@@ -258,6 +275,12 @@
     align-items: center;
     border: 1px solid hsla(207, 26%, 7%, .5);
     border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
 }
 
 .subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity {
@@ -761,4 +784,10 @@
 
 .subContainer .subSubContainer .middle .post .postBottom .save img {
     cursor: pointer;
+}
+
+.snackbar > div {
+    background-color: var(--text-color);
+    color: var(--editor-bg-color);
+    font-family: var(--secondary-font);
 }

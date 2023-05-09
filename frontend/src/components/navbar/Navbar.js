@@ -28,6 +28,9 @@ import { useNavigate } from 'react-router-dom';
 import remove_image from '../../assets/cancel.png';
 import { ColorRing } from 'react-loader-spinner';
 import socket from '../../SOCKET_CONNECTION';
+import LikeUser from '../post/LikeUser'
+import SearchResult from '../search_result/SearchResult';
+import collaborators_announcements from '../../assets/notif.mp3';
 
 function Navbar() {
 
@@ -217,6 +220,39 @@ function Navbar() {
     catch(error) {
       console.log(error);
     }
+    //const audio = document.createElement('audio'); // create new audio element
+    //audio.src = collaborators_announcements; // set audio source URL
+    //document.body.appendChild(audio); // append audio element to the document
+    //audio.addEventListener('canplaythrough', () => {
+    //  
+    //});
+    socket.emit(`user:announce-${document_id}`);
+  };
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const handleSearchUser = (event) => {
+    setSearchQuery(event.target.value);
+  }
+
+  const searchUser = async (event) => {
+    event.preventDefault();
+    try {
+      const res = await axios.get("/users/search?q=" + searchQuery);
+      setSearchResults(res.data);  
+    } 
+    catch (error) {
+      console.log(error);
+    }
+    openSearchResultsDialog();
+  }
+
+  const [dialogSearchResultsOpen, setSearchResultsDialogOpen] = useState(false);
+  const openSearchResultsDialog = () => {
+    setSearchResultsDialogOpen(true);
+  };
+  const closeSearchResultsDialog = () => {
+    setSearchResultsDialogOpen(false);
   };
 
   return (
@@ -225,10 +261,21 @@ function Navbar() {
         <div className={styles.nav}>
             <img src={logo} alt="Logo of website" width="170" height="89" />
             <div className={styles.navGroup}>
+              <form method='post' onSubmit={searchUser}>
                 <div className={styles.search}>
-                    {user.email !== process.env.REACT_APP_ADMIN_EMAIL ? <input type="text" name='search' placeholder='Search for people' /> : <input type="text" name='search' placeholder='Search for users' />}
+                    {user.role !== "Admin" ? <input type="text" value={searchQuery} placeholder='Search for people' onChange={handleSearchUser} /> : <input type="text" placeholder='Search for users' />}
                     <img src={search} alt="search icon" width="24" height="24" />
                 </div>
+              </form>
+              <Dialog open={dialogSearchResultsOpen} onClose={closeSearchResultsDialog} className={styles.dialog}>
+                <DialogTitle>Search Results For "{searchQuery}"</DialogTitle>
+                <Divider />
+                <DialogContent>
+                  {searchResults.map((searchResult) => {
+                    return <SearchResult key={searchResult._id} searchResult={searchResult} searchQuery={searchQuery} />
+                  })}
+                </DialogContent>
+              </Dialog>
                 <button id='notification'
                     aria-controls={openNotification ? 'notification-menu' : undefined}
                     aria-haspopup="true"

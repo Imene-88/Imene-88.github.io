@@ -1,3 +1,9 @@
+.snackbar > div {
+    background-color: var(--text-color);
+    color: var(--editor-bg-color);
+    font-family: var(--secondary-font);
+}
+
 .navEditor {
     position: relative;
     display: flex;

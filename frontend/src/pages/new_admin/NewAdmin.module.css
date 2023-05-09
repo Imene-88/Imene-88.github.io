@@ -52,7 +52,7 @@
 
 .subContainer .subSubContainer .wrapper form {
     position: relative;
-    margin-left: 45px;
+    margin-left: 300px;
     top: 200px;
 }
 
@@ -67,9 +67,48 @@
     border: none;
     outline: none;
     background-color: var(--editor-bg-color);
-    width: 500px;
+    width: 700px;
     padding: 10px;
     font-family: var(--secondary-font);
     font-size: 15px;
     border-radius: 5px;
+}
+
+.subContainer .subSubContainer .wrapper form .formActions {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-right: 385px;
+    gap: 15px;
+}
+
+.subContainer .subSubContainer .wrapper form .formActions button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 20px;
+    cursor: pointer;
+    font-family: var(--secondary-font);
+    border-radius: 5px;
+}
+
+.subContainer .subSubContainer .wrapper form .formActions .cancelBtn {
+    background: transparent;
+    border: 1px solid hsla(12, 41%, 37%, .5);
+}
+
+.subContainer .subSubContainer .wrapper form .formActions .cancelBtn:hover {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    transition: all 0.5s ease-in-out;
+}
+
+.subContainer .subSubContainer .wrapper form .formActions .addBtn {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+}
+
+.subContainer .subSubContainer .wrapper form .formActions .addBtn:hover {
+    opacity: 0.9;
 }

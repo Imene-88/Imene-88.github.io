@@ -12,6 +12,7 @@ router.post("/register", async (req, res) => {
             type_of_color_blindness: req.body.type_of_color_blindness,
             email: req.body.email,
             password: hashedPassword,
+            role: req.body.role,
         });
         user.save();
         res.status(200).json(user);

@@ -34,11 +34,15 @@ function Documents() {
       <div className={styles.subContainer}>
         <Sidebar />
         <div className={styles.subSubContainer}>
+          {userDocuments.length > 0 ? 
           <div className={styles.documents}>
             {userDocuments.map((document) => {
               return <UserDocument key={document._id} document={document} />
             })}
           </div>
+          : 
+          <p className={styles.noDocuments}>You currently have no documents. <br /> Start creating a new one by clicking the '+' icon.</p>
+          }
           <Link to={`/documents/add_doc/${v4()}`}>
             <img src={addDoc} alt="Add document icon" width="53" height="53" className={styles.addPostImg} />
           </Link>
