@@ -32,6 +32,7 @@ import collaborators_announcements from '../../assets/notif.mp3';
 function AddDoc() {
 
   const { user: loggedInUser } = useContext(AuthContext);
+  const { id: document_id} = useParams();
 
   const [anchorProfile, setAnchorProfile] = useState(null);
   const openProfile = Boolean(anchorProfile);
@@ -131,22 +132,67 @@ function AddDoc() {
     setAnchorElHelp(null);
   };
 
-  // Make input width fit content width
-  const [text, setText] = useState('');
-  const titleInput = useRef();
-  const handleChange = (event) => {
-    setText(event.target.value);
+  const [titleDialogOpen, setTitleDialogOpen] = useState(false);
+  const openTitleDialog = () => {
+    setTitleDialogOpen(true);
   };
+
+  const closeTitleDialog = () => {
+    setTitleDialogOpen(false);
+  };
+
+  // Make input width fit content width
+  const [title, setTitle] = useState('');
+  const titleInput = useRef();
+  const handleTitleChange = (event) => {
+    setTitle(event.target.value);
+  };
+  //useEffect(() => {
+  //  const adjustInputWidthToFitContent = () => {
+  //    if (text.length < 1) {
+  //      titleInput.current.style.width = titleInput.current.placeholder.length+'ch';
+  //    } else {
+  //      titleInput.current.style.width = text.length+'ch';
+  //    }
+  //  }; 
+  //  adjustInputWidthToFitContent(); // eslint-disable-next-line
+  //}, [text]); 
+
+  const [updatedTitle, setUpdatedTitle] = useState("");
+
   useEffect(() => {
-    const adjustInputWidthToFitContent = () => {
-      if (text.length < 1) {
-        titleInput.current.style.width = titleInput.current.placeholder.length+'ch';
-      } else {
-        titleInput.current.style.width = text.length+'ch';
+    socket.on(`title:receive-${document_id}`, (title) => {
+      setUpdatedTitle(title);
+    })
+  }, [document_id]);
+
+  const saveTitle = async () => {
+    try {
+      const res = await axios.put("/documents/updateTitle/" + document_id, {
+        title: title, 
+      });  
+      const res2 = await axios.get("/documents/getTitle/" + res.data._id);
+      setUpdatedTitle(res2.data);
+      socket.emit(`title:change-${document_id}`, res2.data);
+    } 
+    catch (error) {
+      console.log(error);
+    }
+    closeTitleDialog();
+  };
+
+  useEffect(() => {
+    const getTitle = async () => {
+      try {
+        const res = await axios.get("/documents/getTitle/" + document_id);
+        setUpdatedTitle(res.data);  
+      } 
+      catch (error) {
+        console.log(error);
       }
-    }; 
-    adjustInputWidthToFitContent(); // eslint-disable-next-line
-  }, [text]); 
+    };
+    getTitle();
+  }, [document_id]);
 
   // Tooltip
   const LightTooltip = styled(({ className, ...props }) => (
@@ -166,7 +212,7 @@ function AddDoc() {
 
     const navigate = useNavigate();
 
-    const { id: document_id} = useParams();
+    
     const documentDescription = useRef();
     const [documentParticipants, setDocumentParticipants] = useState([]);
     const [documentOpen, setDocumentOpen] = useState(false);
@@ -268,7 +314,17 @@ function AddDoc() {
         <div className={styles.imgFileGroup}>
         <img src={logo} alt="Logo of website" width={170} height={89} />
         <div className={styles.fileInteraction}>
-          <input type="text" placeholder='Untitled document' value={text} ref={titleInput} onChange={handleChange} />
+          <input type="text" placeholder='Untitled document' value={updatedTitle} ref={titleInput} onClick={openTitleDialog} readOnly />
+          <Dialog open={titleDialogOpen} onClose={closeTitleDialog} className={styles.titleDialog}>
+            <DialogTitle>Provide a title for your document</DialogTitle>
+            <Divider />
+            <DialogContent>
+              <input type="text" placeholder='Untitled document' value={title} onChange={handleTitleChange} />
+            </DialogContent>
+            <DialogActions>
+              <button className={styles.publishBtn} onClick={saveTitle}>Save</button>
+            </DialogActions>
+          </Dialog>
           <div className={styles.fileNav}>
             <div>
               { /* --------------- File --------------- */ }

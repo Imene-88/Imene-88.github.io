@@ -85,6 +85,10 @@ io.on('connection', (socket) => {
             socket.broadcast.to(document_id).emit(`changes:receive-${document_id}`, delta);
         });
 
+        socket.on(`title:change-${document_id}`, (title) => {
+            socket.broadcast.to(document_id).emit(`title:receive-${document_id}`, title);
+        });
+
         socket.on(`document:saveChangesToDB-${document_id}`, async (content) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
         });

@@ -786,6 +786,27 @@
     cursor: pointer;
 }
 
+.subContainer .subSubContainer .middle .post .postBottom .save {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.socialPlatforms {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    display: none;
+    transition: all 0.5s ease-in-out;
+    z-index: 100;
+}
+
 .snackbar > div {
     background-color: var(--text-color);
     color: var(--editor-bg-color);

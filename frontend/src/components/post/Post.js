@@ -28,6 +28,12 @@ import post_comment from '../../assets/post_comment.png';
 import Comment from './Comment';
 import LikeUser from './LikeUser';
 import socket from '../../SOCKET_CONNECTION';
+import social_share_btn from '../../assets/paper-plane.png';
+import { PinterestShareButton, TwitterShareButton, TumblrShareButton } from 'react-share';
+import pinterest from '../../assets/pinterest.png';
+import twitter from '../../assets/twitter.png';
+import tumblr from '../../assets/tumblr.png';
+import default_post_image from '../../assets/default_post_image.jpg';
 
 export default function Post({post}) {
   const {user: loggedInUser} = useContext(AuthContext);
@@ -300,6 +306,18 @@ export default function Post({post}) {
       })
     }
 
+    const social_share = useRef();
+    const [shareBtnClicked, setShareBtnClicked] = useState(false);
+    const sharePost = () => {
+      if (!shareBtnClicked) {
+        social_share.current.style.display = 'flex';
+        setShareBtnClicked(!shareBtnClicked);
+      } else {
+        social_share.current.style.display = 'none';
+        setShareBtnClicked(!shareBtnClicked);
+      }
+    };
+
   return (
     <div className={styles.post}>
         <div className={styles.postTop}>
@@ -464,6 +482,20 @@ export default function Post({post}) {
             {loggedInUser.role !== "Admin" && 
               <div className={styles.save}>
                   <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={28} height={28} onClick={savePost} />
+                  <div className={styles.socialShare}>
+                    <img src={social_share_btn} alt="save icon" width={28} height={28} onClick={sharePost} />
+                    <div className={styles.socialPlatforms} ref={social_share}>
+                      <PinterestShareButton url={`https://api.pinterest.com/v1/pins/${window.location.href}`} media={post.image ? post.image : default_post_image} description={encodeURIComponent(post.content)} >
+                        <img src={pinterest} alt="pinterest icon" width={24} height={24} />
+                      </PinterestShareButton>
+                      <TwitterShareButton url={window.location.href} media={post.image}>
+                        <img src={twitter} alt="twitter icon" width={24} height={24} />
+                      </TwitterShareButton>
+                      <TumblrShareButton url={window.location.href}>
+                        <img src={tumblr} alt="tumblr icon" width={24} height={24} />
+                      </TumblrShareButton>
+                    </div>
+                  </div>
               </div>
             }
         </div>

@@ -5,11 +5,15 @@ router.get("/open", documentController.getOpenDocuments);
 
 router.put("/:documentId/update", documentController.updateDocument);
 
+router.put("/updateTitle/:documentId", documentController.updateDocumentTitle);
+
 router.get("/:id/likesCount", documentController.getOpenDocumentLikesCount);
 
 router.get("/:userId/documents", documentController.getDocuments);
 
 router.get("/participants/:documentId", documentController.getDocumentParticipants);
+
+router.get("/getTitle/:documentId", documentController.getTitle);
 
 router.delete("/:id", documentController.deleteDocument);
 

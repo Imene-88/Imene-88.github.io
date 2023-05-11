@@ -162,8 +162,40 @@
     align-items: center;
 }
 
-.dialog > div:nth-child(3) > div > hr {
+.titleDialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    font-family: var(--main-font);
+    font-weight: 600;
+    text-align: center;
+}
+
+.dialog > div:nth-child(3) > div > hr,
+.titleDialog > div:nth-child(3) > div > hr {
     border-bottom: thin solid var(--tertiary-color);
+}
+
+.titleDialog > div:nth-child(3) > div {
+    width: 500px;
+    height: 210px;
+    background-color: var(--editor-bg-color);
+}
+
+.titleDialog > div:nth-child(3) > div > div > input {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 6px 20px;
+    width: 450px;
+    font-family: var(--secondary-font);
+    border-radius: 5px;
+}
+
+.titleDialog > div:nth-child(3) > div > div > button {
+    margin-right: 15px;
+}
+
+.titleDialog > div:nth-child(3) > div > div > button:hover {
+    opacity: 0.9;
 }
 
 .documentDescription {

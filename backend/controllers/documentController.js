@@ -106,3 +106,23 @@ exports.deleteDocument = async (req, res) => {
         console.log(error);
     }
 }
+
+exports.updateDocumentTitle = async (req, res) => {
+    try {
+        const newTitle = await DocumentModel.findByIdAndUpdate(req.params.documentId, { title: req.body.title }, { new: true });
+        res.status(200).json(newTitle);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+exports.getTitle = async (req, res) => {
+    try {
+        const document = await DocumentModel.findById(req.params.documentId);
+        res.status(200).json(document.title);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+}
