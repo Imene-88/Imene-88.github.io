@@ -31,6 +31,7 @@ import socket from '../../SOCKET_CONNECTION';
 import LikeUser from '../post/LikeUser'
 import SearchResult from '../search_result/SearchResult';
 import collaborators_announcements from '../../assets/notif.mp3';
+import { Engagespot } from '@engagespot/react-component';
 
 function Navbar() {
 
@@ -40,22 +41,39 @@ function Navbar() {
   const [adminNotifications, setAdminNotifications] = useState([]);
 
   useEffect(() => {
+    const getNotifications = async () => {
+      try {
+        const res = await axios.get("/notifications/getNotifications/" + user._id);
+        setNotifications(res.data); 
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    getNotifications();
+  }, []);
+
+  useEffect(() => {
     socket.on("document:shared", data => {
       setNotifications((prev) => [...prev, data]);
     })
   }, []);
 
-  const receiveNotification = ({senderFullName, document_id, receiverId, link, accessRight}) => {
+  const receiveNotification = ({senderFullName, document_id, receiverId, link, accessRight, type}, notification) => {
     return (
-      <MenuItem>
-        <p>{senderFullName} sent you a collaboration request. Do you: </p>
-        <div className={styles.collab_request}>
-          <Link to={link}>
-            <button onClick={() => acceptCollabRequest(document_id, receiverId, accessRight)}>Accept</button>
-          </Link>
-          <button>Refuse</button>
-        </div>
-      </MenuItem>
+      <>
+        {type === "shareDoc" && 
+          <MenuItem>
+            <p>{senderFullName} sent you a collaboration request. Do you: </p>
+            <div className={styles.collab_request}>
+              <Link to={link}>
+                <button onClick={() => acceptCollabRequest(document_id, receiverId, accessRight)}>Accept</button>
+              </Link>
+              <button>Refuse</button>
+            </div>
+          </MenuItem>
+        }
+      </>
     )
   };
 
@@ -276,37 +294,15 @@ function Navbar() {
                   })}
                 </DialogContent>
               </Dialog>
-                <button id='notification'
-                    aria-controls={openNotification ? 'notification-menu' : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={openNotification ? "true" : undefined}
-                    onClick={handleClickNotification}>
-                      <img src={notification} alt="notification icon" width="40" height="40" className={styles.images} />
-                </button>
-                {user.role !== "Admin" &&
-                  <Menu id='notification-menu'
-                    className={styles.profile_menu}
-                    anchorEl={anchorNotification}
-                    open={openNotification}
-                    onClose={handleCloseNotification}
-                    MenuListProps={{
-                      'aria-labelledby': 'notification',
-                    }}>
-                      {notifications.map((notification) => receiveNotification(notification))}  
-                  </Menu>
-                }
-                {user.role === "Admin" && 
-                  <Menu id='notification-menu'
-                    className={styles.profile_menu}
-                    anchorEl={anchorNotification}
-                    open={openNotification}
-                    onClose={handleCloseNotification}
-                    MenuListProps={{
-                      'aria-labelledby': 'notification',
-                    }}>
-                    {adminNotifications.map((adminNotification) => receiveAdminNotification(adminNotification))}
-                  </Menu>
-                }
+              <Engagespot apiKey="392669pd2q63zp1n10mrub" userId={user._id} theme={{
+                colors: {
+                  brandingPrimary: "var(--primary-color)",
+                },
+                notificationButton: {
+                  iconFill: "var(--primary-color)",
+                  iconSize: "42px",
+                },
+              }} />
                 {user.role !== "Admin" && <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />}
                 <Dialog open={dialogOpen} onClose={closeAddPostDialog} className={styles.dialog}>
                   <DialogTitle>New Post</DialogTitle>

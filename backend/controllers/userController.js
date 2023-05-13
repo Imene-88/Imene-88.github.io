@@ -96,6 +96,21 @@ exports.followUser = async (req, res) => {
         const thisUser = await UserModel.findById(req.body.userId);
         await followedUser.updateOne({$push: {followers: thisUser}}); 
         await thisUser.updateOne({$push: {following: followedUser}});
+        axios.post(
+            'https://api.engagespot.co/v3/notifications',
+            {
+              notification: {
+                title: `${thisUser.username} followed you`,
+              },
+              recipients: [followedUser._id],
+            },
+            {
+              headers: {
+                'X-ENGAGESPOT-API-KEY': '392669pd2q63zp1n10mrub',
+                'X-ENGAGESPOT-API-SECRET': process.env.ENGAGESPOT_API_SECRET,
+              },
+            }
+          );
         res.status(200).json("User followed successfully");
     }
     catch(error) {

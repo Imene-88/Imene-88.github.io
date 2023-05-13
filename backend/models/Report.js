@@ -1,7 +1,12 @@
 const mongoose = require('mongoose');
 
 const reportSchema = new mongoose.Schema({
-    user_id: {
+    sender_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
+    receiver_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
@@ -14,9 +19,14 @@ const reportSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    report_type: {
-        type: String,
+    post_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
     },
+    reported_user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    }
 },
 {timestamps: true},
 );

@@ -5,6 +5,7 @@ import default_picture from '../../assets/default_user_profile_picture.png';
 import socket from '../../SOCKET_CONNECTION';
 import { AuthContext } from '../../context/AuthContext';
 import { useParams } from 'react-router';
+import axios from 'axios';
 
 function SharedWithUsers({followedUser}) {
 
@@ -26,13 +27,28 @@ function SharedWithUsers({followedUser}) {
 
     console.log(accessRight);
 
-    const shareDocument = (type) => {
-        socket.emit(`document:share-${document_id}`, {
-          senderId: loggedInUser._id,
-          receiverId: sharedWith,
-          accessRight: accessRight,
-          type,
-        });
+    const shareDocument = async (type) => {
+        //socket.emit(`document:share-${document_id}`, {
+        //  senderId: loggedInUser._id,
+        //  receiverId: sharedWith,
+        //  accessRight: accessRight,
+        //  type,
+        //});
+        axios.post(
+          'https://api.engagespot.co/v3/notifications',
+          {
+            notification: {
+              title: `${loggedInUser.full_name} sent you a collaboration request.`,
+            },
+            recipients: [{sharedWith}],
+          },
+          {
+            headers: {
+              'X-ENGAGESPOT-API-KEY': '392669pd2q63zp1n10mrub',
+              'X-ENGAGESPOT-API-SECRET': process.env.REACT_APP_ENGAGESPOT_API_SECRET,
+            },
+          }
+        );
     };
 
   return (

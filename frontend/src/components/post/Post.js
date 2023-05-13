@@ -295,28 +295,45 @@ export default function Post({post}) {
       getAllAdmins();
     }, []);
 
-    const sendNotification = (type) => {
+    const checkbox1Value = useRef();
+    const checkbox2Value = useRef();
+    const checkbox3Value = useRef();
+    const checkbox4Value = useRef();
+    const reportContent = useRef();
+    const sendNotification = (type, postId) => {
       admins.map((admin) => {
+        const addReport = async () => {
+          try {
+            const res = await axios.post("/reports/addReport/" + loggedInUser._id, {
+              receiverId: admin._id,
+              checkedAnswer: checkbox1Value.current.value || checkbox2Value.current.value || checkbox3Value.current.value || checkbox4Value.current.value,
+              content: reportContent.current.value,
+              postId: postId,
+            });
+            console.log(res.data); 
+          } 
+          catch (error) {
+            console.log(error);
+          }
+        }
+        addReport();
         socket.emit("notification:send", {
           senderId: loggedInUser._id,
           receiverId: admin._id,
-          postId: post._id,
+          postId: postId,
           type
         });
       })
     }
 
     const social_share = useRef();
-    const [shareBtnClicked, setShareBtnClicked] = useState(false);
-    const sharePost = () => {
-      if (!shareBtnClicked) {
+    const showSharePost = () => {
         social_share.current.style.display = 'flex';
-        setShareBtnClicked(!shareBtnClicked);
-      } else {
-        social_share.current.style.display = 'none';
-        setShareBtnClicked(!shareBtnClicked);
-      }
-    };
+    }
+    
+    const hideSharePost = () => {
+      social_share.current.style.display = 'none';
+    }
 
   return (
     <div className={styles.post}>
@@ -361,25 +378,25 @@ export default function Post({post}) {
                   <DialogContent className={styles.report_post_contents}>
                     <p>Why are you reporting this post?</p>
                     <div className={styles.report_reason}>
-                      <input type="checkbox" name="hate_speech" />
+                      <input type="checkbox" name="hate_speech" value="Hate Speech" ref={checkbox1Value} required />
                       <p>Hate speech or symbols</p>
                     </div>
                     <div className={styles.report_reason}>
-                      <input type="checkbox" name="false_info" /> 
+                      <input type="checkbox" name="false_info" value="False Information" ref={checkbox2Value} required /> 
                       <p>False information</p>
                     </div>
                     <div className={styles.report_reason}>
-                      <input type="checkbox" name="violation" />
+                      <input type="checkbox" name="violation" value="Intellectual Property Violation" ref={checkbox3Value} required />
                       <p>Intellectual property violation</p>
                     </div>
                     <div className={styles.report_reason}>
-                      <input type="checkbox" name="smth_else" />
+                      <input type="checkbox" name="smth_else" value="Something Else" ref={checkbox4Value} required />
                       <p>Something else</p>
                     </div>
-                    <textarea cols="69" rows="8" placeholder='Explain your answer.' className={styles.reportContent}></textarea>
+                    <textarea cols="69" rows="8" placeholder='Explain your answer.' required className={styles.reportContent} ref={reportContent}></textarea>
                   </DialogContent> 
                   <DialogActions>
-                    <button className={styles.reportPostBtn} onClick={() => sendNotification("report-post")}>Report</button>
+                    <button className={styles.reportPostBtn} onClick={() => sendNotification("report-post", post._id)}>Report</button>
                   </DialogActions>
                 </Dialog>
                 <MenuItem onClick={openReportUserDialog}>
@@ -483,12 +500,12 @@ export default function Post({post}) {
               <div className={styles.save}>
                   <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={28} height={28} onClick={savePost} />
                   <div className={styles.socialShare}>
-                    <img src={social_share_btn} alt="save icon" width={28} height={28} onClick={sharePost} />
-                    <div className={styles.socialPlatforms} ref={social_share}>
+                    <img src={social_share_btn} alt="save icon" width={28} height={28} onMouseEnter={showSharePost} />
+                    <div className={styles.socialPlatforms} ref={social_share} onMouseLeave={hideSharePost}>
                       <PinterestShareButton url={`https://api.pinterest.com/v1/pins/${window.location.href}`} media={post.image ? post.image : default_post_image} description={encodeURIComponent(post.content)} >
                         <img src={pinterest} alt="pinterest icon" width={24} height={24} />
                       </PinterestShareButton>
-                      <TwitterShareButton url={window.location.href} media={post.image}>
+                      <TwitterShareButton>
                         <img src={twitter} alt="twitter icon" width={24} height={24} />
                       </TwitterShareButton>
                       <TumblrShareButton url={window.location.href}>

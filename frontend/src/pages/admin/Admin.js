@@ -6,6 +6,7 @@ import Navbar from '../../components/navbar/Navbar';
 import Sidebar from '../../components/sidebar/Sidebar';
 import socket from '../../SOCKET_CONNECTION';
 import { AuthContext } from '../../context/AuthContext';
+import RecentReports from '../../components/recent_reports/RecentReports';
 
 function Admin() {
 
@@ -25,9 +26,7 @@ function Admin() {
                 <Panels />
                 <div className={styles.wrapper2}>
                   <RecentUsers />
-                  <div className={styles.right}>
-                    <p>Reports</p>
-                  </div>
+                  <RecentReports />
                 </div>
             </div>
         </div>

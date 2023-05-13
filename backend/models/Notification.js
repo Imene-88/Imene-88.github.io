@@ -11,9 +11,25 @@ const notificationSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    content: {
+    type: {
         type: String,
     },
+    post_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Post",
+    },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+    },
+    document_id : {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Document",
+    },
+    read: {
+        type: Boolean,
+        default: false,
+    }
 },
 {timestamps: true}
 );

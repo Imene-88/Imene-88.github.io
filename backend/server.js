@@ -25,6 +25,8 @@ const adminRoute = require("./routes/adminRoute");
 const commentRoute = require("./routes/commentRoute");
 const userInterestsRoute = require("./routes/userInterestsRoute");
 const accessRightsRoute = require("./routes/accessRightsRoute");
+const reportsRoute = require("./routes/reportsRoute");
+const notificationsRoute = require("./routes/NotificationsRoute");
 
 dotenv.config();
 
@@ -43,6 +45,8 @@ app.use("/api/admin", adminRoute);
 app.use("/api/comments", commentRoute);
 app.use("/api/interests", userInterestsRoute);
 app.use("/api/access_rights", accessRightsRoute);
+app.use("/api/reports", reportsRoute);
+app.use("/api/notifications", notificationsRoute);
 
 /* ---------------- Socket ---------------- */
 
@@ -107,7 +111,7 @@ io.on('connection', (socket) => {
                 link,
                 accessRight,
                 type,
-            })
+            }) 
         });
         
         socket.on(`user:announce-${document_id}`, () => {
