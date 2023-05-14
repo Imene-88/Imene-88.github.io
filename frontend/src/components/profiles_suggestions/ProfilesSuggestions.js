@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import { AuthContext } from '../../context/AuthContext';
 import axios from 'axios';
 import SimilarProfileSuggestion from './SimilarProfileSuggestion';
+import zIndex from '@mui/material/styles/zIndex';
 
 function ProfilesSuggestions() {
 
@@ -43,7 +44,7 @@ function ProfilesSuggestions() {
       }, [loggedInUser._id]);
 
   return (
-    <Carousel responsive={responsive}>
+    <Carousel responsive={responsive} style={{zIndex: -1}}>
         {similarProfiles.map((similarProfile) => {
             return <SimilarProfileSuggestion key={similarProfile._id} similarProfile={similarProfile} />
         })}

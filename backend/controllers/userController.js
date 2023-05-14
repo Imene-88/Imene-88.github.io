@@ -1,6 +1,7 @@
 const UserModel = require("../models/User");
 const PostModel = require("../models/Post");
 const bcrypt = require("bcrypt");
+const axios = require("axios");
 
 exports.updateUser = async (req, res) => {
     if(req.body.password) {
@@ -96,11 +97,13 @@ exports.followUser = async (req, res) => {
         const thisUser = await UserModel.findById(req.body.userId);
         await followedUser.updateOne({$push: {followers: thisUser}}); 
         await thisUser.updateOne({$push: {following: followedUser}});
+        res.status(200).json("User followed successfully");
         axios.post(
             'https://api.engagespot.co/v3/notifications',
             {
               notification: {
                 title: `${thisUser.username} followed you`,
+                icon: thisUser.profile_picture,
               },
               recipients: [followedUser._id],
             },
@@ -111,7 +114,6 @@ exports.followUser = async (req, res) => {
               },
             }
           );
-        res.status(200).json("User followed successfully");
     }
     catch(error) {
         console.log(error);

@@ -24,6 +24,7 @@ exports.likePost = async (req, res) => {
                 {
                   notification: {
                     title: `${user.username} liked your post`,
+                    Image: user.profile_picture,
                   },
                   recipients: [postOwner],
                 },
