@@ -27,28 +27,22 @@ function SharedWithUsers({followedUser}) {
 
     console.log(accessRight);
 
-    const shareDocument = async (type) => {
+    const shareDocument = async () => {
         //socket.emit(`document:share-${document_id}`, {
         //  senderId: loggedInUser._id,
         //  receiverId: sharedWith,
         //  accessRight: accessRight,
         //  type,
         //});
-        axios.post(
-          'https://api.engagespot.co/v3/notifications',
-          {
-            notification: {
-              title: `${loggedInUser.full_name} sent you a collaboration request.`,
-            },
-            recipients: [{sharedWith}],
-          },
-          {
-            headers: {
-              'X-ENGAGESPOT-API-KEY': '392669pd2q63zp1n10mrub',
-              'X-ENGAGESPOT-API-SECRET': process.env.REACT_APP_ENGAGESPOT_API_SECRET,
-            },
-          }
-        );
+        try {
+          await axios.post("/documents/shareDocument/" + document_id + "/" + sharedWith, {
+            senderId: loggedInUser._id,
+          });
+        } 
+        catch (error) {
+          console.log(error);
+        }
+        
     };
 
   return (
@@ -65,7 +59,7 @@ function SharedWithUsers({followedUser}) {
             <option value="editor">Editor</option>
             <option value="viewer">Viewer</option>
           </select>
-          <button className={styles.publishBtn} onClick={() => shareDocument("shareDoc")}>Share</button>
+          <button className={styles.publishBtn} onClick={shareDocument}>Share</button>
         </div>
       }
     </>

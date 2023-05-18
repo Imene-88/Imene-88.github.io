@@ -26,7 +26,7 @@ const commentRoute = require("./routes/commentRoute");
 const userInterestsRoute = require("./routes/userInterestsRoute");
 const accessRightsRoute = require("./routes/accessRightsRoute");
 const reportsRoute = require("./routes/reportsRoute");
-const notificationsRoute = require("./routes/NotificationsRoute");
+const adsRoute = require("./routes/adsRoute");
 
 dotenv.config();
 
@@ -46,7 +46,7 @@ app.use("/api/comments", commentRoute);
 app.use("/api/interests", userInterestsRoute);
 app.use("/api/access_rights", accessRightsRoute);
 app.use("/api/reports", reportsRoute);
-app.use("/api/notifications", notificationsRoute);
+app.use("/api/ads", adsRoute);
 
 /* ---------------- Socket ---------------- */
 
@@ -60,7 +60,7 @@ const io = new Server(server, {
 });
 
 const defaultValue = "";
-let link;
+//let link;
 
 // socket code
 io.on('connection', (socket) => {
@@ -69,16 +69,16 @@ io.on('connection', (socket) => {
         connectedUsersController.addNewConnectedUser(userId, socket.id);
     });
 
-    socket.on("notification:send", async ({senderId, receiverId, postId, type}) => {
-        const receiver = await connectedUsersController.getConnectedUser(receiverId);
-        const sender = await userController.getSender(senderId);
-        const senderFullName = sender.full_name;
-        socket.broadcast.to(receiver.socket_id).emit("notification:receive", {
-            senderFullName,
-            postId,
-            type
-        })
-    }); 
+    //socket.on("notification:send", async ({senderId, receiverId, postId, type}) => {
+    //    const receiver = await connectedUsersController.getConnectedUser(receiverId);
+    //    const sender = await userController.getSender(senderId);
+    //    const senderFullName = sender.full_name;
+    //    socket.broadcast.to(receiver.socket_id).emit("notification:receive", {
+    //        senderFullName,
+    //        postId,
+    //        type
+    //    })
+    //}); 
 
     socket.on("document:send", async (document_id, userId) => {
         const document = await findOrCreateDocument(document_id, userId);
@@ -97,22 +97,22 @@ io.on('connection', (socket) => {
             await DocumentModel.findByIdAndUpdate(document_id, {content: content});
         });
 
-        socket.on(`document:share-${document_id}`, async ({senderId, receiverId, accessRight, type}) => {
-            const receiver = await connectedUsersController.getConnectedUser(receiverId);
-            const sender = await userController.getSender(senderId);
-            const senderFullName = sender.full_name;
-            if (type === "shareDoc") {
-                link = "http://localhost:3000/documents/add_doc/" + document_id;
-            }
-            socket.broadcast.to(receiver.socket_id).emit("document:shared", {
-                senderFullName,
-                document_id,
-                receiverId,
-                link,
-                accessRight,
-                type,
-            }) 
-        });
+        //socket.on(`document:share-${document_id}`, async ({senderId, receiverId, accessRight, type}) => {
+        //    const receiver = await connectedUsersController.getConnectedUser(receiverId);
+        //    const sender = await userController.getSender(senderId);
+        //    const senderFullName = sender.full_name;
+        //    if (type === "shareDoc") {
+        //        link = "http://localhost:3000/documents/add_doc/" + document_id;
+        //    }
+        //    socket.broadcast.to(receiver.socket_id).emit("document:shared", {
+        //        senderFullName,
+        //        document_id,
+        //        receiverId,
+        //        link,
+        //        accessRight,
+        //        type,
+        //    }) 
+        //});
         
         socket.on(`user:announce-${document_id}`, () => {
             socket.broadcast.to(document_id).emit(`user:announced-${document_id}`);

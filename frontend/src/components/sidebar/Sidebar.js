@@ -15,6 +15,8 @@ import doc_filled from '../../assets/doc_filled.png';
 import doc_unfilled from '../../assets/doc_unfilled.png';
 import reports_filled from '../../assets/reports_filled.png';
 import reports_unfilled from '../../assets/reports_unfilled.png';
+import ads_filled from '../../assets/megaphone.png';
+import ads_unfilled from '../../assets/megaphone_unfilled.png';
 import { AuthContext } from '../../context/AuthContext';
 
 const LightTooltip = styled(({ className, ...props }) => (
@@ -94,6 +96,13 @@ function Sidebar() {
               <LightTooltip title="Reports">
                 <Link to="/reports">
                   <img src={reports_unfilled} alt="report icon" width="35" height="35" />
+                </Link>
+              </LightTooltip>
+          </div>
+          <div className={styles.page}>
+              <LightTooltip title="Ads">
+                <Link to="/ads">
+                  <img src={ads_unfilled} alt="ads icon" width="35" height="35" />
                 </Link>
               </LightTooltip>
           </div>

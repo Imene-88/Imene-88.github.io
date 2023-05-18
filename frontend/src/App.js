@@ -18,6 +18,7 @@ import Posts from './pages/admin_posts/Posts';
 import Reports from './pages/admin_reports/Reports';
 import NewAdmin from './pages/new_admin/NewAdmin';
 import UserInterests from './pages/user_interests/UserInterests';
+import Ads from './pages/ads/Ads.js';
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -41,6 +42,7 @@ function App() {
       <Route path="/users/new_admin" element={<NewAdmin />} />
       <Route path="/posts" element={<Posts />} />
       <Route path="/reports" element={<Reports />} />
+      <Route path="/ads" element={<Ads />} />
     </Routes>
   );
 }

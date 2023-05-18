@@ -465,6 +465,10 @@ function AddDoc() {
                   }}
                 >
                   <MenuItem onClick={handleCloseTools}>Voice Typing</MenuItem>
+                  <div className={styles.authorship}>
+                    <MenuItem onClick={handleCloseTools}>Authorship identification</MenuItem>
+                    <button>Upgrade</button>
+                  </div>
                 </Menu>
               </div>
             }

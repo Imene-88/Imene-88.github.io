@@ -1,6 +1,12 @@
 const DocumentModel = require("../models/Document");
 const LikeModel = require("../models/Like");
 const UserModel = require("../models/User");
+const axios = require("axios");
+const { EngagespotClient } = require("@engagespot/node");
+const client = EngagespotClient({
+    apiKey:'392669pd2q63zp1n10mrub',
+    apiSecret:'ao84rhf7bjs0prh22pjr9ojc41g21d8380c9db10497bi3e4e'
+});
 
 exports.getDocument = async (req, res) => {
     try {
@@ -121,6 +127,27 @@ exports.getTitle = async (req, res) => {
     try {
         const document = await DocumentModel.findById(req.params.documentId);
         res.status(200).json(document.title);
+    } 
+    catch (error) {
+        console.log(error);
+    }
+}
+
+exports.shareDocumentWithUsers = async (req, res) => {
+    try {
+        const user = await UserModel.findById(req.body.senderId);
+        const link = "http://localhost:3000/documents/add_doc/" + req.params.documentId;
+        await client.send({
+            notification:{
+                title: `${user.full_name} sent you a collaboration request. Would you like to: `,
+                icon: user.profile_picture,
+            },
+            data:{
+                type: 'shareDoc',
+                link: link,
+            },
+            recipients:[req.params.receiverId]
+        }); 
     } 
     catch (error) {
         console.log(error);

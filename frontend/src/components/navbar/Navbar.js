@@ -37,63 +37,63 @@ function Navbar() {
 
   const { user } = useContext(AuthContext);
 
-  const [notifications, setNotifications] = useState([]);
-  const [adminNotifications, setAdminNotifications] = useState([]);
+  //const [notifications, setNotifications] = useState([]);
+  //const [adminNotifications, setAdminNotifications] = useState([]);
 
-  useEffect(() => {
-    const getNotifications = async () => {
-      try {
-        const res = await axios.get("/notifications/getNotifications/" + user._id);
-        setNotifications(res.data); 
-      } 
-      catch (error) {
-        console.log(error);
-      }
-    };
-    getNotifications();
-  }, []);
+  //useEffect(() => {
+  //  const getNotifications = async () => {
+  //    try {
+  //      const res = await axios.get("/notifications/getNotifications/" + user._id);
+  //      setNotifications(res.data); 
+  //    } 
+  //    catch (error) {
+  //      console.log(error);
+  //    }
+  //  };
+  //  getNotifications();
+  //}, []);
 
-  useEffect(() => {
-    socket.on("document:shared", data => {
-      setNotifications((prev) => [...prev, data]);
-    })
-  }, []);
+  //useEffect(() => {
+  //  socket.on("document:shared", data => {
+  //    setNotifications((prev) => [...prev, data]);
+  //  })
+  //}, []);
 
-  const receiveNotification = ({senderFullName, document_id, receiverId, link, accessRight, type}, notification) => {
-    return (
-      <>
-        {type === "shareDoc" && 
-          <MenuItem>
-            <p>{senderFullName} sent you a collaboration request. Do you: </p>
-            <div className={styles.collab_request}>
-              <Link to={link}>
-                <button onClick={() => acceptCollabRequest(document_id, receiverId, accessRight)}>Accept</button>
-              </Link>
-              <button>Refuse</button>
-            </div>
-          </MenuItem>
-        }
-      </>
-    )
-  };
+  //const receiveNotification = ({senderFullName, document_id, receiverId, link, accessRight, type}, notification) => {
+  //  return (
+  //    <>
+  //      {type === "shareDoc" && 
+  //        <MenuItem>
+  //          <p>{senderFullName} sent you a collaboration request. Do you: </p>
+  //          <div className={styles.collab_request}>
+  //            <Link to={link}>
+  //              <button onClick={() => acceptCollabRequest(document_id, receiverId, accessRight)}>Accept</button>
+  //            </Link>
+  //            <button>Refuse</button>
+  //          </div>
+  //        </MenuItem>
+  //      }
+  //    </>
+  //  )
+  //};
 
-  useEffect(() => {
-    socket.on("notification:receive", data => {
-      setAdminNotifications((prev) => [...prev, data]);
-    })
-  }, []);
+  //useEffect(() => {
+  //  socket.on("notification:receive", data => {
+  //    setAdminNotifications((prev) => [...prev, data]);
+  //  })
+  //}, []);
 
-  const receiveAdminNotification = ({senderFullName, postId, type}) => {
-    return (
-      <>
-      {type === "report-post" && 
-        <MenuItem>
-          <p>{senderFullName} reported a post: {postId} </p>
-        </MenuItem>
-      }
-      </>
-    )
-  };
+  //const receiveAdminNotification = ({senderFullName, postId, type}) => {
+  //  return (
+  //    <>
+  //    {type === "report-post" && 
+  //      <MenuItem>
+  //        <p>{senderFullName} reported a post: {postId} </p>
+  //      </MenuItem>
+  //    }
+  //    </>
+  //  )
+  //};
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const openAddPostDialog = () => {
@@ -273,6 +273,30 @@ function Navbar() {
     setSearchResultsDialogOpen(false);
   };
 
+  const NotificationHeading = ({ heading }) => {
+    return (
+      <p>{heading}</p>
+    );
+  }
+
+  const NotificationActionButtons = ({link}) => {
+    return (
+      <div className={styles.notifActionBtns}>
+        <Link to={link}>Accept</Link>
+        <Link>Refuse</Link>
+      </div>
+    )
+  }
+
+  const Notification = ({notification}) => {
+    return (
+      <>
+        <NotificationHeading heading={notification.heading} />
+        <NotificationActionButtons link={notification.data?.link} />
+      </>
+    )
+  };
+
   return (
     <div className={styles.container}>
         <div className={styles.addition}></div>
@@ -302,6 +326,10 @@ function Navbar() {
                   iconFill: "var(--primary-color)",
                   iconSize: "42px",
                 },
+              }} renderNotificationBody={(notification) => {
+                if (notification.data?.type === "shareDoc") {
+                  return <Notification notification={notification} />
+                }
               }} />
                 {user.role !== "Admin" && <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />}
                 <Dialog open={dialogOpen} onClose={closeAddPostDialog} className={styles.dialog}>

@@ -17,4 +17,6 @@ router.get("/getTitle/:documentId", documentController.getTitle);
 
 router.delete("/:id", documentController.deleteDocument);
 
+router.post("/shareDocument/:documentId/:receiverId", documentController.shareDocumentWithUsers);
+
 module.exports = router;

@@ -1,1 +1,0 @@
-const notificationModel = require("../models/Notification");
