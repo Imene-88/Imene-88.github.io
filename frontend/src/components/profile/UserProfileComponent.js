@@ -38,22 +38,28 @@ function UserProfileComponent() {
     getUser();
   }, [fullname]);
 
+  const userFollowed = loggedInUser.following.some(userX => userX._id === user._id);
+  console.log(userFollowed)
+
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const closeSnackbar = () => {
     setSnackbarOpen(false);
   };
 
+  const [followBtnClicked, setFollowBtnClicked] = useState(false);
   const followUser = async () => {
     try {
       await axios.put("/users/" + user._id + "/follow", {
         userId: loggedInUser._id,
       });  
+      setFollowBtnClicked(true);
     } 
     catch (error) {
       console.log(error);
     }
     setSnackbarOpen(true);
   };
+
 
   return (
     <div className={styles.profile}>
@@ -65,7 +71,7 @@ function UserProfileComponent() {
             <p>{user.username}</p>
             <p>{user.bio}</p>
           </div>
-          {!loggedInUser.following.includes(user) && <button onClick={followUser}>Follow</button> }
+          {!userFollowed && !followBtnClicked && <button onClick={followUser}>Follow</button> }
           <Snackbar
             anchorOrigin={{
               horizontal: "right",
@@ -73,7 +79,7 @@ function UserProfileComponent() {
             }}
             open={snackbarOpen}
             autoHideDuration={5000}
-            message="User followed successfully."
+            message={`You followed ${user.username}`}
             onClose={closeSnackbar}
             className={styles.snackbar}
           />

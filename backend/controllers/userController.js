@@ -16,7 +16,7 @@ exports.updateUser = async (req, res) => {
                 password: req.body.password,
                 bio: req.body.bio,
                 profile_picture: req.body.profile_picture,
-                birth_date: new Date(req.body.birth_date),
+                //birth_date: new Date(req.body.birth_date),
                 account_type: req.body.account_type,
                 activated: req.body.activated,
                 role: req.body.role
@@ -35,7 +35,7 @@ exports.updateUser = async (req, res) => {
                 email: req.body.email,
                 bio: req.body.bio,
                 profile_picture: req.body.profile_picture,
-                birth_date: new Date(req.body.birth_date),
+                //birth_date: new Date(req.body.birth_date),
                 account_type: req.body.account_type,
                 activated: req.body.activated,
                 role: req.body.role
@@ -97,7 +97,7 @@ exports.followUser = async (req, res) => {
         const thisUser = await UserModel.findById(req.body.userId);
         await followedUser.updateOne({$push: {followers: thisUser}}); 
         await thisUser.updateOne({$push: {following: followedUser}});
-        res.status(200).json("User followed successfully");
+        res.status(200).json(thisUser);
         axios.post(
             'https://api.engagespot.co/v3/notifications',
             {

@@ -32,10 +32,6 @@ const userSchema = new mongoose.Schema({
         type: String,
         default: "",
     },
-    birth_date: {
-        type: Date,
-        default: Date.now,
-    }, 
     account_type: {
         type: String,
         default: "basic",

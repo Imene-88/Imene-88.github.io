@@ -2,6 +2,7 @@ import React, { useCallback, useContext, useEffect, useState } from 'react';
 import styles from './TextEditor.module.css';
 import Quill from 'quill';
 import 'quill/dist/quill.snow.css';
+import QuillCursors from 'quill-cursors';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import socket from '../../SOCKET_CONNECTION';
@@ -16,6 +17,7 @@ const fontSize = ['8','9','10','11','12','14','18','24','30','36','48','60','72'
 var Size = Quill.import('attributors/style/size');
 Size.whitelist = fontSize;
 Quill.register(Size, true);
+Quill.register('modules/cursors', QuillCursors);
 
 const custom_additional_toolbar = [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -99,7 +101,9 @@ function TextEditor2({accessRight}) {
         textEditor.innerHTML = ''; /* clean up the text editor so that after each change it will not re-render */
         const editor = document.createElement('div'); /* Create a new div that containes the editor and append it to the main container so that the toolbar and the editor are included both in the div */
         textEditor.append(editor);   
-        const q = new Quill(editor, { theme: "snow", modules: {toolbar: accessRight == "viewer" ? false : custom_additional_toolbar}, placeholder: "Type to insert" });
+        const q = new Quill(editor, { theme: "snow", modules: {toolbar: accessRight == "viewer" ? false : custom_additional_toolbar, history: {
+            delay: 2000, maxStack: 100, userOnly: true,
+        }, cursors: true}, placeholder: "Type to insert" });
         q.focus();
         setQuill(q);
     }, []);

@@ -27,9 +27,11 @@ function Ads() {
         <div className={styles.subSubContainer}>
           <div className={styles.wrapper}>
             <p>Advertisements</p>
-            {ads.map((ad) => {
-              return <AdminAds key={ad._id} ad={ad} />
-            })}
+            <div className={styles.ads}>
+              {ads.map((ad) => {
+                return <AdminAds key={ad._id} ad={ad} />
+              })}
+            </div>
           </div>
         </div>
       </div>      

@@ -39,3 +39,23 @@ exports.getUsersInterests = async (req, res) => {
         console.log(error);
     }
 };
+
+exports.getBirthDate = async (req, res) => {
+    try {
+        const user = await UserInterestsModel.findOne({ user_id: req.params.userId });
+        res.status(200).json(user.birth_date);  
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};
+
+exports.updateBirthDate = async (req, res) => {
+    try {
+        const user = await UserInterestsModel.findOneAndUpdate({ user_id: req.params.userId }, { birth_date: new Date(req.body.birth_date) }, { new: true });
+        res.status(200).json(user);  
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};

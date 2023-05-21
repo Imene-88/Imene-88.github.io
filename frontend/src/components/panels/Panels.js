@@ -206,7 +206,7 @@ function Panels() {
                     <form method='post' onSubmit={addAdd}>
                         <DialogContent>
                             <textarea cols="69" rows="8" placeholder='What does the advertisement about?' autoFocus className={styles.postContent} ref={adminAdContent}></textarea>
-                            <select ref={targetAudience}>
+                            <select ref={targetAudience} className={styles.targetAudience}>
                                 <option value="" id='first-option'>Target Audience</option>
                                 <option value="freelance">Freelance writers</option>
                                 <option value="novelists">Novelists</option>

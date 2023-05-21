@@ -7,4 +7,6 @@ router.get("/getAds", adsController.getAds);
 
 router.get("/getAdsCount", adsController.getAdsCount);
 
+router.delete("/deleteAd/:id", adsController.deleteAd);
+
 module.exports = router;

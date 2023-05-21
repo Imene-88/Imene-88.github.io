@@ -72,7 +72,7 @@ export default function Following() {
             }}
             open={snackbarOpen}
             autoHideDuration={5000}
-            message="User unfollowed successfully. Refresh the page to see the results."
+            message={`You unfollowed ${followedUser.username}. Refresh the page to see the results.`}
             onClose={closeSnackbar}
             className={styles.snackbar}
           />

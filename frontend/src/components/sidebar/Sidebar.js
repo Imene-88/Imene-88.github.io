@@ -37,7 +37,7 @@ function Sidebar() {
 
   return (
     <>
-      {loggedInUser.role !== "Admin" && 
+      {loggedInUser.role === "User" && 
         <div className={styles.navCol}>
           <div className={styles.page}>
             <LightTooltip title="Open Collaborations">
@@ -62,7 +62,7 @@ function Sidebar() {
           </div>
         </div>
       }
-      {loggedInUser.role === "Admin" && 
+      {loggedInUser.role !== "User" &&
         <div className={styles.navColAdmin}>
           <div className={styles.page}>
               <LightTooltip title="Home">

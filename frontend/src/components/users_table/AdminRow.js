@@ -25,7 +25,7 @@ function AdminRow({admin}) {
         </TableCell>
         <TableCell align="left">{admin.username}</TableCell>
         <TableCell align="left">{admin.email}</TableCell>
-        <TableCell align="left">{handleBirthDate(admin.birth_date)}</TableCell>
+        {/*<TableCell align="left">{handleBirthDate(admin.birth_date)}</TableCell>*/}
         <TableCell align="left">{admin.type_of_color_blindness}</TableCell>
     </TableRow>
   )

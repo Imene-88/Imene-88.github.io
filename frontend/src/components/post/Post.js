@@ -496,7 +496,7 @@ export default function Post({post}) {
                   {commentNbr > 0 && <span>{commentNbr}</span>}
                 </div>
             </div>
-            {loggedInUser.role !== "Admin" && 
+            {loggedInUser.role === "User" && 
               <div className={styles.save}>
                   <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={28} height={28} onClick={savePost} />
                   <div className={styles.socialShare}>

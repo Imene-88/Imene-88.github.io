@@ -172,7 +172,7 @@ function UserInterests() {
             <input type="date" value={birthDate} onChange={enableDoneButton} />
             <div className={styles.lastButtons}>
               <button ref={backButton} onClick={goToPreviousPage}>Back</button>
-              <button disabled={!dateSelected} onClick={insertUserInterests}>Done</button>
+              <button onClick={insertUserInterests}>Done</button>
             </div>
           </div>
         }

@@ -26,7 +26,7 @@ function App() {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/register" element={user ? (<Navigate replace to={"/user_interests"} />) : (<Register />)} />
-      <Route path="/login" element={user ? (user.role === "Admin" ? (<Navigate replace to={"/admin_page"} />) : (<Navigate replace to={"/main_page"} />)) : (<Login />)} />
+      <Route path="/login" element={user ? (user.role === "User" ? (<Navigate replace to={"/main_page"} />) : (<Navigate replace to={"/admin_page"} />)) : (<Login />)} />
       <Route path="/main_page" element={<MainPage />} />
       <Route path="/user_interests" element={<UserInterests />} />
       <Route path="/admin_page" element={<AdminPage />} />

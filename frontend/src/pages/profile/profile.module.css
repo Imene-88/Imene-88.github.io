@@ -83,6 +83,11 @@
     cursor: pointer;
 }
 
+.subContainer .subSubContainer .profile .header .leftHeader .identity .fullname_edit .edit p {
+    position: relative;
+    top: -3.5px;
+}
+
 .subContainer .subSubContainer .profile .header .leftHeader .identity .fullname_edit .edit:hover {
     font-weight: 600;
 }

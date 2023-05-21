@@ -305,7 +305,7 @@ function Navbar() {
             <div className={styles.navGroup}>
               <form method='post' onSubmit={searchUser}>
                 <div className={styles.search}>
-                    {user.role !== "Admin" ? <input type="text" value={searchQuery} placeholder='Search for people' onChange={handleSearchUser} /> : <input type="text" placeholder='Search for users' />}
+                    {user.role === "User" ? <input type="text" value={searchQuery} placeholder='Search for people' onChange={handleSearchUser} /> : <input type="text" value={searchQuery} placeholder='Search for users' onChange={handleSearchUser} />}
                     <img src={search} alt="search icon" width="24" height="24" />
                 </div>
               </form>
@@ -331,7 +331,7 @@ function Navbar() {
                   return <Notification notification={notification} />
                 }
               }} />
-                {user.role !== "Admin" && <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />}
+                {user.role === "User" && <img src={addPost} alt="adding a post icon" width="40" height="40" className={styles.images} onClick={openAddPostDialog} />}
                 <Dialog open={dialogOpen} onClose={closeAddPostDialog} className={styles.dialog}>
                   <DialogTitle>New Post</DialogTitle>
                   <Divider />

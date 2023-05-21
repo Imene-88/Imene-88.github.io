@@ -139,3 +139,17 @@
 .addPostBtn:disabled {
     background-color: gray;
 }
+
+.targetAudience {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    margin-top: 5px;
+    width: 553px;
+    font-family: var(--secondary-font);
+    background-color: var(--bg-color);
+    border-radius: 2px;
+    font-size: 15px;
+    cursor: pointer;
+}

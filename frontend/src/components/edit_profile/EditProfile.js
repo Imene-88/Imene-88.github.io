@@ -24,6 +24,22 @@ function EditProfile() {
         setDialogOpen(false);
     };
 
+    const [birthDate, setBirthDate] = useState("");
+    useEffect(() => {
+        const getBirthDate = async () => {
+            try {
+                const res = await axios.get("/interests/getBirthDate/" + loggedInUser._id);  
+                setBirthDate(res.data);  
+            } 
+            catch (error) {
+                console.log(error);
+            }
+        };
+        getBirthDate();
+    }, [loggedInUser._id]);
+
+    
+
     const userFullname = useRef();
     const userUsername = useRef();
     const userBio = useRef();
@@ -68,12 +84,19 @@ function EditProfile() {
         );
     };
 
+
+
     const editProfile = async (event) => {
         event.preventDefault();
         if (userPassword.current.value !== confirmUserPassword.current.value) {
             confirmUserPassword.current.setCustomValidity("The two passwords you provided do not match");
         } else {
             try {
+                if (userBirthDate.current.value) {
+                    await axios.put("/interests/updateBirthDate/" + loggedInUser._id, {
+                        birth_date: userBirthDate.current.value,
+                    })
+                };
                 await axios.put("/users/" + loggedInUser._id, {
                     full_name: userFullname.current.value || loggedInUser.fullName,
                     username: userUsername.current.value || loggedInUser.username, 
@@ -82,7 +105,6 @@ function EditProfile() {
                     password: userPassword.current.value !== "" && userPassword.current.value,
                     profile_picture: profilePictureUrl || loggedInUser.profile_picture,
                     bio: userBio.current.value || loggedInUser.bio,
-                    birth_date: new Date(userBirthDate.current.value) || loggedInUser.birth_date,
                 });
                 window.location.reload();
             }
@@ -131,7 +153,7 @@ function EditProfile() {
                         </div>
                         <div className={styles.userInputs}>
                             <label>Birth date</label>
-                            <input type="date" defaultValue={new Date(loggedInUser.birth_date).toISOString().slice(0, 10)} ref={userBirthDate} />
+                            <input type="date" defaultValue={birthDate.slice(0, 10)} ref={userBirthDate} />
                         </div>
                         <Divider />
                         <div className={styles.userInputs}>

@@ -82,8 +82,12 @@ exports.getMyPosts = async (req, res) => {
 exports.getLikesCount = async (req, res) => {
     try {
         const post = await PostModel.findById(req.params.id);
-        const likesCount = await LikeModel.countDocuments({post_id: post._id});
-        res.status(200).json(likesCount);
+        if (post) {
+            const likesCount = await LikeModel.countDocuments({post_id: post._id});
+            res.status(200).json(likesCount);
+        } else {
+            return;
+        }
     }
     catch(error) {
         console.log(error);

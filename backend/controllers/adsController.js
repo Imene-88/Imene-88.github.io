@@ -36,3 +36,13 @@ exports.getAds = async (req, res) => {
         console.log(error);
     }
 }
+
+exports.deleteAd = async (req, res) => {
+    try {
+        await AdsModel.findByIdAndDelete(req.params.id);
+        res.status(200).json("ad deleted successfully");
+    } 
+    catch (error) {
+        console.log(error);
+    }
+};

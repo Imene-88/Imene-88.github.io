@@ -47,7 +47,7 @@ function UserRow({user}) {
         <TableCell align="left">{user.username}</TableCell>
         <TableCell align="left">{user.email}</TableCell>
         <TableCell align="left">{user.type_of_color_blindness}</TableCell>
-        <TableCell align="left">{handleBirthDate(user.birth_date)}</TableCell>
+        {/*<TableCell align="left">{handleBirthDate(user.birth_date)}</TableCell>*/}
         <TableCell align="left">{user.account_type}</TableCell>
         <TableCell align="center"><p className={styles.activated}>{user.activated ? "Activated" : "Disactivated"}</p></TableCell>
     </TableRow>
