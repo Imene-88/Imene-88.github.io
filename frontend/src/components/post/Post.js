@@ -339,16 +339,17 @@ export default function Post({post}) {
     <div className={styles.post}>
         <div className={styles.postTop}>
             <div className={styles.left}>
-              <img src={user.profile_picture || default_picture} alt={"user profile"} width={44} height={44} />
-              {user._id !== loggedInUser._id && 
+              {post.postType === "Post" && <img src={user.profile_picture || default_picture} alt={"user profile"} width={44} height={44} />}
+              {user._id !== loggedInUser._id && post.postType === "Post" &&
                 <Link to={`/userProfile/${user.full_name}`}>
                   <p className={styles.username}>{user.username}</p>
                 </Link>
               }
-              {user._id === loggedInUser._id && <p className={styles.username}>{user.username}</p>}
+              {user._id === loggedInUser._id && post.postType === "Post" && <p className={styles.username}>{user.username}</p>}
+              {post.postType === "Ad" && <p className={styles.username}>Announcement</p>}
               <p className={styles.date}>{format(post.createdAt)}</p>
             </div>
-            {loggedInUser.role !== "Admin" && 
+            {loggedInUser.role === "User" && 
               <button id='report'
                 aria-controls={openReport ? 'report-menu' : undefined}
                 aria-haspopup="true"
@@ -464,7 +465,7 @@ export default function Post({post}) {
                   {likeNbr > 0 && <span>{likeNbr}</span>}
                 </div>
               }
-              {loggedInUser.role === "Admin" && 
+              {loggedInUser.role === "Admin" || loggedInUser.role === "Super Admin" &&  
                 <div className={styles.like}>
                   <img src={like_btn} alt="like icon" width={30} height={30} onClick={openLikedByDialog} />
                   <Dialog open={dialogLikedByOpen} onClose={closeLikedByDialog} className={styles.dialog}>

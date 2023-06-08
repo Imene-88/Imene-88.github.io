@@ -16,6 +16,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Divider from '@mui/material/Divider';
 import LikeUser from '../post/LikeUser';
+import { Link } from 'react-router-dom';
 
 function ProfileComponent() {
 
@@ -77,6 +78,20 @@ function ProfileComponent() {
   const closeFollowingsDialog = () => {
     setDialogFollowingsOpen(false);
   };
+
+  const [userPortfolio, setUserPortfolio] = useState({});
+  useEffect(() => {
+    const getPortfolio = async () => {
+      try {
+        const res = await axios.get("/portfolios/getPortfolio/" + loggedInUser._id);
+        setUserPortfolio(res.data);
+      } 
+      catch (error) {
+        console.log(error);
+      }
+    };
+    getPortfolio();
+  }, [loggedInUser._id]);
   
   return (
     <div className={styles.profile}>
@@ -91,7 +106,7 @@ function ProfileComponent() {
             <p>{loggedInUser.email}</p>
           </div>
         </div>
-        {loggedInUser.role !== "Admin" &&
+        {loggedInUser.role === "User" &&
           <div className={styles.rightHeader}>
             <div className={styles.data}>
               <p>{postsCount}</p>
@@ -126,12 +141,13 @@ function ProfileComponent() {
           </div>
         }
       </div>
-      {loggedInUser.role !== "Admin" &&
+      {loggedInUser.role === "User" &&
         <div className={styles.posts_save}>
           <TabContext value={value}>
             <TabList onChange={handleChange} aria-label="Posts and saved posts">
               <Tab label="My posts" value="1" />
               <Tab label="Saved" value="2" />
+              <Tab label="Portfolio" value="3" />
             </TabList>
             <TabPanel value="1">
               <div className={styles.posts}>
@@ -145,6 +161,18 @@ function ProfileComponent() {
                   {savedPosts.map((savedPost) => {
                     return <LoggedInUserSavedPosts key={savedPost._id} savedPost={savedPost} />
                   })}
+                </div>
+            </TabPanel>
+            <TabPanel value="3">
+                <div className={styles.posts}>
+                  {userPortfolio._id ? 
+                    <div>Portfolio</div> 
+                  : 
+                    <div>
+                      <p className={styles.buildPortfolio}>Start building your portfolio, showcase your work, trust the process <br/> and most importantly, trust yourself, you are worth it more than you think.</p>
+                      <Link to="/myPortfolio">Build Portfolio</Link>
+                    </div>
+                  }
                 </div>
             </TabPanel>
           </TabContext>

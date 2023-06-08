@@ -27,6 +27,7 @@ const userInterestsRoute = require("./routes/userInterestsRoute");
 const accessRightsRoute = require("./routes/accessRightsRoute");
 const reportsRoute = require("./routes/reportsRoute");
 const adsRoute = require("./routes/adsRoute");
+const portfolioRoute = require("./routes/portfolioRoute");
 
 dotenv.config();
 
@@ -47,6 +48,7 @@ app.use("/api/interests", userInterestsRoute);
 app.use("/api/access_rights", accessRightsRoute);
 app.use("/api/reports", reportsRoute);
 app.use("/api/ads", adsRoute);
+app.use("/api/portfolios", portfolioRoute);
 
 /* ---------------- Socket ---------------- */
 

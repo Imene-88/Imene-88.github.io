@@ -20,6 +20,31 @@ import { storage } from "../../Firebase";
 import { ColorRing } from 'react-loader-spinner';
 import remove_image from '../../assets/cancel.png';
 import { AuthContext } from '../../context/AuthContext';
+import { useTheme } from '@mui/material/styles';
+import OutlinedInput from '@mui/material/OutlinedInput';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import { writersTypes } from '../../USER_INTERESTS_PAGE_DATA.js';
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+function getStyles(type, writerType, theme) {
+  return {
+    fontWeight:
+    writerType.indexOf(type) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 function Panels() {
 
@@ -53,7 +78,7 @@ function Panels() {
     };
 
   const adminAdContent = useRef();
-  const targetAudience = useRef();
+  const [targetAudience, setTargetAudience] = useState([]);
   const [newPostImageUrl, setNewPostImageUrl] = useState("");
   const [postImage, setPostImage] = useState(null);
   const [newPostVideoUrl, setNewPostVideoUrl] = useState("");
@@ -136,15 +161,28 @@ function Panels() {
         setPostImageCancelled(true);
       }
 
+      const theme = useTheme();
+      const [writerType, setWriterType] = useState([]);
+
+      const handleChange = (event) => {
+        const {
+          target: { value },
+        } = event;
+        setTargetAudience(event.target.value)
+        setWriterType(
+          // On autofill we get a stringified value.
+          typeof value === 'string' ? value.split(',') : value,
+        );
+      };
+
       const addAdd = async (event) => {
         event.preventDefault();
-        console.log(targetAudience.current.value)
         try {
             await axios.post("/ads/createAd/" + loggedInUser._id, {
                 content: adminAdContent.current.value,
                 image: newPostImageUrl,
                 video: newPostVideoUrl,
-                audience: targetAudience.current.value,
+                audience: targetAudience,
             });    
         } 
         catch (error) {
@@ -206,7 +244,7 @@ function Panels() {
                     <form method='post' onSubmit={addAdd}>
                         <DialogContent>
                             <textarea cols="69" rows="8" placeholder='What does the advertisement about?' autoFocus className={styles.postContent} ref={adminAdContent}></textarea>
-                            <select ref={targetAudience} className={styles.targetAudience}>
+                            {/*<select ref={targetAudience} className={styles.targetAudience}>
                                 <option value="" id='first-option'>Target Audience</option>
                                 <option value="freelance">Freelance writers</option>
                                 <option value="novelists">Novelists</option>
@@ -218,7 +256,37 @@ function Panels() {
                                 <option value="copy">Copywriters</option>
                                 <option value="journalists">Journalists</option>
                                 <option value="non-fiction">Non-fiction writers</option>
-                            </select>
+                            </select>*/}
+                            <Select
+                              multiple
+                              displayEmpty
+                              value={writerType}
+                              onChange={handleChange}
+                              input={<OutlinedInput />}
+                              renderValue={(selected) => {
+                                if (selected.length === 0) {
+                                  return "Target Audience";
+                                }
+                              
+                                return selected.join(', ');
+                              }}
+                              MenuProps={MenuProps}
+                              inputProps={{ 'aria-label': 'Without label' }}
+                              sx={{ width: 553 }}
+                            >
+                              <MenuItem disabled value="">
+                                Target Audience
+                              </MenuItem>
+                              {writersTypes.map((type) => (
+                                <MenuItem
+                                  key={type}
+                                  value={type}
+                                  style={getStyles(type, writerType, theme)}
+                                >
+                                  {type}
+                                </MenuItem>
+                              ))}
+                            </Select>
                             <div className={styles.dialogIcons}>
                               <label id="newPostImage" className={styles.imageIcon}>
                                 <img src={imageIcon} alt="uploadImage" width={35} height={35} />

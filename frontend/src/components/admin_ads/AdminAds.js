@@ -61,7 +61,7 @@ function AdminAds({ad}) {
       }
     };
     getLike();
-  }, []);
+  }, [loggedInUser._id, ad._id]);
   
   const [likeBtnCLicked, setLikeBtnCLicked] = useState(false);
   const likePost = async () => {
@@ -95,11 +95,11 @@ function AdminAds({ad}) {
   const [admin, setAdmin] = useState({});
   useEffect(() => {
     const getUser = async () => {
-      const res = await axios.get("/users/user?id=" + ad.admin_id); 
+      const res = await axios.get("/users/user?id=" + ad.owner_id); 
       setAdmin(res.data);
     };
     getUser();
-  }, [ad.admin_id]);
+  }, [ad.owner_id]);
 
   const [anchorReport, setAnchorReport] = useState(null);
   const openReport = Boolean(anchorReport);
@@ -119,10 +119,10 @@ function AdminAds({ad}) {
   };
 
   const deleteAd = useCallback((adId, adImage, adVideo) => {
+    const adImageReference = ref(storage, adImage);
+    const adVideoReference = ref(storage, adVideo);
     const deleteAdminAd = async () => {
-      try {
-        const adImageReference = ref(storage, adImage);
-        const adVideoReference = ref(storage, adVideo);  
+      try {  
         await axios.delete("/ads/deleteAd/" + adId);
         window.location.reload();
         if (adImageReference) {
@@ -278,7 +278,7 @@ function AdminAds({ad}) {
           <p className={styles.username}>{admin.username}</p>
           <p className={styles.date}>{format(ad.createdAt)}</p>
         </div>
-        {(ad.admin_id === loggedInUser._id || loggedInUser.role === "Super Admin") &&
+        {(ad.owner_id === loggedInUser._id || loggedInUser.role === "Super Admin") &&
           <>
             <button id='report'
                 aria-controls={openReport ? 'report-menu' : undefined}

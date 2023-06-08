@@ -153,3 +153,25 @@
     font-size: 15px;
     cursor: pointer;
 }
+
+form > div:first-child > div:nth-child(2) {
+    height: 40px;
+    font-family: var(--secondary-font);
+}
+
+.postImageHolder {
+    position: relative;
+    padding: 50px;
+}
+
+.postImageHolder .postImage {
+    width: 100%;
+    object-fit: cover;
+}
+
+.postImageHolder .removepostImage {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+}

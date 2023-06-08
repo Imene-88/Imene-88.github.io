@@ -26,6 +26,9 @@ const reportSchema = new mongoose.Schema({
     reported_user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
+    },
+    report_type: {
+        type: String,
     }
 },
 {timestamps: true},

@@ -301,7 +301,7 @@ function Navbar() {
     <div className={styles.container}>
         <div className={styles.addition}></div>
         <div className={styles.nav}>
-            <img src={logo} alt="Logo of website" width="170" height="89" />
+            <p className={styles.logo}><span>Wr1</span>ven</p>
             <div className={styles.navGroup}>
               <form method='post' onSubmit={searchUser}>
                 <div className={styles.search}>

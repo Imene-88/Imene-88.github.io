@@ -20,10 +20,6 @@ import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 function MainPage() {
 
   const { user: loggedInUser} = useContext(AuthContext);
-
-  useEffect(() => {
-    socket.emit("connectedUser:add", loggedInUser._id);
-  }, [loggedInUser._id]);
   
   return (
     <>

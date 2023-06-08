@@ -3,6 +3,7 @@ import like_btn from '../../assets/like.png';
 import like_btn_filled from '../../assets/heart.png';
 import comment_btn from '../../assets/comment.png';
 import save_btn from '../../assets/save.png';
+import save_btn_filled from '../../assets/save_filled.png';
 import styles from './myposts.module.css';
 import axios from 'axios';
 import default_picture from '../../assets/default_user_profile_picture.png';
@@ -20,10 +21,28 @@ export default function LoggedInUserPosts({post}) {
       count();
     }, [post._id]); 
 
+    const [liked, setLiked] = useState(false);
+    useEffect(() => {
+      const getLike = async () => {
+        try {
+          const res = await axios.get("/likes/get_like/" + loggedInUser._id + "/" + post._id);
+          if (res.data.length > 0) {
+            setLiked(true);
+          } else {
+            setLiked(false);
+          }
+        } 
+        catch (error) {
+          console.log(error);
+        }
+      };
+      getLike();
+    }, []);
+
     const [likeBtnCLicked, setLikeBtnCLicked] = useState(false);
     const [likeBtn, setLikeBtn] = useState(like_btn);   
     const likePost = () => {
-      if (!likeBtnCLicked) {
+      if (!likeBtnCLicked && !liked) {
         try {
           axios.post("/likes/like_post/" + post._id, {userId: loggedInUser._id});
         }
@@ -31,11 +50,11 @@ export default function LoggedInUserPosts({post}) {
         }
         setLikeNbr(likeNbr + 1);
         setLikeBtnCLicked(!likeBtnCLicked);
-        setLikeBtn(like_btn_filled);
+        setLiked((prevLiked) => !prevLiked);
       } else {
         setLikeNbr(likeNbr - 1);
         setLikeBtnCLicked(!likeBtnCLicked);
-        setLikeBtn(like_btn);
+        setLiked((prevLiked) => !prevLiked);
         try {
           axios.delete(`/likes/unlike_post/${post._id}`, {
             data: {
@@ -46,6 +65,47 @@ export default function LoggedInUserPosts({post}) {
         catch(error) {}
       }
     };    
+
+    const [saved, setSaved] = useState(false);
+    useEffect(() => {
+      const getSavedPost = async () => {
+        try {
+          const res = await axios.get("/posts/" + loggedInUser._id + "/savedPost/" + post._id);
+          if (res.data.length > 0) {
+            setSaved(true);
+          } else {
+            setSaved(false);
+          }
+        } 
+        catch (error) {
+          console.log(error);
+        }
+      };
+      getSavedPost();
+    }, [loggedInUser._id, post._id]);
+
+    const [saveBtnCLicked, setSaveBtnCLicked] = useState(false);
+    const savePost = async () => {
+        if (!saveBtnCLicked && !saved) {
+          try {
+            await axios.post("/posts/" + loggedInUser._id + "/save_post/" + post._id);
+          }
+          catch(error) {
+            console.log(error);
+          }
+          setSaveBtnCLicked(!saveBtnCLicked);
+          setSaved((prevSaved) => !prevSaved);
+        } else {
+          try {
+            await axios.delete("/posts/unsave_post/" + loggedInUser._id + "/" + post._id);
+          }
+          catch(error) {
+            console.log(error);
+          }
+          setSaveBtnCLicked(!saveBtnCLicked);
+          setSaved((prevSaved) => !prevSaved);
+        }
+      };
     
     return (
       <div className={styles.post}>
@@ -63,7 +123,7 @@ export default function LoggedInUserPosts({post}) {
           <div className={styles.postBottom}>
               <div className={styles.react_to_post}>
                   <div className={styles.like}>
-                    <img src={likeBtn} alt="like icon" width={30} height={30} onClick={likePost} />
+                    <img src={liked ? like_btn_filled : like_btn} alt="like icon" width={30} height={30} onClick={likePost} />
                     <span>{likeNbr}</span>
                   </div>
                   <div className={styles.comment}>
@@ -72,7 +132,7 @@ export default function LoggedInUserPosts({post}) {
                   </div>
               </div>
               <div className={styles.save}>
-                  <img src={save_btn} alt="save icon" width={30} height={30} />
+                  <img src={saved ? save_btn_filled : save_btn} alt="save icon" width={30} height={30} onClick={savePost} />
               </div>
           </div>
       </div>

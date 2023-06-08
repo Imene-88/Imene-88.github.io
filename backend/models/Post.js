@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema({
     video: {
         type: String,
     },
+    postType: {
+        type: String,
+        default: "Post",
+    }
 },
 {timestamps: true}
 );

@@ -312,7 +312,7 @@ function AddDoc() {
     }
       <div className={styles.navEditor}>
         <div className={styles.imgFileGroup}>
-        <img src={logo} alt="Logo of website" width={170} height={89} />
+        <p className={styles.logo}><span>Wr1</span>ven</p>
         <div className={styles.fileInteraction}>
           <input type="text" placeholder='Untitled document' value={updatedTitle} ref={titleInput} onClick={openTitleDialog} readOnly />
           <Dialog open={titleDialogOpen} onClose={closeTitleDialog} className={styles.titleDialog}>

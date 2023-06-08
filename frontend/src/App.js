@@ -19,12 +19,16 @@ import Reports from './pages/admin_reports/Reports';
 import NewAdmin from './pages/new_admin/NewAdmin';
 import UserInterests from './pages/user_interests/UserInterests';
 import Ads from './pages/ads/Ads.js';
+import Portfolio from './pages/portfolio/Portfolio';
+import MyPortfolio from './pages/my_portfolio/MyPortfolio';
 
 function App() {
   const { user } = useContext(AuthContext);
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/myPortfolio" element={<MyPortfolio />} />
       <Route path="/register" element={user ? (<Navigate replace to={"/user_interests"} />) : (<Register />)} />
       <Route path="/login" element={user ? (user.role === "User" ? (<Navigate replace to={"/main_page"} />) : (<Navigate replace to={"/admin_page"} />)) : (<Login />)} />
       <Route path="/main_page" element={<MainPage />} />

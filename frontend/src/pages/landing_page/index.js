@@ -9,10 +9,10 @@ function LandingPage() {
       <div className={styles.blur1}></div>
       <div className={styles.blur2}></div>
       <div className={styles.top}>
-        <p className={styles.logo}><span>1n</span>scripto</p>
+        <p className={styles.logo}><span>Wr1</span>ven</p>
         <div className={styles.topMenu}>
           <Link>Home</Link>
-          <Link>Portfolio</Link>
+          <Link to={"/portfolio"}>Portfolio</Link>
           <Link>About us</Link>
           <Link to={"/login"}>Log in</Link>
           <Link to={"/register"}>Get Started</Link>

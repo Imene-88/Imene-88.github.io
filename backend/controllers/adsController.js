@@ -3,7 +3,7 @@ const AdsModel = require('../models/Ads');
 exports.addAd = async (req, res) => {
     try {
         const ad = new AdsModel({
-            admin_id: req.params.adminId,
+            owner_id: req.params.adminId,
             content: req.body.content,
             image: req.body.image,
             video: req.body.video,

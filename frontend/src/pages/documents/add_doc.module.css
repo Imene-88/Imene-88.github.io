@@ -16,16 +16,26 @@
     justify-content: flex-start;
 }
 
-.navEditor .imgFileGroup img:first-child {
+.navEditor .imgFileGroup .logo { 
     position: relative;
-    top: 8px;
-    left: -10px;
+    font-family: var(--logo-font);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 30px;
+    top: 20px;
+    left: 20px;
+    margin-bottom: 45px;
+    color: var(--text-color);
+}
+
+.navEditor .imgFileGroup .logo span {
+    color: var(--primary-color);
 }
 
 .navEditor .imgFileGroup .fileInteraction {
     position: relative;
     top: 22px;
-    left: -10px;
+    left: 50px;
 }
 
 .navEditor .imgFileGroup .fileInteraction input {

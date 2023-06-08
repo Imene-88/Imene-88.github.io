@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const adsSchema = new mongoose.Schema({
-    admin_id: {
+    owner_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true,
@@ -16,7 +16,12 @@ const adsSchema = new mongoose.Schema({
         type: String,
     },
     target_audience: {
+        type: Array,
+        default: [],
+    },
+    postType: {
         type: String,
+        default: "Ad",
     }
 },
 {timestamps: true}

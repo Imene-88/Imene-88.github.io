@@ -22,7 +22,7 @@ function Login() {
 
   return (
     <div className={styles.container}>
-        <img src={logo} alt="Logo of website" width="170" height="89" />
+        <p className={styles.logo}><span>Wr1</span>ven</p>
         <div className={styles.subContainer}>
             <h2 className={styles.loginPart}>Sign In</h2>
             <form method='post' className={styles.login} onSubmit={userLogin}>

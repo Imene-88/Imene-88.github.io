@@ -15,3 +15,20 @@ export const interestsList = [
     "Freelance Writing",
     "Publishing",
 ];
+
+export const writersTypes = [
+    'All writers',
+    'Freelance writers',
+    'Novelists',
+    'Screenwriters',
+    'Playwrights',
+    'Poets',
+    'Bloggers',
+    'Academic writers',
+    'Technical writers',
+    'Copywriters',
+    'Journalists',
+    'Non-fiction writers',
+    'Editors',
+    'Publishers',
+];

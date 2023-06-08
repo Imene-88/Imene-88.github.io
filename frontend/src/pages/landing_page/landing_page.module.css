@@ -35,7 +35,7 @@
 }
 
 .landingPage .top .logo,
-.landingPage .firstDiv .firstDivHeadlines > p .logo {
+.landingPage .firstDiv .firstDivHeadlines > p .logo { 
     position: relative;
     font-family: var(--logo-font);
     font-style: italic;

@@ -1,0 +1,96 @@
+.MyPortfolio {
+    position: relative;
+    padding: 20px 10px 10px;
+    height: 100vh;
+    max-height: fit-content;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.MyPortfolio > p {
+    position: relative;
+    text-align: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+    font-size: 25px;
+}
+
+.MyPortfolio .userInformation {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.MyPortfolio .userInformation img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+    right: 150px;
+    top: 15px;
+}
+
+.MyPortfolio form {
+    position: relative;
+    top: 60px;
+    left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 15px;
+}
+
+.MyPortfolio form input:first-child, 
+.MyPortfolio form textarea {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 15px;
+    border-radius: 5px;
+    width: 1000px;
+    font-family: var(--secondary-font);
+}
+
+.MyPortfolio form textarea {
+    resize: none;
+}
+
+.writtenPieceImage .upload,
+.MyPortfolio .finishPortfolio {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    font-family: var(--secondary-font);
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.MyPortfolio .finishPortfolio {
+    padding: 10px 63px;
+    left: 840px;
+    top: -50px;
+}
+
+.writtenPieceImage input {
+    display: none;
+}
+
+.listOfWorks {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(9, 10%);
+    gap: 20px;
+    top: 40px;
+    margin-right: 60px;
+    padding-bottom: 20px;
+}
+
+.listOfWorks .workImage {
+    position: relative;
+    object-fit: contain;
+}

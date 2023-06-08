@@ -3,6 +3,8 @@ const UserModel = require("../models/User");
 const LikeModel = require("../models/Like");
 const CommentModel = require("../models/Comment");
 const SavedPostModel = require("../models/SavedPosts");
+const UserInterestsModel = require('../models/UserInterests');
+const AdsModel = require("../models/Ads");
 
 exports.createPost = async (req, res) => {
     try {
@@ -24,12 +26,61 @@ exports.getFeed = async (req, res) => {
     try {
         const thisUser = await UserModel.findById(req.params.userId);
         const thisUsersPosts = await PostModel.find({owner_id: thisUser._id});
+        const userInterersts = await UserInterestsModel.findOne({user_id: thisUser._id});
+        const ads = await AdsModel.find({});
         const followedUsersPosts = await Promise.all(
             thisUser.following.map((followedUser) => {
                 return PostModel.find({owner_id: followedUser});
             })
         );
-        const feedContent = [...thisUsersPosts, ...followedUsersPosts.flat()];
+        const removeDuplicates = (givenArray) => {
+            const arrayFiltered = new Set(givenArray);
+            const uniqueValuesArray = Array.from(arrayFiltered);
+            return uniqueValuesArray;
+        }
+        let interestingAds = [];
+        userInterersts.interests.map((interest) => {
+            if (interest === "Fiction Writing" || interest === "Short Story" || interest === "Novel") {
+                interestingAds.push("Novelists");
+            } else if (interest === "ScreenWriting") {
+                interestingAds.push("Screenwriters");
+            } else if (interest === "Playwriting") {
+                interestingAds.push("Playwrights");
+            } else if (interest === "Poetry") {
+                interestingAds.push("Poets");
+            } else if (interest === "Blogging") {
+                interestingAds.push("Bloggers");
+            } else if (interest === "Copywriting") {
+                interestingAds.push("Copywriters");
+            } else if (interest === "Non-Fiction") {
+                interestingAds.push("Non-fiction writers");
+            } else if (interest === "Technical Writing") {
+                interestingAds.push("Technical writers");
+            } else if (interest === "Academic Writing") {
+                interestingAds.push("Academic writers");
+            } else if (interest === "Journalism") {
+                interestingAds.push("Journalists");
+            } else if (interest === "Editing") {
+                interestingAds.push("Editors");
+            } else if (interest === "Freelance Writing") {
+                interestingAds.push("Freelance writers");
+            } else if (interest === "Publishing") {
+                interestingAds.push("Publishers");
+            }
+        })
+        const uniqueInterestingAds = removeDuplicates(interestingAds);
+        const allWritersAds = ads.filter((ad) => ad.target_audience.includes("All writers"));
+        let specificAds = [];
+        let isIncluded;
+        ads.map((ad) => {
+            isIncluded = uniqueInterestingAds.some(item => ad.target_audience.includes(item));
+            if (isIncluded) {
+                if (!specificAds.includes(ad)) {
+                    specificAds.push(ad);
+                }
+            }
+        });
+        const feedContent = [...thisUsersPosts, ...followedUsersPosts.flat(), ...allWritersAds, ...specificAds];
         res.status(200).json(feedContent);
     }
     catch(error) {
@@ -97,8 +148,13 @@ exports.getLikesCount = async (req, res) => {
 exports.getCommentsCount = async (req, res) => {
     try {
         const post = await PostModel.findById(req.params.id);
-        const commentsCount = await CommentModel.countDocuments({post_id: post._id});
-        res.status(200).json(commentsCount);
+        if (post) {
+            const commentsCount = await CommentModel.countDocuments({post_id: post._id});
+            res.status(200).json(commentsCount);
+        } else {
+            return;
+        }
+        
     } 
     catch (error) {
         console.log(error);
