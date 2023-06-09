@@ -1,0 +1,339 @@
+.container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--nav-color);
+    overflow: hidden;
+}
+
+.container .addition {
+    position: absolute;
+    width: 92.82%;
+    height: 93px;
+    margin-left: 101px;
+    background-color: var(--bg-color);
+    z-index: 1;
+}
+
+.container .nav {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+}
+
+.container .nav .logo {
+    position: relative;
+    font-family: var(--logo-font);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 30px;
+    top: 20px;
+    left: 50px;
+    color: var(--text-color);
+}
+
+.container .nav .logo span {
+    color: var(--primary-color);
+}
+
+.container .nav .navGroup {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    top: 20px;
+    right: 46px;
+    gap: 25px;
+}
+
+.container .nav .navGroup .search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 543px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    padding: 0 25px;
+    border-radius: 5px;
+}
+
+.container .nav .navGroup .search input {
+    width: 90%;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    font-family: var(--secondary-font);
+    color: var(--tertiary-color);
+}
+
+.container .nav .navGroup > div > div > div:nth-child(2) > div:nth-child(2) > div > img {
+    object-fit: cover;
+}
+
+.container .nav .navGroup .search img {
+    position: relative;
+    opacity: 0.5;
+}
+
+.container .nav .navGroup button {
+    position: relative;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.container .nav img:last-child,
+.profile_menu > div:nth-child(3) > ul > li:first-child img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.container .nav .images {
+    cursor: pointer;
+}
+
+.navCol {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    z-index: 100;
+    top: 259px;
+    left: 29px;
+    gap: 61px;
+}
+
+.navColAdmin {
+    position: absolute;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    z-index: 100;
+    top: 150px;
+    left: 29px;
+    gap: 50px;
+}
+
+.navCol .page img {
+    cursor: pointer;
+}
+
+.navCol .page img::before {
+    content: '';
+    display: block;
+    width: 100px;
+    height: 66px;
+    left: 0;
+    background: var(--text-color);
+    z-index: 100;
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 400px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.postContent {
+    position: relative;
+    resize: none;
+    background-color: var(--bg-color);
+    outline: none;
+    border: none;
+    padding: 15px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.postContent::placeholder {
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.dialogIcons {
+    position: relative;
+    top: 15px;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.dialogIcons p {
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    font-size: 15px;
+}
+
+.dialogIcons img {
+    cursor: pointer;
+}
+
+.dialogIcons .imageIcon, 
+.dialogIcons .videoIcon {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-right: 40px;
+    gap: 10px;
+}
+
+.addPostBtn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 10px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 250px;
+    margin-bottom: 30px;
+}
+
+.addPostBtn:disabled {
+    background-color: gray;
+}
+
+.profile_menu  {
+    margin-top: 10px;
+}
+
+.profile_menu > div:nth-child(3) {
+    left: 999px;
+    background-color: var(--editor-bg-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li,
+.profile_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:first-child {
+    position: relative;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:last-child {
+    position: relative;
+    font-size: 14.5px;
+    color: var(--tertiary-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li:nth-child(5) .switch_dark {
+    margin-left: 65px;
+}
+
+.imageIcon input,
+.videoIcon input {
+    display: none;
+}
+
+.collab_request button {
+    position: relative;
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    padding: 3px 5px;
+    outline: none;
+    margin-right: 5px;
+}
+
+.collab_request button:hover {
+    background-color: var(--primary-color);
+}
+
+.postImageHolder {
+    position: relative;
+    padding: 50px;
+}
+
+.postImageHolder .postImage {
+    width: 100%;
+    object-fit: cover;
+}
+
+.postImageHolder .removepostImage {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    cursor: pointer;
+}
+
+.progressCircle {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    left: 40px;
+}
+
+.progressCircle .progressValue {
+    position: relative;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.notifActionBtns {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+    top: 10px;
+    left: 180px;
+}
+
+.notifActionBtns a:first-child {
+    position: relative;
+    text-decoration: none;
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: var(--secondary-font);
+    font-size: 12px;
+}
+
+.notifActionBtns a:first-child:hover,
+.notifActionBtns a:last-child:hover {
+    opacity: 0.8;
+}
+
+.notifActionBtns a:last-child {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+    background-color: var(--secondary-color);
+    padding: 3px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-family: var(--secondary-font);
+    font-size: 12px;
+}

@@ -1,0 +1,71 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    max-height: fit-content;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .wrapper {
+    position: relative;
+    padding: 0 20px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 170px;
+}
+
+.adminsTop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 150px;
+    margin-left: 35px;
+}
+
+.subContainer .subSubContainer .wrapper > p,
+.adminsTop p {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 23px;
+    font-weight: 600;
+}
+
+.subContainer .subSubContainer .wrapper > p {
+    top: 150px;
+    margin-left: 35px;
+}
+
+.adminsTop button {
+    position: relative;
+    border: none;
+    outline: none;
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    font-family: var(--main-font);
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.adminsTop button:hover {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+}

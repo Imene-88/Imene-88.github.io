@@ -1,0 +1,142 @@
+.landingPage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.landingPage .blur1 {
+    position: absolute;
+    width: 352px;
+    height: 224px;
+    border-radius: 50%;
+    background-color: var(--nav-color);
+    filter: blur(32px);
+    top: -90px;
+    left: -50px;
+}
+
+.landingPage .blur2 {
+    position: absolute;
+    width: 352px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: var(--nav-color);
+    filter: blur(32px);
+    top: 350px;
+    right: -150px;
+}
+
+.landingPage .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landingPage .top .logo,
+.landingPage .firstDiv .firstDivHeadlines > p .logo { 
+    position: relative;
+    font-family: var(--logo-font);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 30px;
+    top: 20px;
+    left: 80px;
+    color: var(--text-color);
+}
+
+.landingPage .top .logo span,
+.landingPage .firstDiv .firstDivHeadlines > p .logo span {
+    color: var(--primary-color);
+}
+
+.landingPage .top .topMenu {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 35px;
+    margin-right: 20px;
+    top: 25px;
+}
+
+.landingPage .top .topMenu a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    padding: 5px 20px;
+    border-radius: 8px;
+}
+
+.landingPage .top .topMenu a:hover {
+    background-color: var(--primary-color);
+    transition: all 0.5s ease-in-out;
+    color: var(--bg-color);
+}
+
+.landingPage .top .topMenu a:last-child {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    letter-spacing: 1px;
+}
+
+.landingPage .top .topMenu a:last-child:hover {
+    opacity: 0.8;
+}
+
+.landingPage .firstDiv {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    top: 60px;
+}
+
+.landingPage .firstDiv .firstDivHeadlines {
+    position: relative;
+    top: 3px;
+    left: 80px;
+}
+
+.landingPage .firstDiv .firstDivHeadlines h1 {
+    position: relative;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+    font-size: 35px;
+}
+
+.landingPage .firstDiv .firstDivHeadlines h1 span {
+    color: var(--primary-color);
+}
+
+.landingPage .firstDiv .firstDivHeadlines > p {
+    position: relative;
+    top: 30px;
+    font-family: var(--secondary-font);
+    line-height: 20px;
+}
+
+.landingPage .firstDiv .firstDivHeadlines > p .logo {
+    font-size: 15px;
+    top: 0;
+    left: 0;
+}
+
+.landingPage .firstDiv img {
+   position: relative;
+   right: 60px;
+}
+
+.landingPage .firstDiv .firstDivHeadlines a {
+    position: relative;
+    top: 60px;
+    text-decoration: none;
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    padding: 5px 30px;
+    border-radius: 8px;
+    font-family: var(--secondary-font);
+    letter-spacing: 1px;
+}

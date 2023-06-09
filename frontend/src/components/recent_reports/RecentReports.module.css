@@ -1,0 +1,34 @@
+.recentReports {
+    position: relative;
+    width: 30%;
+    padding: 0 5px;
+}
+
+.recentReports .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recentReports .top a {
+    position: relative;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.recentReports .top p:first-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.recentReports .top p:last-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 14px;
+    color: var(--tertiary-color);
+}

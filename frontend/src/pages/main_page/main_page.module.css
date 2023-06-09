@@ -1,0 +1,814 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    max-height: fit-content;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .wrapper {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 20px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 170px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--nav-color);
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle {
+    position: relative;
+    width: 70%;
+    top: 130px;
+}
+
+.usersPosts {
+    position: relative;
+    top: 160px;
+    margin-left: 35px;
+    margin-top: 10px;
+    z-index: 0;
+}
+
+.profile {
+    position: relative;
+    padding: 10px 100px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 170px;
+}
+
+.profile .header {
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--bg-color);
+    top: 75px;
+    padding-top: 45px;
+    z-index: 999;
+}
+
+.profile .header .leftHeader {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.profile .header .leftHeader > img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile .header .leftHeader .identity .fullname_edit {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.profile .header .leftHeader .identity .fullname_edit .edit {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.profile .header .leftHeader .identity .fullname_edit .edit:hover {
+    font-weight: 600;
+}
+
+.profile .header .leftHeader .identity p:first-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.profile .header .leftHeader .identity p:nth-child(2) {
+    position: relative;
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.profile .header .leftHeader .identity p:last-child {
+    margin-top: 8px;
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+}
+
+.profile .header .leftHeader button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 20px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    border-radius: 5px;
+    margin-left: 15px;
+    font-family: var(--secondary-font);
+}
+
+.profile .header .leftHeader button:hover {
+    opacity: 0.9;
+}
+
+.profile .header .rightHeader {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.profile .header .rightHeader .data {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.profile .header .rightHeader .data p:first-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.profile .header .rightHeader .data p:last-child {
+    position: relative;
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+    font-size: 18px;
+}
+
+.profile .posts_save {
+    position: relative;
+    top: 75px;
+    left: 5px;
+}
+
+.posts_save > div:nth-child(1) {
+    position: fixed;
+    width: 79.6%;
+    background-color: var(--bg-color);
+    padding-top: 30px;
+    z-index: 1;
+}
+
+.posts_save > div:nth-child(1) > div > div > button:first-child {
+    color: var(--primary-color);
+}
+
+.posts_save > div:nth-child(1) > div > div > button:first-child[aria-selected=false] {
+    color: var(--tertiary-color);
+}
+
+.posts_save > div:nth-child(1) > div > div > button:last-child {
+    color: var(--tertiary-color);
+}
+
+.posts_save > div:nth-child(1) > div > div > button:last-child[aria-selected=true] {
+    color: var(--primary-color);
+}
+
+.posts_save > div:nth-child(1) > div > span {
+    background-color: var(--primary-color);
+}
+
+.posts_save > div:nth-child(2) {
+    position: relative;
+    padding-left: 0;
+}
+
+.posts_save .posts {
+    position: relative;
+    top: 80px;
+    left: 5px;
+}
+
+.subContainer .subSubContainer .middle .post,
+.profile .posts_save .posts .post, 
+.usersPosts .post {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(236, 231, 211, 0.9);
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .right {
+    position: sticky;
+    width: 30%;
+    background-color: var(--editor-bg-color);
+    margin-left: 40px;
+    top: 130px;
+    margin-top: 130px;
+    padding: 20px;
+    height: 79vh;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle .post .postTop,
+.subContainer .subSubContainer .right .following,
+.profile .posts_save .posts .post .postTop,
+.usersPosts .post .postTop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+} 
+
+.subContainer .subSubContainer .middle > div:first-child {
+    position: relative;
+    margin-bottom: 20px;
+    padding: 5px 30px;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    border: 1px solid hsla(207, 26%, 7%, .5);
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity {
+    position: relative;
+    text-align: center;
+    font-family: var(--secondary-font);
+    font-size: 14px;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity .username {
+    font-weight: 600;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile .profileIdentity a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 15px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    font-family: var(--main-font);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .middle > div:first-child .similarProfile button:hover {
+    opacity: 0.9;
+}
+
+.subContainer .subSubContainer .right .following {
+    margin-bottom: 30px;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left,
+.subContainer .subSubContainer .right .following .left,
+.profile .posts_save .posts .post .postTop .left,
+.usersPosts .post .postTop .left {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.subContainer .subSubContainer .right .following .left {
+    gap: 15px;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left a,
+.profile .posts_save .posts .post .postTop .left a, 
+.usersPosts .post .postTop .left a {
+    position: relative;
+    text-decoration: none;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left img,
+.subContainer .subSubContainer .right .following .left img,
+.profile .posts_save .posts .post .postTop .left img,
+.usersPosts .post .postTop .left img {
+    border-radius: 50%;
+    object-fit: cover;
+} 
+
+.subContainer .subSubContainer .middle .post .postTop .left .username,
+.profile .posts_save .posts .post .postTop .left .username,
+.usersPosts .post .postTop .left .username {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .left .date,
+.profile .posts_save .posts .post .postTop .left .date,
+.usersPosts .post .postTop .left .date {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 11px;
+    color: var(--tertiary-color);
+}
+
+.subContainer .subSubContainer .middle .post .postTop button,
+.profile .posts_save .posts .post .postTop button, 
+.usersPosts .post .postTop button {
+    position: relative;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.subContainer .subSubContainer .middle .post .postTop .dots,
+.profile .posts_save .posts .post .postTop .dots,
+.usersPosts .post .postTop .dots {
+    position: relative;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle, 
+.profile .posts_save .posts .post .postMiddle,
+.usersPosts .post .postMiddle {
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle p,
+.profile .posts_save .posts .post .postMiddle p,
+.usersPosts .post .postMiddle p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 10px;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle img,
+.profile .posts_save .posts .post .postMiddle img,
+.usersPosts .post .postMiddle img {
+    width: 100%;
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.subContainer .subSubContainer .middle .post .postMiddle .postVideo,
+.profile .posts_save .posts .post .postMiddle .postVideo,
+.usersPosts .post .postMiddle .postVideo {
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom,
+.profile .posts_save .posts .post .postBottom,
+.usersPosts .post .postBottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post,
+.profile .posts_save .posts .post .postBottom .react_to_post,
+.usersPosts .post .postBottom .react_to_post {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .like, 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment,
+.profile .posts_save .posts .post .postBottom .react_to_post .like,
+.profile .posts_save .posts .post .postBottom .react_to_post .comment,
+.usersPosts .post .postBottom .react_to_post .like,
+.usersPosts .post .postBottom .react_to_post .comment {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7px;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .like img, 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment img,
+.usersPosts .post .postBottom .react_to_post .like img,
+.usersPosts .post .postBottom .react_to_post .comment img {
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .like span, 
+.subContainer .subSubContainer .middle .post .postBottom .react_to_post .comment span,
+.profile .posts_save .posts .post .postBottom .react_to_post .like span, 
+.profile .posts_save .posts .post .postBottom .react_to_post .comment span,
+.usersPosts .post .postBottom .react_to_post .like span,
+.usersPosts .post .postBottom .react_to_post .comment span {
+    position: relative;
+    font-family: var(--secondary-font);
+}
+
+.subContainer .subSubContainer .right .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .right .top a {
+    position: relative;
+    text-decoration: none;
+}
+
+.subContainer .subSubContainer .right .top > p {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    margin-bottom: 30px;
+}
+
+.subContainer .subSubContainer .right .top a button {
+    position: relative;
+    margin-bottom: 30px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following .left .text a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .right .following .left .text a p:first-child {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following .left .text a p:first-child:hover {
+    font-weight: 600;
+}
+
+.subContainer .subSubContainer .right .following .left .text p:last-child {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 14.5px;
+}
+
+.subContainer .subSubContainer .right .following button {
+    position: relative;
+    border: 2px solid var(--primary-color);
+    outline: none;
+    padding: 3px 15px;
+    color: var(--text-color);
+    background-color: transparent;
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .right .following button:hover {
+    background-color: var(--primary-color);
+    transition: all 0.3s;
+    color: var(--bg-color);
+}
+
+.report_menu {
+    margin-left: -128px;
+}
+
+.report_menu > div:nth-child(3),
+.commentUD_menu > div:nth-child(3) {
+    background-color: var(--bg-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li,
+.report_menu > div:nth-child(3) > ul > a,
+.commentUD_menu > div:nth-child(3) > ul > li,
+.commentUD_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li .text p:first-child {
+    position: relative;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.report_menu > div:nth-child(3) > ul > li .text p:last-child {
+    position: relative;
+    font-size: 14.5px;
+    color: var(--tertiary-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li:nth-child(5) .switch_dark {
+    margin-left: 65px;
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 500px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.report_post_contents > p {
+    position: relative;
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    margin-bottom: 10px;
+}
+
+.report_post_contents .report_reason {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.report_post_contents .report_reason input {
+    position: relative;
+    width: 17px;
+    height: 17px;
+    margin-bottom: 5px;
+}
+
+.report_post_contents .report_reason input[type="checkbox"]:checked {
+    background-color: red;
+}
+
+.report_post_contents .report_reason p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 15px;
+    top: -3.4px;
+}
+
+.reportContent {
+    position: relative;
+    resize: none;
+    background-color: var(--bg-color);
+    outline: none;
+    border: none;
+    padding: 14px 50px 40px 14px;
+    overflow: hidden;
+    border-radius: 3px;
+    margin-top: 10px;
+    font-family: var(--secondary-font);
+}
+
+.reportContent::placeholder {
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.reportPostBtn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 8px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+    margin-right: 250px;
+    margin-bottom:20px;
+}
+
+.no_followings {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-style: italic;
+    color: var(--text-color);
+    text-align: center;
+    margin: 0 60px;
+    top: 200px;
+}
+
+.writeComment {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: var(--bg-color);
+    padding: 10px 15px;
+    width: 100%;
+    margin: 0 15px 10px 10px;
+    border-radius: 5px;
+    font-family: var(--main-font);
+    resize: none;
+}
+
+.postComment {
+    position: relative;
+    margin-bottom: 11px;
+    margin-right: 11px;
+    cursor: pointer;
+}
+
+.userComment {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.likeUser {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.userComment img,
+.likeUser img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.userComment .commentText .commentTop {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.likeUser .commentText a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+}
+
+.userComment .commentText p,
+.likeUser p {
+    position: relative;
+    font-family: var(--secondary-font);
+}
+
+.userComment .commentText .commentTop p:first-child {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.userComment .commentText .commentTop p:last-child {
+    font-size: 12px;
+    color: var(--tertiary-color);
+}
+
+.userComment .commentText > p {
+    margin-top: 4px;
+}
+
+.commentUDdots {
+    position: relative;
+    background: transparent;
+    border: none;
+    outline: none;
+    margin-left: 300px;
+    cursor: pointer;
+}
+
+.commentUD_menu {
+    left: 0;
+}
+
+.commentUD_menu > div:nth-child(3) > ul > li {
+    font-size: 15px;
+}
+
+.commentUD_menu > div:nth-child(3) > ul > li:last-child {
+    margin-left: 6px;
+}
+
+.editDialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 90px;
+    background-color: var(--editor-bg-color);
+    padding: 15px 0 0;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .save img {
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .middle .post .postBottom .save {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.socialPlatforms {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    display: none;
+    transition: all 0.5s ease-in-out;
+    z-index: 100;
+}
+
+.snackbar > div {
+    background-color: var(--text-color);
+    color: var(--editor-bg-color);
+    font-family: var(--secondary-font);
+}

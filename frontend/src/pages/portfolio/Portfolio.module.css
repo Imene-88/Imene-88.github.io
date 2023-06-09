@@ -1,0 +1,285 @@
+.landingPage {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.landingPage .blur1 {
+    position: absolute;
+    width: 352px;
+    height: 224px;
+    border-radius: 50%;
+    background-color: var(--nav-color);
+    filter: blur(32px);
+    top: -90px;
+    left: -50px;
+}
+
+.landingPage .blur2 {
+    position: absolute;
+    width: 352px;
+    height: 250px;
+    border-radius: 50%;
+    background-color: var(--nav-color);
+    filter: blur(32px);
+    top: 350px;
+    right: -150px;
+}
+
+.landingPage > .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.landingPage .top .logo,
+.landingPage .firstDiv .firstDivHeadlines > p .logo {
+    position: relative;
+    font-family: var(--logo-font);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 30px;
+    top: 20px;
+    left: 80px;
+    color: var(--text-color);
+}
+
+.landingPage .top .logo span,
+.landingPage .firstDiv .firstDivHeadlines > p .logo span {
+    color: var(--primary-color);
+}
+
+.landingPage .top .topMenu {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 35px;
+    margin-right: 20px;
+    top: 25px;
+}
+
+.landingPage .top .topMenu a {
+    position: relative;
+    text-decoration: none;
+    color: var(--text-color);
+    font-family: var(--secondary-font);
+    padding: 5px 20px;
+    border-radius: 8px;
+}
+
+.landingPage .top .topMenu a:hover {
+    background-color: var(--primary-color);
+    transition: all 0.5s ease-in-out;
+    color: var(--bg-color);
+}
+
+.landingPage .top .topMenu a:last-child {
+    color: var(--bg-color);
+    background-color: var(--primary-color);
+    letter-spacing: 1px;
+}
+
+.landingPage .top .topMenu a:last-child:hover {
+    opacity: 0.8;
+}
+
+.landingPage .frontDiv {
+    position: relative;
+    top: 20px;
+    height: 100vh;
+    padding: 0 15px;
+}
+
+.landingPage .frontDiv .top {
+    position: relative;
+    top: 100px;
+    left: 325px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.landingPage .frontDiv .top .svg1 {
+    height: 10px;
+    width: 30px;
+    margin-top: 10px;
+}
+
+.landingPage .frontDiv .top .dot {
+    position: relative;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    width: 7px;
+    height: 7px;
+}
+
+.landingPage .frontDiv .top .svg2 {
+    height: 10px;
+    width: 700px;
+    margin-top: 10px;
+}
+
+.landingPage .frontDiv .right {
+    position: relative;
+    top: 90px;
+    left: 1135px;   
+}
+
+.landingPage .frontDiv .right .svg3 {
+    height: 800px;
+}
+
+.landingPage .frontDiv .bottom {
+    position: relative;
+    top: -319px;
+    left: 325px;   
+}
+
+.landingPage .frontDiv .bottom .svg4 {
+    height: 10px;
+    width: 811px;
+}
+
+.landingPage .frontDiv .left {
+    position: relative;
+    top: -732px;
+    left: 325px;   
+}
+
+.landingPage .frontDiv .left .svg5 {
+    height: 400px;
+}
+
+.phrase {
+    position: absolute;
+    top: 280px;
+    left: 420px;   
+}
+
+.phrase p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-weight: 600;
+    color: var(--text-color);
+    font-size: 45px;
+    text-align: center;
+}
+
+.phrase button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 8px 50px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    border-radius: 8px;
+    font-family: var(--secondary-font);
+    margin-top: 30px;
+    margin-left: 240px;
+    font-size: 17px;
+}
+
+.phrase button:hover {
+    opacity: 0.8;
+}
+
+.cards {
+    position: relative;
+    padding: 15px 60px;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(4, 20%);
+    gap: 10px;
+    margin-bottom: 20px;
+    place-content: center;
+}
+
+.cards .card {
+    position: relative;
+    width: 250px;
+    height: 350px;
+    border: 2px solid hsla(12, 41%, 37%, .5);
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.cards .card img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.cards .card p {
+    position: relative;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.cards .card .fullName {
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.cards .card .description {
+    width: fit-content;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+}
+
+.cards .card .studio_button {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    display: flex;
+    align-items: center;
+    background: var(--primary-color);
+    color: var(--bg-color);
+    padding: 0 10px;
+    border-radius: 50px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    transition: 0.35s ease all;
+    overflow: hidden;
+    max-width: 30px; /* icon size */
+}
+  
+.cards .card .studio_button .studio_button_icon {
+    position: relative;
+    bottom: 7px;
+    right: 2.5px;
+}
+  
+.cards .card .studio_button .studio_button_label {
+    white-space: nowrap;
+    padding: 0 8px;
+    opacity: 0;
+    transform: translateX(10px);
+    transition: 0.25s ease all;
+    font-family: var(--secondary-font);
+}
+  
+.cards .card:hover {
+    .studio_button {
+      max-width: 100%;
+    }
+    .studio_button_label {
+      opacity: 1;
+      transform: translateX(0);
+      transition: 0.25s 0.1s ease-in opacity, 0.15s 0.1s cubic-bezier(.175, .885, .32, 1.275) transform;
+    }
+  }
+

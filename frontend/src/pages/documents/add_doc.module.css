@@ -1,0 +1,341 @@
+.snackbar > div {
+    background-color: var(--text-color);
+    color: var(--editor-bg-color);
+    font-family: var(--secondary-font);
+}
+
+.navEditor {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navEditor .imgFileGroup {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.navEditor .imgFileGroup .logo { 
+    position: relative;
+    font-family: var(--logo-font);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 30px;
+    top: 20px;
+    left: 20px;
+    margin-bottom: 45px;
+    color: var(--text-color);
+}
+
+.navEditor .imgFileGroup .logo span {
+    color: var(--primary-color);
+}
+
+.navEditor .imgFileGroup .fileInteraction {
+    position: relative;
+    top: 22px;
+    left: 50px;
+}
+
+.navEditor .imgFileGroup .fileInteraction input {
+    position: relative;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: var(--secondary-font);
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    color: var(--tertiary-color);
+    left: -5px;
+    padding: 1px 0 1px 5px;
+}
+
+.navEditor .imgFileGroup .fileInteraction input:hover,
+.navEditor .imgFileGroup .fileInteraction input:focus {
+    border: 1px solid var(--text-color);
+    border-radius: 4px;
+}
+
+.navEditor .imgFileGroup .fileInteraction .fileNav {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    left: -7px;
+}
+
+.navEditor .imgFileGroup .fileInteraction .fileNav button {
+    color: var(--text-color);
+    text-transform: capitalize;
+    font-family: var(--secondary-font);
+    font-style: normal;
+    font-weight: 600;
+    min-width: 0;
+}
+
+.navEditor .imgFileGroup .fileInteraction .fileNav button:hover {
+    background-color: var(--secondary-color);
+}
+
+.navEditor .userInteraction {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+    right: 46px;
+}
+
+.navEditor .userInteraction .profileButton {
+    position: relative;
+    background: none;
+    padding: 0;
+}
+
+.profile_menu  {
+    margin-top: 10px;
+}
+
+.profile_menu > div:nth-child(3) {
+    left: 999px;
+    background-color: var(--editor-bg-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li,
+.profile_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:first-child {
+    position: relative;
+    font-size: 17px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.profile_menu > div:nth-child(3) > ul > li .text p:last-child {
+    position: relative;
+    font-size: 14.5px;
+    color: var(--tertiary-color);
+}
+
+.profile_menu > div:nth-child(3) > ul > li:nth-child(5) .switch_dark {
+    margin-left: 65px;
+}
+
+.profile_menu > div:nth-child(3) > ul > li:first-child img {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.navEditor .userInteraction .openDoc {
+    cursor: pointer;
+}
+
+.navEditor .userInteraction .profile {
+    position: relative;
+    border-radius: 50%;
+    object-fit: cover;
+    cursor: pointer;
+}
+
+.navEditor .userInteraction button {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 700px;
+    height: 400px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    font-family: var(--main-font);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.titleDialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    font-family: var(--main-font);
+    font-weight: 600;
+    text-align: center;
+}
+
+.dialog > div:nth-child(3) > div > hr,
+.titleDialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.titleDialog > div:nth-child(3) > div {
+    width: 500px;
+    height: 210px;
+    background-color: var(--editor-bg-color);
+}
+
+.titleDialog > div:nth-child(3) > div > div > input {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 6px 20px;
+    width: 450px;
+    font-family: var(--secondary-font);
+    border-radius: 5px;
+}
+
+.titleDialog > div:nth-child(3) > div > div > button {
+    margin-right: 15px;
+}
+
+.titleDialog > div:nth-child(3) > div > div > button:hover {
+    opacity: 0.9;
+}
+
+.documentDescription {
+    position: relative;
+    resize: none;
+    background-color: var(--bg-color);
+    outline: none;
+    border: none;
+    padding: 15px;
+    overflow: hidden;
+    border-radius: 3px;
+}
+
+.documentDescription::placeholder {
+    color: var(--tertiary-color);
+    font-family: var(--secondary-font);
+}
+
+.selectAccessRight {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.selectAccessRight select {
+    position: relative;
+    border: none;
+    outline: none;
+    width: 415px;
+    padding: 8px 15px;
+    font-family: var(--secondary-font);
+    font-size: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.publishBtn {
+    position: relative;
+    border: none;
+    outline: none;
+    padding: 5px 30px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    border-radius: 10px;
+    font-family: var(--main-font);
+    font-style: normal;
+    font-size: 15px;
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.publishBtn:hover {
+    opacity: 0.9;
+}
+
+.shareDiv {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.userFollowings {
+    position: relative;
+    width: 95%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--bg-color);
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.userFollowings:hover {
+    transform: scale(1.05);
+    transition: all 0.4s ease;
+}
+
+.userFollowings p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+}
+
+.userFollowings img {
+    position: relative;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.participantsAvatars {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    left: 10px;
+}
+
+.participantsAvatars img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: -20px;
+}
+
+.authorship {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 5px;
+}
+
+.authorship button {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: var(--secondary-color);
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-family: var(--secondary-font);
+    font-size: 12px;
+    color: var(--text-color);
+    margin-right: 15px;
+}

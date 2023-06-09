@@ -1,0 +1,176 @@
+.userInterests {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100vh;
+}
+
+.userInterests .left {
+    position: relative;
+    width: 15%;
+    background-color: var(--nav-color);
+}
+
+.userInterests .right {
+    position: relative;
+    width: 85%;
+    padding: 20px 30px;
+    background-color: var(--bg-color);
+}
+
+.userInterests .right .topInfo p {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 17px;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin: 20px 0 0 20px;
+    color: var(--tertiary-color);
+}
+
+.userInterests .right .topInfo img {
+    position: relative;
+    margin: 19px 0 0 15px;
+}
+
+.userInterests .right .topInfo {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 15px;
+}
+
+.top > div:last-child {
+    position: relative;
+    background: transparent;
+    margin: 0 0 0 12px;
+}
+
+.top > div:last-child > span {
+    position: relative;
+    background-color: var(--nav-color);
+    border-radius: 5px;
+}
+
+.top > div:last-child > span > span {
+    background-color: var(--primary-color);
+}
+
+.interests {
+    position: relative;
+    margin-top: 40px;
+}
+
+.interests > p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+.interests .interestsOptions {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 20%);
+    gap: 20px;
+    margin-top: 100px;
+    padding-left: 350px;
+}
+
+.interests .interestsOptions .userInfo {
+    position: relative;
+    margin-bottom: 5px;
+    border: 1px solid hsla(12, 41%, 37%, .5);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.interests .interestsOptions .userInfo p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+    text-align: center;
+}
+
+.buttons,
+.secondButtons {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.secondButtons {
+    margin-top: 100px;
+}
+
+.lastButtons {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 300px;
+    margin-left: 370px;
+}
+
+.buttons button,
+.lastButtons button,
+.secondButtons button {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    padding: 8px 35px;
+    border-radius: 3px;
+    font-family: var(--main-font);
+    cursor: pointer;
+}
+
+.buttons button:hover,
+.lastButtons button:hover,
+.secondButtons button:hover {
+    opacity: 0.9;
+}
+
+.buttons button:first-child,
+.lastButtons button:first-child {
+    display: none;
+}
+
+.buttons button:last-child,
+.secondButtons button:last-child {
+    margin-left: auto;
+    margin-right: -10px;
+}
+
+.buttons button:last-child:disabled,
+.lastButtons button:last-child:disabled,
+.secondButtons button:last-child:disabled {
+    background-color: grey;
+}
+
+.interests .birthDate {
+    margin-top: 200px;
+}
+
+.interests input {
+    position: relative;
+    border: none;
+    outline: none;
+    width: 500px;
+    border-radius: 8px;
+    background-color: var(--editor-bg-color);
+    margin-top: 50px;
+    margin-left: 370px;
+    padding: 20px;
+    margin-bottom: 20px;
+    font-family: var(--secondary-font);
+}
+
+.firstNext {
+    margin-top: 230px;
+}

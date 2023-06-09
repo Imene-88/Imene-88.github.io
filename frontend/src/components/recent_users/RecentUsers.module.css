@@ -1,0 +1,69 @@
+.recentUsers {
+    position: relative;
+    width: 70%;
+    padding: 0 20px 0 35px;
+}
+
+.recentUsers .top {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.recentUsers .top a {
+    position: relative;
+    text-decoration: none;
+    margin-right: 5px;
+}
+
+.recentUsers .top p:first-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.recentUsers .top p:last-child {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 14px;
+    color: var(--tertiary-color);
+}
+
+.recentUsers .recentUser {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(236, 231, 211, 0.9);
+    margin-bottom: 3px;
+    border-radius: 8px;
+}
+
+.recentUsers .recentUser .userProfile {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.recentUsers .recentUser .userProfile img {
+    position: relative;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.recentUsers .recentUser p {
+    position: relative;
+    font-family: var(--secondary-font);
+
+}
+
+.recentUsers .recentUser > p {
+    text-align: right;
+    font-size: 14px;
+    color: var(--tertiary-color);
+}

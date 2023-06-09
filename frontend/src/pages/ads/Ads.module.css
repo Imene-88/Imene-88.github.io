@@ -1,0 +1,230 @@
+.subContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer {
+    position: absolute;
+    width: 93.4%;
+    height: 100vh;
+    max-height: fit-content;
+    left: 101px;
+    top: 0px;
+    background-color: var(--bg-color);
+    border-top-left-radius: 58px;
+    border-bottom-left-radius: 58px;
+    overflow: hidden;
+}
+
+.subContainer .subSubContainer .wrapper {
+    position: relative;
+    padding: 0 20px;
+    width: 100%;
+    height: 100%;
+    max-height: fit-content;
+    overflow: hidden;
+    overflow-y: scroll;
+    padding-bottom: 170px;
+}
+
+.subContainer .subSubContainer .wrapper > p {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 23px;
+    font-weight: 600;
+    top: 150px;
+    margin-left: 35px;
+}
+
+.subContainer .subSubContainer .wrapper .ads {
+    position: relative;
+    top: 160px;
+    margin-left: 35px;
+    margin-top: 10px;
+    z-index: 0;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0 3px 10px rgba(236, 231, 211, 0.9);
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop .left {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop .left img {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop .left .username {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 18px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop .left .date {
+    position: relative;
+    font-family: var(--main-font);
+    font-size: 11px;
+    color: var(--tertiary-color);
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop button {
+    position: relative;
+    border: none;
+    outline: none;
+    background: transparent;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adTop .dots {
+    position: relative;
+    cursor: pointer;
+}
+
+.report_menu {
+    margin-left: -35px;
+}
+
+.report_menu > div:nth-child(3) {
+    background-color: var(--bg-color);
+}
+
+.report_menu > div:nth-child(3) > ul > li,
+.report_menu > div:nth-child(3) > ul > a {
+    gap: 10px;
+    font-family: var(--secondary-font);
+    color: var(--text-color);
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adMiddle {
+    position: relative;
+    padding: 0 20px;
+    margin-bottom: 15px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adMiddle p {
+    position: relative;
+    font-family: var(--secondary-font);
+    font-size: 16px;
+    font-weight: 400;
+    font-style: normal;
+    margin-bottom: 10px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adMiddle img {
+    width: 100%;
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adMiddle .postVideo {
+    max-height: fit-content;
+    object-fit: contain;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .react_to_post {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .like, 
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .comment {
+    position: relative;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 7px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .react_to_post .like img, 
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .react_to_post .comment img {
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .like span, 
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .comment span {
+    position: relative;
+    font-family: var(--secondary-font);
+}
+
+.dialog > div:nth-child(3) > div {
+    width: 800px;
+    height: 500px;
+    background-color: var(--editor-bg-color);
+}
+
+.dialog > div:nth-child(3) > div > h2 {
+    color: var(--text-color);
+    align-self: center;
+    font-family: var(--main-font);
+    font-weight: 600;
+}
+
+.dialog > div:nth-child(3) > div > hr {
+    border-bottom: thin solid var(--tertiary-color);
+}
+
+.writeComment {
+    position: relative;
+    border: none;
+    outline: none;
+    background-color: var(--bg-color);
+    padding: 10px 15px;
+    width: 100%;
+    margin: 0 15px 10px 10px;
+    border-radius: 5px;
+    font-family: var(--main-font);
+    resize: none;
+}
+
+.postComment {
+    position: relative;
+    margin-bottom: 11px;
+    margin-right: 11px;
+    cursor: pointer;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .save {
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.subContainer .subSubContainer .wrapper .ads .ad .adBottom .save img {
+    cursor: pointer;
+}
